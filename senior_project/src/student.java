@@ -46,7 +46,7 @@ public class student{
     }
 
     public void setBannerID(float Bid){
-        this.bannerID = Bid;
+        bannerID = Bid;
     }
 
     public void setStatus(String status){
