@@ -4,10 +4,10 @@ public class student{
     public String firstName;
     public String lastName;
     public String email;
-    public int BannerID;
+    public float BannerID;
     public String status;
     public String classification;
-    public int gpa;
+    public double gpa;
     public ArrayList<classes> classe;
 
     public student(){
@@ -21,7 +21,7 @@ public class student{
         classe = new ArrayList<classes>();
     }
 
-    public student(String firstName, String lastName ,String email, int BannerID, String status, String classification, int gpa, ArrayList<classes> classe ){
+    public student(String firstName, String lastName ,String email, float BannerID, String status, String classification, double gpa, ArrayList<classes> classe ){
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -45,7 +45,7 @@ public class student{
         this.email = email;
     }
 
-    public void setBannerID(String Bid){
+    public void setBannerID(float Bid){
         this.bannerID = Bid;
     }
 
@@ -57,7 +57,7 @@ public class student{
         this.classification = classification;
     }
 
-    public void setGpa(int gpa){
+    public void setGpa(double gpa){
         this.gpa = gpa;
     }
 
@@ -81,7 +81,7 @@ public class student{
         return lastName;
     }
 
-    public int getBannerID(){
+    public float getBannerID(){
         return BannerID;
     }
 
@@ -97,7 +97,7 @@ public class student{
         return classe;
     }
 
-    public int getGpa(){
+    public double getGpa(){
         return gpa;
     }
 
