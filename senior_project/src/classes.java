@@ -3,14 +3,16 @@ public class classes{
     public String description;
     public String codeName;
     public int id;
+    public int credit;
     public String preRequisite;
     public String CoRequisite;
 
-    public classes(String name, String description, String codeName, int id, String preRequisite, String CoRequisite){
+    public classes(String name, String description, String codeName, int id, int credit, String preRequisite, String CoRequisite){
         this.name = name;
         this.description = description;
         this.codeName = codeName;
         this.id = id;
+        this.credit = credit;
         this.preRequisite = preRequisite;
         this.CoRequisite = CoRequisite;
     }
@@ -20,6 +22,7 @@ public class classes{
         description = null;
         codeName = null;
         id = 0;
+        credit = 0;
         preRequisite = null;
         CoRequisite = null;
 
@@ -40,6 +43,10 @@ public class classes{
 
     public void setID(int id){
         this.id = id;
+    }
+
+    public void setCredit(int credit){
+        this.credit = credit;
     }
 
     public void setPreRequisite(String preRequisite){
@@ -66,6 +73,10 @@ public class classes{
         return id;
     }
 
+    public int getCredit(){
+        return credit;
+    }
+
     public String getPreRequisite(){
         return preRequisite;
     }
@@ -77,7 +88,7 @@ public class classes{
     public String toString(){
         String res = " ";
         res = "Name: "+"\n"+name+"\n"+"Description: "+"\n"+description+"\n"+"Code name: "+"\n"+codeName+"\n"+"course id: "+"\n"+id+"\n"
-        +"course pre-requisite: "+"\n"+preRequisite+"\n"+"course co-requisite: "+"\n"+CoRequisite;
+       +"Credits :"+"\n"+credit+"\n"+"course pre-requisite: "+"\n"+preRequisite+"\n"+"course co-requisite: "+"\n"+CoRequisite;
 
         return res;
 
