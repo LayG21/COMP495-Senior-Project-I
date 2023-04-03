@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 public class curriculum{
     public String department;
     ArrayList<classes> courses;
