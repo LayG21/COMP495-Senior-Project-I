@@ -7,6 +7,7 @@ public class student{
     public int BannerID;
     public String status;
     public String classification;
+    public int gpa;
     public ArrayList<classes> classe;
 
     public student(){
@@ -16,16 +17,18 @@ public class student{
         BannerID = 0;
         status = null;
         classification = null;
+        gpa = 0;
         classe = new ArrayList<classes>();
     }
 
-    public student(String firstName, String lastName ,String email, int BannerID, String status, String classification, ArrayList<classes> classe ){
+    public student(String firstName, String lastName ,String email, int BannerID, String status, String classification, int gpa, ArrayList<classes> classe ){
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.BannerID = BannerID;
         this.status = status;
         this.classification = classification;
+        this.gpa = gpa;
         this.classe = classe;
 
     }
@@ -52,6 +55,10 @@ public class student{
 
     public void setClassification(String classification){
         this.classification = classification;
+    }
+
+    public void setGpa(int gpa){
+        this.gpa = gpa;
     }
 
     public void setClasse(ArrayList<classes> classe){
@@ -90,6 +97,10 @@ public class student{
         return classe;
     }
 
+    public int getGpa(){
+        return gpa;
+    }
+
     public classes getClasse(int i){
         return classe.get(i);
     }
@@ -107,7 +118,7 @@ public class student{
         String result = " ";
 
         result = "First name:"+"\n" +firstName+"\n"+"Last name:"+"\n"+lastName+"\n"+"Banner ID:"+"\n"+BannerID+"\n"+"Status:"+"\n"+status+"\n"
-        +"Classification:"+"\n"+classification+"\n"+"current classes: "+"\n";
+        +"Classification:"+"\n"+classification+"\n"+"Grade Point Average: "+"\n"+gpa+"\n"+"current classes: "+"\n";
         for(int i = 0; i < getNumClasse(); i++){
             result += classe.get(i).toString()+"\n";
         }
