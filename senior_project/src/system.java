@@ -21,15 +21,15 @@ public class system{
        computerSc.add(comp167);
        computerSc.add(comp280);
 
-       student std = new student("John", "Doe", "jd@aggies.ncat.edu", 950409687, "Part-time", "Freshman", 3.5, cl);
+       student stud = new student("John", "Doe", "jd@aggies.ncat.edu", 950409687, "Part-time", "Freshman", 3.5, cl);
        advisor adv = new advisor("Professor", "Jane", "Doe", "janed@aggies.edu", "computer science");
        curriculum compSc = new curriculum("ComputerScience",computerSc);
 
-       
+      
 
        System.out.println(compSc.toString());
        System.out.println();
-       System.out.println(std.toString());
+       System.out.println(stud.toString());
        System.out.println();
        System.out.println(adv.toString());
     }
