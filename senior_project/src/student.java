@@ -17,7 +17,7 @@ public class student{
         BannerID = 0;
         status = null;
         classification = null;
-        gpa = 0;
+        gpa = 0.0;
         classe = new ArrayList<classes>();
     }
 
