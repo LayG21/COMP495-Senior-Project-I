@@ -1,0 +1,91 @@
+/*change chat page and container to not be all the way at bottom and to fit screen*/
+
+.chat-container {
+  display: flex;
+  /*
+  this causes overflow
+  height:90vh;
+  */
+  height: 90em;
+  width: 100%;
+}
+
+.sidebar {
+  background-color: #eee;
+  width: 20%;
+}
+
+.chat-list {
+  list-style: none;
+  padding: 10px;
+
+}
+
+.chat-list li {
+  display: flex;
+  justify-content: space-between;
+ 
+}
+
+.chat-window {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #ccc;
+
+  width: 100%;
+}
+
+.chat-header {
+  background-color: #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-form {
+  display: flex;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.chat-messages {
+  height: 90em;
+  overflow-y: scroll;
+}
+.chat-messages .message-received{
+  background-color: rgb(136, 136, 135);
+}
+
+.chat-messages .message-sent{
+  background-color:rgb(204, 204, 204);
+}
+
+.chat-form .text-message {
+  flex-grow: 1;
+  height: 40px;
+}
+
+.chat-form input.submit-btn {
+  background-color: #004785;
+  color: white;
+  border: none;
+  font-size: 15px;
+  padding: 12px 24px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.searchBars input, .searchBars .user-type{
+  width: 90%;
+}
+
+/*Fix chat page to work for phone*/
+@media (max-width: 768px) {
+  .chat-list li {
+    display: flex;
+    flex-direction: column;
+    
+    border-radius: 5px;
+    
+  }
+}
