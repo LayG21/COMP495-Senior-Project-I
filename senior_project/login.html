@@ -17,19 +17,19 @@
     <div class="login-container">
         <main>
             <div class="login-form">
-                <form >
+                <form action="login.php" method="post" >
                     <div>
                         <h2>Log In</h2>
                     </div>
                     <!--The label should be ontop of the input box-->
                     <label for="user-email">Enter Email:</label>
-                    <input type="email" class="user-email" id="user-email" placeholder="Email">
+                    <input type="email" class="user-email" id="user-email" name="user_email" placeholder="Email">
 
                     <label for="user-password">Enter Password:</label>
-                    <input type="password" class="user-password" id="user-password" placeholder="Password">
+                    <input type="password" class="user-password" id="user-password" name="user_password" placeholder="Password">
 
                     <label for="user-type">Select User Type:</label>
-                    <select class="user-type" id="user-type">
+                    <select class="user-type" id="user-type" name="user_type">
                         <option value="" selected></option>
                         <option value="Student">STUDENT</option>
                         <option value="ADVISOR">ADVISOR</option>
