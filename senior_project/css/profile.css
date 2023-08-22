@@ -1,0 +1,32 @@
+/*Styling for profile page.*/
+main{
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 40px;
+    margin-left: 200px;
+    margin-right: 200px;
+   
+}
+/*div only becomes visible if there is something inside it*/
+div.profile-container {
+    align-items: center;
+    align-self: center;
+    padding-top: 9px;
+    background-color: rgb(220, 220, 220);
+    display: flex;
+    flex-direction: column;
+}
+
+#profile-logo {
+    background-color: white;
+    align-self: center;
+}
+
+@media (max-width: 768px){
+    main{
+        align-items: center;
+        margin-left: 100px;
+        margin-right: 100px;
+       
+    }
+}
