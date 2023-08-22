@@ -2,10 +2,10 @@
 session_start();
 
 // Database connection setup
-$dbHost = "your_database_host";
-$dbUser = "your_database_username";
+$dbHost = "localhost";
+$dbUser = "root";
 $dbPass = "your_database_password";
-$dbName = "your_database_name";
+$dbName = "STUDENT_ADVISOR_WEBAPP";
 
 $conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
 
