@@ -1,3 +1,6 @@
+<?php
+session_start();
+
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php"); // Redirect to login page
@@ -5,4 +8,5 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 // Display dashboard content
-echo "Welcome, " . $_SESSION['user_name']; 
+echo "Welcome, " . $_SESSION['username'];
+?>
