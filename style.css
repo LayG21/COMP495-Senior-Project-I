@@ -1,0 +1,66 @@
+.container{
+    display: flex;
+    align-items: center;
+    justify-content: center
+    }
+.navbar{
+    width: 80%;
+    margin: 0 auto;
+    
+}
+header{
+    background: #004684;
+}
+header::after{
+    content: '';
+    display: table;
+    clear: both;
+}
+.temp_logo{
+    float: left;
+    padding: 10px;
+}
+nav{
+    float: right;
+}
+nav ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+nav li{
+    display: inline-block;
+    margin-left: 50px;
+    padding-top: 25px;
+    position: relative;
+}
+nav a{
+    color: #fdb927;
+    text-decoration: none;
+}
+nav a:hover{
+    color: white;
+}
+img{
+    padding-top: 20px;
+}
+.s_container,.a_container{
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+label{
+    color: white;
+}
+#log_page{
+    text-align: center;
+    color: white;
+}
+#login_page{
+    background-image:linear-gradient(rgba(0, 0, 0, 0.837),rgba(188, 188, 188, 0.5)), url(img/EricBuilding.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    
+}

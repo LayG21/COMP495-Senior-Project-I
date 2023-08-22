@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/nav.css"/>
+    <link rel="stylesheet" href="../css/profile.css">
+  
+    <title>Profile Page</title>
+</head>
+
+<body>
+    <!--Navbar section-->
+    <header class="navbar">
+        <p class="logo">Aggie Advise</p>
+        <input type="checkbox" id="nav-toggle" class="nav-toggle"/>
+        <nav>
+            <ul class="links">
+                <li> <a class="nav-link" href="../src/index.html">Home</a></li>
+                <li> <a class="nav-link" href="student-profile.html">Profile</a></li>
+                <li> <a class="nav-link" href="chat.html">Chat</a></li>
+                <li class="calc-links"> 
+                    <a class="nav-link" href="#">Calculator &#x25BC;</a>
+                    <ul class="dropdown" id="dropdown">
+                        <li><a href="../src/gpa-calculator.html">GPA Calculator</a></li>
+                        <li><a href="../src/course-calculator.html">Course Calculator</a></li>
+
+                    </ul>
+                </li>
+                <li> <a class="nav-link" href="../src/scheduler.html">Scheduler</a></li>
+                <li> <a class="nav-link" href="../src/contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
+    </header>
+
+    <main>
+        <div class="profile-container">
+            <!--Needs to be filled and fetched on login-->
+            <div id="profile-circle">
+                <p id="profile-letters">JD</p>
+            </div>
+            <div class="profile-info">
+                <p>Name: </p>
+                    <p class="name-input" id="name-input">Jane Doe</p>
+                    <br>
+                <p>Classification: </p>
+                    <p class="classification-input" id="classification-input"> Sophomore</p>
+                    <br>
+                <p>Credits:</p>
+                    <p class="credit-input" id="credit-input">40</p>
+                    <br>
+                <p>GPA:</p>
+                    <p class="gpa-input" id="gpa-input">3.60</p>
+                    <br>
+                <p>Major: </p> 
+                    <p class="major-input" id="major-input">Computer Science</p>
+                    <br>
+                <p>Advisor: </p> 
+                    <p class="advisor-input" id="advisor-input">John Doe</p>
+                    <br>
+                <p>Advisor Email: </p>
+                    <p class="email-input" id="email-input">john.doe@example.com</p>
+            </div>
+        </div>
+    </main>
+    
+</body>
+
+</html>
