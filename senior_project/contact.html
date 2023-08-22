@@ -1,28 +1,87 @@
 <!DOCTYPE html>
 <html>
-    <head> 
-        <link rel="stylesheet" href="style.css" />
-        <title>Contact Page</title>
-    </head>
-    <body>
-        <h1>Contact Page</h1>
-        <header>
-            <div class="navbar">
-                <h4 class="temp_logo">Aggie Helper</h4>
-                <nav>
-                    <ul>
-                        <li><a href="home_page.html">Home</a></li>
-                        <li><a href="profile.html">Profile</a></li>
-                        <li><a href="chat.html">Chat</a></li>
-                        <li><a href="calc.html">GPA Calculator</a></li>
-                        <li><a href="class.html">Classes</a></li>
-                        <li><a href="schedule.html">Schedule Appointment</a></li>
-                        <li><a href="contact.html">Contact Us</a></li>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/nav.css"/>
+
+    <title>Contact Page</title>
+</head>
+
+<body>
+    <!--Navigation bar-->
+    <header class="navbar">
+        <p class="logo">Aggie Advise</p>
+        <input type="checkbox" id="nav-toggle" class="nav-toggle"/>
+        <nav>
+            <ul class="links">
+                <li> <a class="nav-link" href="Index.html">Home</a></li>
+                <li> <a class="nav-link" href="../private/student-profile.html">Profile</a></li>
+                <li> <a class="nav-link" href="../private/chat.html">Chat</a></li>
+                <li class="calc-links"> 
+                    <a class="nav-link" href="#">Calculator &#x25BC;</a>
+                    <ul class="dropdown" id="dropdown">
+                        <li><a href="gpa-calculator.html">GPA Calculator</a></li>
+                        <li><a href="course-calculator.html">Course Calculator</a></li>
 
                     </ul>
-                </nav>
-            </div>
+                </li>
+                <li> <a class="nav-link" href="scheduler.html">Scheduler</a></li>
+                <li> <a class="nav-link" href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
+    </header>
+    <!--Body for contact page-->
+    <main>
+        <div class="left-column">
+            <p>Phone Number: 123-456-7890</p>
+            <p>Email: abc@email.com</p>
+            <p>Address: 1601 E Market St, Greensboro, NC 27411</p>
+        </div>
+
+        
+            <div class="right-column">
+                <form action="#" onsubmit="event.preventDefault()">
+                    <div>
+                        <h3>Contact Form</h3>
+                        <div class="input-fill">
+                            <input type="text" class="first-name" id="first-name">
+                            <label for="first-name">First Name</label>
+                        </div>
+                        <div class="input-fill">
+                            <input type="text" class="last-name" id="last-name">
+                            <label for="last-name">Last Name</label>
+                        </div>
+                        <div class="input-fill">
+                            <input type="email" class="email" id="email">
+                            <label for="email">Email Address</label>
+                        </div>
+                        <div class="input-fill">
+                            <select class="user-type" id="user-type">
+                                <option value=""></option>
+                                <option value="Student">Student</option>
+                                <option value="Advisor">Advisor</option>
+                            </select>
+                            <label for="user-type">Advisor or Student</label>
+                        </div>
+        
+                        <div class="input-fill">
+                            <textarea class="user-message" id="user-message" cols="30" rows="10"></textarea>
+                            <label for="user-message">Write Message</label>
+                        </div>
+        
+                        <input type="button" value="Submit" id="submit-contact" class="submit-contact">
+                </form>
+                
+                
+                </div>
             
-        </header>
-    </body>
+            </div>
+        
+       
+    </main>
+</body>
+
 </html>
