@@ -3,7 +3,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__); // Load environment variables from .env file
 $dotenv->load();
 
-$dotenv->load();
 
 session_start();
 
