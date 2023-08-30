@@ -20,9 +20,9 @@ if ($conn->connect_error) {
 }
 
 // Get user input
-$username = $_POST['user_email'];
-$password = $_POST['user_password'];
-$userType = $_POST['user_type'];
+$username = $_POST['user-email'];
+$password = $_POST['user-password'];
+$userType = $_POST['user-type'];
 
 if($userType == 'STUDENT'){
     $sql = "SELECT StudentID, StudentEmail, StudentPassword FROM STUDENT WHERE StudentEmail = ?";
