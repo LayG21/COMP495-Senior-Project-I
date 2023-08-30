@@ -25,7 +25,7 @@ $password = $_POST['user-password'];
 $userType = $_POST['user-type'];
 
 if($userType == 'STUDENT'){
-    $sql = "SELECT StudentID, StudentEmail, StudentPassword FROM STUDENT WHERE StudentEmail = ?";
+    $sql = "SELECT StudentID, StudentEmail, StudentPassword FROM STUDENT WHERE StudentEmail = '$username' and StudentPassword = '$password'";
 } elseif($userType == 'ADVISOR'){
     $sql = "SELECT AdvisorID, AdvisorEmail, AdvisorPassword FROM ADVISOR WHERE AdvisorEmail = ?";
 }
