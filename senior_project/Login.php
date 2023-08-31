@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . '/vendor/autoload.php';
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__); // Load environment variables from .env file
-$dotenv->load();
+#require_once __DIR__ . '/vendor/autoload.php';
+#$dotenv = Dotenv\Dotenv::createImmutable(__DIR__); // Load environment variables from .env file
+#$dotenv->load();
 
 
 session_start();
@@ -9,10 +9,10 @@ session_start();
 // Database connection setup
 $dbHost = "localhost";
 $dbUser = "root";
-$dbPass = getenv("DB_PASSWORD"); // Retrieve password from environment variable;
+$dbPass = "jtmo9657"; // Retrieve password from environment variable;
 $dbName = "STUDENT_ADVISOR_WEBAPP";
 
-$conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
+$conn = mysqli_connect($dbHost, $dbUser, $dbPass, $dbName);
 
 // Check connection
 if ($conn->connect_error) {
