@@ -1,0 +1,25 @@
+/*Styling for scheduler page*/
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+  }
+  
+  .scheduler-info {
+    text-align: center;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+  
+  textarea {
+    margin-top: 20px;
+    width:100%;
+  }
+  
