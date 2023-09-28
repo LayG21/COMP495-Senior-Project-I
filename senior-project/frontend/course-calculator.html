@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Calculator</title>
+
+    <link rel="stylesheet" href="../css/nav.css"/>
+    <link rel="stylesheet" href="../css/calc.css">
+    
+</head>
+
+<body>
+    <header class="navbar">
+        <p class="logo">Aggie Advise</p>
+        <input type="checkbox" id="nav-toggle" class="nav-toggle"/>
+        <nav>
+            <ul class="links">
+                <li> <a class="nav-link" href="index.html">Home</a></li>
+                <li> <a class="nav-link" href="../private/student-profile.html">Profile</a></li>
+                <li> <a class="nav-link" href="../private/chat.html">Chat</a></li>
+                <li class="calc-links"> 
+                    <a class="nav-link" href="#">Calculator &#x25BC;</a>
+                    <ul class="dropdown" id="dropdown">
+                        <li><a href="gpa-calculator.html">GPA Calculator</a></li>
+                        <li><a href="course-calculator.html">Course Calculator</a></li>
+
+                    </ul>
+                </li>
+                <li> <a class="nav-link" href="class-generator.html">Generator</a></li>
+                <li> <a class="nav-link" href="login.html">Login</a></li>
+            </ul>
+        </nav>
+        <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
+    </header>
+    <main>
+        <div class="calc-info">
+            <h3 class="calc-welcome">Course Calculator</h3>
+            <p>Welcome to our Course Calculator</p>
+            <p>These are the instructions: From left to right input the optional assignment name, assignment grade, and assignment weight. </p>
+            <p class="calc-description">Want to use the GPA Calculator, click below</p>
+            <button><a href="gpa-calculator.html">GPA Calculator</a></button>
+            
+        </div>
+        <div class="top-div">
+           
+            <form id="calc-form" class="calc-form" action="#" onsubmit="event.preventDefault()">
+                <ul class="course-calc" id="course-calc">
+                    <li>
+                       
+                        <ul class="labels">
+                            <label for="course-name">Assignment Name(Optional)</label>
+                            <label for="course-grade">Grade</label>
+                            <label for="course-weight">Weight%</label>
+                        </ul>
+                    </li>
+                    <li class="calc-fields">
+                        <input type="text" class="course-name" id="course-name" placeholder="Enter Assignment Name">
+                        <input type="text" class="course-grade" id="course-grade" placeholder="Enter Grade">
+                        <input type="text" class="course-weight" id="course-weight" placeholder="Enter Weight">
+                    </li>
+                    <li class="calc-fields">
+                        <input type="text" class="course-name" id="course-name" placeholder="Enter Assignment Namee">
+                        <input type="text" class="course-grade" id="course-grade" placeholder="Enter Grade">
+                        <input type="text" class="course-weight" id="course-weight" placeholder="Enter Weight">
+                    </li>
+                    <li class="calc-fields">
+                        <input type="text" class="course-name" id="course-name" placeholder="Enter Assignment Name">
+                        <input type="text" class="course-grade" id="course-grade" placeholder="Enter Grade">
+                        <input type="text" class="course-weight" id="course-weight" placeholder="Enter Weight">
+                    </li>
+                    <li class="calc-fields">
+                        <input type="text" class="course-name" id="course-name" placeholder="Enter Assignment Name">
+                        <input type="text" class="course-grade" id="course-grade" placeholder="Enter Grade">
+                        <input type="text" class="course-weight" id="course-weight" placeholder="Enter Weight">
+                    </li>
+                    <li class="calc-fields">
+                        <input type="text" class="course-name" id="course-name" placeholder="Enter Assignment Name">
+                        <input type="text" class="course-grade" id="course-grade" placeholder="Enter Grade">
+                        <input type="text" class="course-weight" id="course-weight" placeholder="Enter Weight">
+                    </li>
+                    <li class="calc-fields">
+                        <input type="text" class="course-name" id="course-name" placeholder="Enter Assignment Name">
+                        <input type="text" class="course-grade" id="course-grade" placeholder="Enter Grade">
+                        <input type="text" class="course-weight" id="course-weight" placeholder="Enter Weight">
+                    </li>
+
+                    <div class="added-row" id="added-row"></div>
+                    <div calc-butons>
+                    
+                        <input type="button" onclick="addMore()" value="Add" class="add-button">
+                        <input type="reset" value="Reset" onclick="changeDefault()" class="reset-button">
+                        <input type="submit" value="Submit" onclick="courseresultAdd()" class="submit-button">
+                    </div>
+    
+                    <div class="bottom-div">
+                        <input type="text" placeholder="Grade Results" id="calc-results" readonly>
+                    </div>
+
+                </ul>
+
+             
+            </form>
+
+        </div>
+
+    </main>
+</body>
+<script src="../javascript/calculator.js"></script>
+
+</html>

@@ -1,0 +1,9 @@
+- ran npm init -y
+-ran npm install express
+- ran npm install nodemon
+-moved the html, css, and client side js to the frontend folder
+- created a new folder named backend for the backend
+-created a test folder for mock database
+- separated the routes
+- originally tested the current pages and 
+i was able to render the pages even after changing the url
