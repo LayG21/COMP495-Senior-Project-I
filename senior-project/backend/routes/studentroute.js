@@ -11,6 +11,7 @@ router.get("/student", (req, res) => {
 });
 
 //get student profile
+//TODO: add database
 router.get("/student/:id", (req, res) => {
   const studentID = parseInt(req.params.id);
   const studentProfile = [];
