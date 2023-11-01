@@ -1,7 +1,7 @@
 //Mimic MySQL database with mock database
 
 //These are the open conversations
-//TO
+//NOTE: How to send and receive the conversation id
 const openConversations = [
   {
     convoID: 1,

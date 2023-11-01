@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { mockStudents, mockAdvisors } = require("../../test/users");
+const { getProfile } = require("../controllers/studentController");
+const { routeRoles } = require("../middleware/rolemiddleware");
 
-//To DO: change this to connecting to mysql
+//To DO: 
 //Validate and Santitize
 
 //get page
@@ -11,8 +12,12 @@ router.get("/student", (req, res) => {
 });
 
 //get student profile
-//TODO: add database
-router.get("/student/:id", (req, res) => {
+
+router.get("/student/:id",getProfile);
+
+/*
+Old route for test database
+router.get("/student/:id",getProfile (req, res) => {
   const studentID = parseInt(req.params.id);
   const studentProfile = [];
   for (let x = 0; x < mockStudents.length; x++) {
@@ -25,5 +30,5 @@ router.get("/student/:id", (req, res) => {
   }
 
   res.send(studentProfile);
-});
+});*/
 module.exports = router;

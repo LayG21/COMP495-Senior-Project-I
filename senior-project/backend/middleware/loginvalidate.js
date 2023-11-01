@@ -1,7 +1,8 @@
 //imports
 const {roles} = require('../roles/roles');
 const emailRegex = /^[\w-]+(?:\.[\w-]+)*@(?:ncat\.com|aggies.ncat\.edu)$/;
-//login validation middleware to be used in routes
+//login validation middleware to be used during login
+//can not trust user input so you sanitize and validate
 function validateInput(req, res, next) {
     
     const userType = req.body.userType;

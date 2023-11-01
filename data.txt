@@ -1,0 +1,33 @@
+[
+    {
+        "student_id":"950416278",
+        "studentFirstName":"Jordan",
+        "studentLastName":"Mozebo",
+        "studentEmail": "jtmozebo@aggies.ncat.edu",
+        "studentPassword":"password",
+        "studentStatus":"Full-Time",
+        "studentClassification": "Senior",
+        "studentGPA": 3.5,
+        
+    },
+
+]
+
+[
+    {
+        "_id":"950321900",
+        "advisorFirstName":"John",
+        "advisorLastName":"Doe",
+        "advisorEmail":"jd@ncat.edu",
+        "advisorPassword":"password"
+        "departmentName":"COMPUTER SCIENCE"
+    },
+     {
+        "_id":"9503421900",
+        "advisorFirstName":"John",
+        "advisorLastName":"Kelly",
+        "advisorEmail":"jk@ncat.edu",
+        "advisorPassword":"password"
+        "departmentName":"COMPUTER SCIENCE"
+    }
+]

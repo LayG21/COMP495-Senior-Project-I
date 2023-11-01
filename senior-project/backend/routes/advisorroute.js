@@ -1,10 +1,10 @@
+//imports
 const express = require("express");
 const router = express.Router();
+const { routeRoles } = require("../middleware/rolemiddleware");
+const { getStudents,getSpecificStudent} = require("../controllers/advisorControlleer");
 
-const { roles } = require("../roles/roles");
-const { mockStudents, mockAdvisors } = require("../../test/users");
-
-//To DO: change this to connecting to mysql
+//To DO: 
 //Validate and Santitize
 
 //test get page
@@ -12,10 +12,11 @@ router.get("/advisor", (req, res) => {
   res.send("Accessing advisor view page");
 });
 
-//test get all assigned students
-router.get("/advisor/:id", (req, res) => {
-  let advisorID = parseInt(req.params.id);
-  let students = [];
+//get all assigned students
+router.get("/advisor/:id", getStudents);
+/*(req, res) => {
+  const advisorID = parseInt(req.params.id);
+  const students = [];
   //look through student table
   for (let x = 0; x < mockStudents.length; x++) {
     if (mockStudents[x].advisorId === advisorID) {
@@ -29,12 +30,13 @@ router.get("/advisor/:id", (req, res) => {
     res.send("No students found with matching advisorID");
   }
   console.log(req.params.id);
-});
+});*/
 
-//test get specific student by id
-router.get("/advisor/:id/:studentID", (req, res) => {
-  let advisorID = parseInt(req.params.id);
-  let studentID = parseInt(req.params.studentID);
+//get specific student by id
+router.get("/advisor/:id/:studentID", getSpecificStudent)
+  /*(req, res) => {
+  const advisorID = parseInt(req.params.id);
+  const studentID = parseInt(req.params.studentID);
 
   let selectedStudent = [];
   for (let x = 0; x < mockStudents.length; x++) {
@@ -54,7 +56,7 @@ router.get("/advisor/:id/:studentID", (req, res) => {
   }
   console.log(`Student: ${studentID} and advisor Id: ${advisorID}`);
   // res.send("This is the response for getting a specific student");
-});
+});*/
 //console.log(mockStudents.length);
 //console.log(mockAdvisors.length);
 //console.log(mockStudents[0].advisorId);
