@@ -34,10 +34,10 @@ console.log("Number of connections:", mongoose.connections.length);
 //prepopulateData();
 
 //routes
-const loginRoutes = require("./backend/routes/loginroute.js");
-const chatRoutes = require("./backend/routes/chatroute.js");
-const advisorRoutes = require("./backend/routes/advisorroute.js");
-const studentRoutes = require("./backend/routes/studentroute.js");
+const loginRoutes = require("./routes/loginroute.js");
+const chatRoutes = require("./routes/chatroute.js");
+const advisorRoutes = require("./routes/advisorroute.js");
+const studentRoutes = require("./routes/studentroute.js");
 
 //const { error } = require("console");
 
