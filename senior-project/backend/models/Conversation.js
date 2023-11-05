@@ -6,11 +6,18 @@ const conversationSchema = new mongoose.Schema({
   conversationID: {
     type: String,
     required: true,
-    },
-    users: {
-        type: Array,
-        required: true,
-    }
+    unique: true,
+  },
+  advisor:{
+    type: Number,
+    ref: 'Advisor',
+    required: true,
+  },
+  student:{
+    type: Number,
+    ref: 'Student',
+    required: true,
+  }
 });
 const Conversation = mongoose.model('Conversation', conversationSchema);
 module.exports = Conversation;
