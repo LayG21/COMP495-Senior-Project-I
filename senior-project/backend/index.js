@@ -28,7 +28,7 @@ console.log("Number of connections:", mongoose.connections.length);
 
 //set static folder
 //serve html,css, and js
-//app.use(express.static(path.join(__dirname, "frontend")));
+app.use(express.static(path.join(__dirname, "../frontend")));
 
 //script to prepopulate data
 //prepopulateData();
