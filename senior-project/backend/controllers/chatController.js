@@ -5,20 +5,45 @@ const mongoose = require("mongoose");
 const {roles} = require('../roles/roles');
 const Conversation = require("../models/Conversation");
 const Message = require("../models/Message");
+const Student = require("../models/Student");
+const Advisor = require("../models/Advisor");
 
+
+//get all users the current user has conversation with
 const getConversations = async (req, res) => {
-    const { userID, userType } = req.body;
+    const userID = req.body.id;
+    const userType = req.body.userType;
+    console.log(userID);
+    console.log(userType);
+
     try {
+        let results = null;
+        let fieldToExtract = null;
+
         if (userType === roles.STUDENT) {
-            //get id,first name, and last name of advisor where student is equal to student ID
-    }
+            results = await Conversation.find({ student: userID })
+                .populate('advisor', '_id advisorFirstName advisorLastName')
+                .select('-_id -student');
+            fieldToExtract = 'advisor';
+        }
         else if (userType === roles.ADVISOR) {
-            //get id,first name, and last name of advisor where student is equal
-    }
+            results = await Conversation.find({ advisor: userID })
+                .populate('student', '_id studentFirstName studentLastName')
+                .select('-_id -advisor');
+            fieldToExtract = 'student';
+        }
+
+        if (!results || results.length === 0) {
+            return res.status(404).json({ message: 'No Conversations Found For User' });
+        }
+
+        // The populated fields should already contain the necessary information
+        const modifiedResponse = results.map(result => result[fieldToExtract]);
+        res.status(200).json(modifiedResponse);
     } catch (error) {
-        
+        console.error('Error:', error);
+        res.status(500).json({ message: error.message });
     }
-    
 };
 
 //might need to use regex
@@ -27,9 +52,12 @@ const searchUser = async (req, res) => {
         //if student:
         //search for advisors where the first name and advsior slightly match
         //return results as the advisorid, firstname, and last name
+        if (userType === roles.STUDENT) { }
+        else if(userType === roles.ADVISOR){}
         //else if advisor:
         //search for advisors where the first name and advsior slightly match
         //return results as the advisorid, firstname, and last name
+        //could update to handle case where not stydent or advisor
     } catch (error) {
         
     }
@@ -51,6 +79,7 @@ const saveMessage = async (req, res) => {
     //save message to db
     //will need senderId, receiverId, content, and convoId
 };
+module.exports = { getConversations };
 
 //create a function that creates convoId as student--advisor
 /*
