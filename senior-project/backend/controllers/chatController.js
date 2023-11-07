@@ -43,15 +43,20 @@ const getUsers = async (req, res) => {
 //get messages between two users
 const getMessages = async (req, res) => {
     //would need the sender and receiver
-    const sender = req.body.id;
-    const receiver = req.params.userID;
+    const currentUser = req.body.id;
+    const otherUser = req.params.userID;
     try {
         //check if request is empty
-        if (!sender || !receiver) {
+        if (!currentUser || !otherUser) {
             return res.status(400).json({ message: 'Please fill all fields' });
         }
         //if not empty get the messages
-        const messages = await Message.find({ $or: [{ sender }, { receiver }] }).sort({ createdAt: -1 });
+        const messages = await Message.find({
+            $or: [
+                { sender: currentUser, receiver: otherUser },
+                { sender: otherUser, receiver: currentUser },
+      ],
+        }).sort({ createdAt: -1 });
         //send back messages if there are any
         if (!messages || messages.length === 0) {
             return res.status(401).json({message:'No Messages Found'});
