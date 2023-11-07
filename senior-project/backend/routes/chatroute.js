@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
+
 const { roles } = require("../roles/roles");
 const { mockStudents, mockAdvisors } = require("../../test/users");
-const { getConversations } = require("../controllers/chatController");
+const { getUsers,searchUsers,getMessages,saveSentMessage} = require("../controllers/chatController");
 
 //To DO: change this to connecting to mysql
 //Validate and Santitize
@@ -11,6 +12,22 @@ const { getConversations } = require("../controllers/chatController");
 router.get("/chat", (req, res) => {
   res.send("Accessing chat page page");
 });
+
+//For current implementation
+
+//get users to chat with
+router.get("/chat/users", getUsers);
+
+//get users based on search
+router.post("/chat/search/", searchUsers);
+
+//get messages between users
+router.get("/chat/messages/:userID", getMessages);
+
+//send message and save it
+router.post("/chat/message", saveSentMessage);
+
+//for original implementation
 
 //test get list of users
 
@@ -29,7 +46,7 @@ router.get("/chat", (req, res) => {
 });*/
 
 //get list of people current user has conversation with
-router.get("/chat/conversations", getConversations);
+//router.get("/chat/conversations", getConversations);
 
 //test get messages between specified users
 /*router.get("/chat/:user1ID/:user2ID", (req, res) => {

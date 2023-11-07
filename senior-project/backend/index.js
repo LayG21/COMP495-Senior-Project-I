@@ -1,3 +1,4 @@
+//NOTE: Would have to change all requests to be done with express session
 //main entry point file
 //import dependencies
 const express = require("express");
@@ -28,7 +29,7 @@ console.log("Number of connections:", mongoose.connections.length);
 
 //set static folder
 //serve html,css, and js
-app.use(express.static(path.join(__dirname, "../frontend")));
+//app.use(express.static(path.join(__dirname, "../frontend")));
 
 //script to prepopulate data
 //prepopulateData();
