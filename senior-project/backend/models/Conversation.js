@@ -16,3 +16,21 @@ const conversationSchema = new mongoose.Schema({
 });
 const Conversation = mongoose.model('Conversation', conversationSchema);
 module.exports = Conversation;
+/*const conversationSchema = new mongoose.Schema({
+  conversationID: {
+    type: String,
+    required: true,
+  },
+  advisor:{
+    type: Number,
+    ref: 'Advisor',
+    required: true,
+  },
+  student:{
+    type: Number,
+    ref: 'Student',
+    required: true,
+  }
+});
+const Conversation = mongoose.model('Conversation', conversationSchema);
+module.exports = Conversation; */

@@ -55,7 +55,7 @@ const getMessages = async (req, res) => {
             $or: [
                 { sender: currentUser, receiver: otherUser },
                 { sender: otherUser, receiver: currentUser },
-      ],
+            ],
         }).sort({ createdAt: -1 });
         //send back messages if there are any
         if (!messages || messages.length === 0) {
@@ -105,7 +105,8 @@ const saveSentMessage = async (req, res) => {
 }
 
 
-
+//search through advisors if current user is a student
+//search through students if current user is advisor
 const searchUsers = async (req, res) => {
     const query = req.query.searchQuery;
 }
