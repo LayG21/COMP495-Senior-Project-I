@@ -2,12 +2,13 @@
 //main entry point file
 //import dependencies
 const express = require("express");
-const path = require("path");
+const app = express();
 const session = require('express-session');
 const http = require('http');
-const socketIO = require('socket.io');
-const app = express();
 const mongoose = require("mongoose");
+const socketIO = require('socket.io');
+const path = require("path");
+const server = http.createServer(app);
 
 //Port that is listening
 const PORT = process.env.PORT || 3000;
@@ -56,4 +57,6 @@ app.get("/", (req, res) => {
 
 //callback function after PORT
 //listening on port
-app.listen(PORT, () => console.log(`listening on port: ${PORT}`));
+server.listen(PORT, () => {
+  console.log(`listening on port: ${PORT}`)
+});
