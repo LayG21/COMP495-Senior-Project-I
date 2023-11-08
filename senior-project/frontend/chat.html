@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/nav.css" />
+    <link rel="stylesheet" href="./css/chat.css" />
+    <script src="./javascript/chat.js"></script>
+
+    <title>Chat Page</title>
+  </head>
+
+  <body>
+    <!--Navbar-->
+    <!--It is responsive-->
+    <header class="navbar">
+      <a class="logo" href="home.html">Aggie Advise</a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+      <nav>
+        <ul class="links">
+          <li><a class="nav-link" href="student-profile.html">Profile</a></li>
+          <li><a class="nav-link" href="advisor-profile.html">View</a></li>
+          <li><a class="nav-link" href="chat.html">Chat</a></li>
+          <li class="calc-links">
+            <a class="nav-link" href="#">Calculator &#x25BC;</a>
+            <ul class="dropdown" id="dropdown">
+              <li><a href="gpa-calculator.html">GPA Calculator</a></li>
+              <li>
+                <a href="course-calculator.html">Course Calculator</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a class="nav-link" href="class-generator.html">Class Generator</a
+            >
+          </li>
+          <li><a class="nav-link" href ="#">Logout</a></li>
+        </ul>
+      </nav>
+      <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
+    </header>
+
+    <!--Body of chat page-->
+    <main>
+      <div class="chat-container">
+        <div class="sidebar">
+          <div class="searchBars">
+            <h3>Search</h3>
+            <form action="">
+              <input
+                type="text"
+                class="searchfName"
+                id="searchfName"
+                placeholder="First Name"
+              />
+              <input
+                type="text"
+                id="searchlName"
+                class="searchlName"
+                placeholder="Last Name"
+              />
+              <input
+                type="email"
+                name=""
+                id="searchEmail"
+                class="searchEmail"
+                placeholder="Email"
+              />
+
+              <input
+                type="submit"
+                value="Chat"
+                id="start-chat"
+                class="start-chat"
+                onsubmit="startChat()"
+              />
+            </form>
+          </div>
+
+          <h3>Chats</h3>
+          <form action="">
+            <ul class="chat-list">
+              <li>
+                Student 1
+                <!-- <input type="submit" value="Open" id="start-chat" class="start-chat" onsubmit="startChat()">-->
+              </li>
+
+              <li>
+                Student 2
+                <!--<input type="submit" value="Open" id="start-chat" class="start-chat" onsubmit="startChat()">-->
+              </li>
+            </ul>
+          </form>
+        </div>
+        <div class="chat-window" id="chat-window">
+          <div class="chat-header">
+            <h4 id="receiver-name">Student 1</h4>
+            <button class="close-chat" onclick="closeChat()">X</button>
+          </div>
+          <div class="chat-messages">
+            <div class="message-received">
+              <p class="receiver-message">Hello</p>
+              <span class="timestamp">10:00 AM</span>
+              <p class="receiver-stamp">Student 1</p>
+            </div>
+            <div class="message-sent">
+              <p class="sender-message">Hi, how can I help you?</p>
+              <span class="timestamp">10:05 AM</span>
+              <p class="receiver-stamp">You</p>
+            </div>
+            <div class="message-received">
+              <p class="receiver-message">Hello</p>
+              <span class="timestamp">10:00 AM</span>
+              <p class="receiver-stamp">Student 1</p>
+            </div>
+            <div class="message-sent">
+              <p class="sender-message">Hi, how can I help you?</p>
+              <span class="timestamp">10:05 AM</span>
+              <p class="receiver-stamp">You</p>
+            </div>
+            <div class="message-received">
+              <p class="receiver-message">Hello</p>
+              <span class="timestamp">10:00 AM</span>
+              <p class="receiver-stamp">Student 1</p>
+            </div>
+            <div class="message-sent">
+              <p class="sender-message">Hi, how can I help you?</p>
+              <span class="timestamp">10:05 AM</span>
+              <p class="receiver-stamp">You</p>
+            </div>
+          </div>
+          <form class="chat-form">
+            <input
+              type="text"
+              class="text-message"
+              id="text-message"
+              placeholder="Type your message..."
+            />
+            <input
+              type="submit"
+              class="submit-btn"
+              id="submit-btn"
+              value="Send"
+            />
+          </form>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

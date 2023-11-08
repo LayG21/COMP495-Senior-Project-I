@@ -1,0 +1,38 @@
+CREATE TABLE Student(
+    studentID  INT PRIMARY KEY,
+    studentFirstName VARCHAR(50),
+    studentLastNAme VARCHAR(50),
+    studentEmail VARCHAR(50),
+    studentStatus VARCHAR(50),
+    studentClassification VARCHAR(50),
+    studentGPA DECIMAL(3,2),
+    studentPassword VARCHAR(50),
+    advisorID INT,
+    FOREIGN KEY(advisorID) REFERENCES Advisor(advisorID)
+
+);
+
+CREATE TABLE Advisor(
+    advisorID INT PRIMARY KEY,
+    depatmentName VARCHAR(50),
+    advisorFirstName VARCHAR(50),
+    advisorLastName VARCHAR(50),
+    advisorEmail VARCHAR(50),
+    advisorPassword VARCHAR(50)
+);
+
+CREATE TABLE Conversation(
+    convoID INT Primary KEY,
+    user1ID INT,
+    user2ID INT
+)
+
+CREATE TABLE Messages(
+    messageID INT PRIMARY KEY,
+    convoID INT,
+    content VARCHAR(100),
+    senderID INT,
+    receiverID INT,
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    FOREIGN KEY(convoID) REFERENCES Advisor(convoID)
+)

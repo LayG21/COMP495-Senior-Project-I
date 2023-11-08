@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="./css/login.css">
+    <title>Login Page</title>
+</head>
+
+<body>
+    <header>
+        <p class="logo" id="logo">Aggie Advise</p>
+    </header>
+    <div class="login-container">
+        <main>
+            <div class="login-form">
+                <form method ="post">
+                    <div>
+                        <h2>Log In</h2>
+                    </div>
+                    <!--The label should be ontop of the input box-->
+                    <label for="user-email">Enter Email:</label>
+                    <input type="email" class="user-email" id="user-email" name ="user-email" placeholder="Email" required>
+
+                    <label for="user-password">Enter Password:</label>
+                    <input type="password" class="user-password" id="user-password" name = "user-email"placeholder="Password" required>
+
+                    <label for="user-type">Select User Type:</label>
+                    <select class="user-type" id="user-type" required>
+                        <option value="" selected></option>
+                        <option value="Student">STUDENT</option>
+                        <option value="ADVISOR">ADVISOR</option>
+                    </select>
+                    <input type="submit" class="login-btn" value="Login">
+                </form>
+            </div>
+    </div>
+
+
+    </main>
+
+    </div>
+    </div>
+</body>
+
+</html>
