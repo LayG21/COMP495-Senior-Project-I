@@ -3,7 +3,7 @@ const roles = require("../roles/roles");
 
 //role middleware that should be applied to certain routes
 //based on role in session
-function routeRoles(req, res, next) {
+function routeRoles(req, res, next,input) {
     const userType = req.body.userType;
     
     //if user type needs to match Student
@@ -19,7 +19,9 @@ function routeRoles(req, res, next) {
         next();
     }
     else {
-        //throw an access error that states they do not have permission
+        //responsd that the user is forbidden access
+        return res.status(403).json({ message: "Forbidden Access" });
     }
 }
+
 module.export = { routeRoles };

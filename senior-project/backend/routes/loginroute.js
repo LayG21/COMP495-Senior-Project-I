@@ -40,7 +40,8 @@ function findAdvisor(advEmail, advPassword) {
   return found;
 }
 //get login page
-router.get("/login", (req, res) => {
+router.get("/", (req, res) => {
+  console.log(req);
   res.send("Accessing login page");
 });
 
@@ -48,7 +49,7 @@ router.get("/login", (req, res) => {
 //I tested the validation, authentication with mockdatabase in a test project
 //TO DO: add tested implmentation here
 
-router.post("/login", validateInput, (req, res) => {
+router.post("/", validateInput, (req, res) => {
   const userType = req.body.userType;
   const userEmail = req.body.userEmail;
   const userPassword = req.body.userPassword;
@@ -59,7 +60,7 @@ router.post("/login", validateInput, (req, res) => {
       console.log("User Email:", userEmail);
       console.log("User Password:", userPassword);
 
-      res.send("Found Student with valid credntials");
+      res.send("Login Successful.Found Student with valid credntials");
     } else if (
       userType === roles.ADVISOR &&
       findAdvisor(userEmail, userPassword)
@@ -69,7 +70,7 @@ router.post("/login", validateInput, (req, res) => {
       console.log("User Email:", userEmail);
       console.log("User Password:", userPassword);
 
-      res.send("Found Advisor with valid crdentials");
+      res.status(200).send("Found Advisor with valid crdentials");
     } else {
       throw new Error(
         "No existing user with these credentials. Make sure password,email, and userType are correct."

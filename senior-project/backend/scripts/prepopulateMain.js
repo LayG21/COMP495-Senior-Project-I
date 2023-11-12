@@ -1,13 +1,14 @@
-/*//Main script that runs prepopulation of data
+//Main script that runs prepopulation of data
 
 const populateStudents = require('./prepopulateStudent');
 const populateAdvisors = require('./prepopulateAdvisor');
+const populateClasses = require('./prepopulateClass');
 
 async function prepopulateData() {
   try {
-    // You can control the order of execution or run in parallel as needed
     await populateAdvisors();
     await populateStudents();
+    await populateClasses();
 
     console.log('Data prepopulation completed successfully');
   } catch (error) {
@@ -21,4 +22,3 @@ if (require.main === module) {
 }
 
 module.exports = prepopulateData;
-*/

@@ -13,7 +13,7 @@ router.get("/advisor", (req, res) => {
 });
 
 //get all assigned students
-router.get("/advisor/:id", getStudents);
+router.get("/advisor/:id", routeRoles(ADVISOR),getStudents);
 /*(req, res) => {
   const advisorID = parseInt(req.params.id);
   const students = [];

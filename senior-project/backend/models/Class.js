@@ -7,7 +7,9 @@ const classSchema = new mongoose.Schema({
     },
     ClassID: {
         type: Number,
-        required:true,
+        unique: true,
+        required: true,
+    
     },
     ClassName: {
         type: String,

@@ -9,18 +9,18 @@ const Student = require("../models/Student");
 const Advisor = require("../models/Advisor");
 
 /* For Current Idea */
-
+//get list of advisor or students based on current user type
 const getUsers = async (req, res) => {
     const userType = req.body.userType;
     let results = null;
     try {
         //get users based on current user role
         if (userType === roles.STUDENT) {
-            results = await Advisor.find({}).select('_id advisorFirstName advisorLastName');
+            results = await Advisor.find({}).select('-_id advisorID advisorFirstName advisorLastName');
             //console.log(results);
         }
         else if (userType === roles.ADVISOR) {
-            results = await Student.find({}).select('_id studentFirstName studentLastName');
+            results = await Student.find({}).select('-_id studentID studentFirstName studentLastName');
             //console.log(results);
         }
         //check if they are neither role or if role is empty
@@ -53,10 +53,10 @@ const getMessages = async (req, res) => {
         //if not empty get the messages
         const messages = await Message.find({
             $or: [
-                { sender: currentUser, receiver: otherUser },
-                { sender: otherUser, receiver: currentUser },
+                { senderID: currentUser, receiverID: otherUser },
+                { senderID: otherUser, receiverID: currentUser },
             ],
-        }).sort({ createdAt: -1 });
+        }).select('-_id').sort({ createdAt: -1 });
         //send back messages if there are any
         if (!messages || messages.length === 0) {
             return res.status(401).json({message:'No Messages Found'});
@@ -85,8 +85,8 @@ const saveSentMessage = async (req, res) => {
         }
         //create new message object to be saved in db
         data = {
-            sender,
-            receiver,
+            senderID:sender,
+            receiverID:receiver,
             content,
         }
         //save message to database

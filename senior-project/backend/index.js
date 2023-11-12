@@ -14,7 +14,7 @@ const server = http.createServer(app);
 const PORT = process.env.PORT || 3000;
 
 //Script to populate database
-//const prepopulateData = require('../senior-project/backend/scripts/prepopulateMain');
+//const prepopulateData = require('./scripts/prepopulateMain');
 
 app.use(express.json());  //lets server accept json
 app.use(express.urlencoded({ extended: false }));
@@ -30,7 +30,7 @@ console.log("Number of connections:", mongoose.connections.length);
 
 //set static folder
 //serve html,css, and js
-//app.use(express.static(path.join(__dirname, "../frontend")));
+app.use(express.static(path.join(__dirname, "../frontend")));
 
 //script to prepopulate data
 //prepopulateData();
@@ -50,7 +50,7 @@ app.use("/", advisorRoutes);
 app.use("/", studentRoutes);
 
 //home page route
-app.get("/", (req, res) => {
+app.get("/home", (req, res) => {
   res.send("Welcome");
 });
 

@@ -1,14 +1,15 @@
-/*//imports
+//imports
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const Advisor = require('../models/Advisor');
 
-//Prepopulate data wit schema
+//Prepopulate data with schema
 async function populateAdvisors() {
   try {
     const advisorsData = [
         // Insert advisor data as needed
         {
-            _id: 950484712,
+            advisorID: 950484712,
             advisorFirstName: "John",
             advisorLastName: "Doe",
             advisorEmail: "jd@ncat.edu",
@@ -16,14 +17,34 @@ async function populateAdvisors() {
             departmentName:"COMPUTER SCIENCE",
         },
         {
-            _id: 950400712,
+            advisorID: 950400712,
             advisorFirstName: "John",
-            advisorLastName: "Kellt",
+            advisorLastName: "Kelly",
             advisorEmail: "jk@ncat.edu",
             advisorPassword: "password",
             departmentName:"COMPUTER SCIENCE",
-        }
+      },
+      {
+            advisorID: 950500555,
+            advisorFirstName: "Randy",
+            advisorLastName: "Bill",
+            advisorEmail: "rb@ncat.edu",
+            advisorPassword: "password",
+            departmentName:"COMPUTER SCIENCE"
+      },
+      {
+            advisorID: 950900111,
+            advisorFirstName: "Mariah",
+            advisorLastName: "Green",
+            advisorEmail: "mg@ncat.edu",
+            advisorPassword: "password",
+            departmentName:"COMPUTER SCIENCE"
+      }
     ];
+    const saltRounds = 10;
+    advisorsData.forEach(advisor => {
+      advisor.advisorPassword = bcrypt.hashSync(advisor.advisorPassword, saltRounds);
+    });
 
     await Advisor.insertMany(advisorsData);
     console.log('Advisors data inserted successfully');
@@ -38,4 +59,3 @@ if (require.main === module) {
 }
 
 module.exports = populateAdvisors;
-*/
