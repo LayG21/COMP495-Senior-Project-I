@@ -1,64 +1,27 @@
 //imports
 const express = require("express");
 const router = express.Router();
-const { routeRoles } = require("../middleware/rolemiddleware");
-const { getStudents,getSpecificStudent} = require("../controllers/advisorControlleer");
+const { roleMiddleware, isAuthorized } = require("../middleware/authorizationMiddleware");
+const { roles } = require("../roles/roles");
+const { getStudents, getSpecificStudent } = require("../controllers/advisorControlleer");
+const path = require('path');
+
+//DONE SO FAR:
+//Tested route calls after applying role middleware
 
 //To DO: 
 //Validate and Santitize
+//Eventually change to working with express session
 
-//test get page
-router.get("/advisor", (req, res) => {
-  res.send("Accessing advisor view page");
+//get page
+router.get("/", (req, res) => {
+  return res.sendFile("/Users/ladylynai/COMP495-Senior-Project-I/senior-project/frontend/advisor.html");
 });
 
 //get all assigned students
-router.get("/advisor/:id", routeRoles(ADVISOR),getStudents);
-/*(req, res) => {
-  const advisorID = parseInt(req.params.id);
-  const students = [];
-  //look through student table
-  for (let x = 0; x < mockStudents.length; x++) {
-    if (mockStudents[x].advisorId === advisorID) {
-      students.push(mockStudents[x]);
-    }
-  }
-  //if students found with matching advisorID
-  if (students.length > 0) {
-    res.send(students);
-  } else {
-    res.send("No students found with matching advisorID");
-  }
-  console.log(req.params.id);
-});*/
+router.get("/students", isAuthorized([roles.ADVISOR]), getStudents);
 
-//get specific student by id
-router.get("/advisor/:id/:studentID", getSpecificStudent)
-  /*(req, res) => {
-  const advisorID = parseInt(req.params.id);
-  const studentID = parseInt(req.params.studentID);
-
-  let selectedStudent = [];
-  for (let x = 0; x < mockStudents.length; x++) {
-    if (
-      mockStudents[x].advisorId === advisorID &&
-      mockStudents[x].id === studentID
-    ) {
-      selectedStudent.push(mockStudents[x]);
-      break;
-    }
-  }
-
-  if (selectedStudent.length > 0) {
-    res.send(selectedStudent);
-  } else {
-    res.send("No such student found.");
-  }
-  console.log(`Student: ${studentID} and advisor Id: ${advisorID}`);
-  // res.send("This is the response for getting a specific student");
-});*/
-//console.log(mockStudents.length);
-//console.log(mockAdvisors.length);
-//console.log(mockStudents[0].advisorId);
+//get specific assigned student by id
+router.get("/students/:studentID", isAuthorized([roles.ADVISOR]), getSpecificStudent);
 
 module.exports = router;

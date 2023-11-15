@@ -1,28 +1,30 @@
 const express = require("express");
 const router = express.Router();
-
 const { roles } = require("../roles/roles");
-const { mockStudents, mockAdvisors } = require("../../test/users");
-const { getUsers,searchUsers,getMessages,saveSentMessage} = require("../controllers/chatController");
+const { getUsers, searchUsers, getMessages, saveSentMessage } = require("../controllers/chatController");
+const path = require('path');
 
 //To DO: change this to connecting to mysql
 //Validate and Santitize
 
 //get page
-router.get("/chat", (req, res) => {
-  res.send("Accessing chat page page");
+//have to protect html page
+router.get("/", (req, res) => {
+  const absolutePath = path.join(__dirname, '../../frontend/chat.html');
+  // If the user is authenticated and has the necessary role, send the HTML file
+  res.sendFile(absolutePath);
 });
 
 //For current implementation
 
 //get users to chat with
-router.get("/chat/users", getUsers);
+router.get("/users", getUsers);
 
 //get users based on search
 router.post("/chat/search/", searchUsers);
 
 //get messages between users
-router.get("/chat/messages/:userID", getMessages);
+router.get("/messages/:userID", getMessages);
 
 //send message and save it
 router.post("/chat/message", saveSentMessage);

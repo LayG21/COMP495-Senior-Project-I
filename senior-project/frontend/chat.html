@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="./css/nav.css" />
     <link rel="stylesheet" href="./css/chat.css" />
     <script src="./javascript/chat.js"></script>
+    <!--Create socket io connection to server-->
+   <!--<script src="/socket.io/socket.io.js"></script>--> 
 
     <title>Chat Page</title>
   </head>
@@ -18,8 +20,8 @@
       <input type="checkbox" id="nav-toggle" class="nav-toggle" />
       <nav>
         <ul class="links">
-          <li><a class="nav-link" href="student-profile.html">Profile</a></li>
-          <li><a class="nav-link" href="advisor-profile.html">View</a></li>
+          <li data-role="student"><a class="nav-link" href="student.html">Profile</a></li>
+          <li data-role="advisor"><a class="nav-link" href="advisor.html">View</a></li>
           <li><a class="nav-link" href="chat.html">Chat</a></li>
           <li class="calc-links">
             <a class="nav-link" href="#">Calculator &#x25BC;</a>
@@ -30,7 +32,7 @@
               </li>
             </ul>
           </li>
-          <li>
+          <li data-role="student">
             <a class="nav-link" href="class-generator.html">Class Generator</a
             >
           </li>
@@ -41,108 +43,46 @@
     </header>
 
     <!--Body of chat page-->
-    <main>
-      <div class="chat-container">
-        <div class="sidebar">
-          <div class="searchBars">
-            <h3>Search</h3>
-            <form action="">
-              <input
-                type="text"
-                class="searchfName"
-                id="searchfName"
-                placeholder="First Name"
-              />
-              <input
-                type="text"
-                id="searchlName"
-                class="searchlName"
-                placeholder="Last Name"
-              />
-              <input
-                type="email"
-                name=""
-                id="searchEmail"
-                class="searchEmail"
-                placeholder="Email"
-              />
-
-              <input
-                type="submit"
-                value="Chat"
-                id="start-chat"
-                class="start-chat"
-                onsubmit="startChat()"
-              />
-            </form>
-          </div>
-
-          <h3>Chats</h3>
-          <form action="">
-            <ul class="chat-list">
-              <li>
-                Student 1
-                <!-- <input type="submit" value="Open" id="start-chat" class="start-chat" onsubmit="startChat()">-->
-              </li>
-
-              <li>
-                Student 2
-                <!--<input type="submit" value="Open" id="start-chat" class="start-chat" onsubmit="startChat()">-->
-              </li>
-            </ul>
-          </form>
+    <main class="chat-container">
+      <!--Sidebar-->
+      <div class="sidebar">
+        <!--Search Bar-->
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Search.." name="search">
         </div>
-        <div class="chat-window" id="chat-window">
-          <div class="chat-header">
-            <h4 id="receiver-name">Student 1</h4>
-            <button class="close-chat" onclick="closeChat()">X</button>
+        <!--List of users to select from-->
+        <div class="user-list">
+          <h3>Users:</h3>
+          <ul class="users">
+            <li>
+              <span>User 1</span>
+            </li>
+          </ul>
+      </div>
+    </div>
+      <!--Chat Window-->
+      <div class="chat-window">
+
+        <!--Chat Header-->
+        <div class="chat-header">
+          <span id=" user-name">Jane Doe</span>
+          <button id="close-button">Close</button>
+        </div>
+
+        <!--Chat Body-->
+        <div class="chat-body">
+          <!--Chat Messages-->
+          <div class="messages">
+            <p>Hi, how can I help you?</p>
           </div>
-          <div class="chat-messages">
-            <div class="message-received">
-              <p class="receiver-message">Hello</p>
-              <span class="timestamp">10:00 AM</span>
-              <p class="receiver-stamp">Student 1</p>
+          <div class="messages">
             </div>
-            <div class="message-sent">
-              <p class="sender-message">Hi, how can I help you?</p>
-              <span class="timestamp">10:05 AM</span>
-              <p class="receiver-stamp">You</p>
-            </div>
-            <div class="message-received">
-              <p class="receiver-message">Hello</p>
-              <span class="timestamp">10:00 AM</span>
-              <p class="receiver-stamp">Student 1</p>
-            </div>
-            <div class="message-sent">
-              <p class="sender-message">Hi, how can I help you?</p>
-              <span class="timestamp">10:05 AM</span>
-              <p class="receiver-stamp">You</p>
-            </div>
-            <div class="message-received">
-              <p class="receiver-message">Hello</p>
-              <span class="timestamp">10:00 AM</span>
-              <p class="receiver-stamp">Student 1</p>
-            </div>
-            <div class="message-sent">
-              <p class="sender-message">Hi, how can I help you?</p>
-              <span class="timestamp">10:05 AM</span>
-              <p class="receiver-stamp">You</p>
-            </div>
-          </div>
-          <form class="chat-form">
-            <input
-              type="text"
-              class="text-message"
-              id="text-message"
-              placeholder="Type your message..."
-            />
-            <input
-              type="submit"
-              class="submit-btn"
-              id="submit-btn"
-              value="Send"
-            />
-          </form>
+        </div>
+
+        <!--Chat Footer-->
+        <div class="chat-footer">
+          <input id="chat-input"type="text" placeholder="Type Message...">
+          <button onclick="sendMessage()">Send</button>
         </div>
       </div>
     </main>

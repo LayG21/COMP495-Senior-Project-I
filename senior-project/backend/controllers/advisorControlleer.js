@@ -6,9 +6,9 @@ const Advisor = require("../models/Advisor");
 
 //get page
 
-//get list of students
+//get list of assigned students
 const getStudents = async (req, res) => {
-  const advisorID = parseInt(req.params.id);
+  const advisorID = parseInt(req.body.id);
 
   try {
     const assignedStudents = await Student.aggregate([
@@ -61,12 +61,9 @@ const getStudents = async (req, res) => {
 
 
 
-
-
-
-//get specific student
+//get specific assigned  student
 const getSpecificStudent = async (req, res) => {
-  const advisorID = parseInt(req.params.id);
+  const advisorID = parseInt(req.body.id);
   const studentID = parseInt(req.params.studentID);
 
   try {
@@ -123,50 +120,48 @@ const getSpecificStudent = async (req, res) => {
 Example Response getstudents:
 [
     {
-        "_id": 950409667,
-        "studentFirstName": "Jordan",
-        "studentLastName": "Mozebo",
-        "studentEmail": "jtmozebo@aggies.ncat.edu",
-        "studentPassword": "password",
+        "studentID": 950505789,
+        "studentFirstName": "Lisa",
+        "studentLastName": "Wade",
+        "studentEmail": "lwade@aggies.ncat.edu",
         "studentStatus": "Full-Time",
         "studentClassification": "Senior",
-        "studentGPA": 3.3,
-        "advisor": 950484712,
-        "__v": 0
+        "studentGPA": 3.4,
+        "advisorFirstName": "Mariah",
+        "advisorLastName": "Green",
+        "advisorEmail": "mg@ncat.edu"
     },
     {
-        "_id": 950777614,
-        "studentFirstName": "Tina",
-        "studentLastName": "Mary",
-        "studentEmail": "tmmozebo@aggies.ncat.edu",
-        "studentPassword": "password",
+        "studentID": 950705799,
+        "studentFirstName": "Jade",
+        "studentLastName": "Jackson",
+        "studentEmail": "jjackson@aggies.ncat.edu",
         "studentStatus": "Full-Time",
         "studentClassification": "Senior",
-        "studentGPA": 3.2,
-        "advisor": 950484712,
-        "__v": 0
+        "studentGPA": 3.4,
+        "advisorFirstName": "Mariah",
+        "advisorLastName": "Green",
+        "advisorEmail": "mg@ncat.edu"
     }
 ]
  */
 
 /*
 Example Response get specific student:
-{
-    "_id": 950409667,
-    "studentFirstName": "Jordan",
-    "studentLastName": "Mozebo",
-    "studentEmail": "jtmozebo@aggies.ncat.edu",
-    "studentStatus": "Full-Time",
-    "studentClassification": "Senior",
-    "studentGPA": 3.3,
-    "advisor": {
-        "_id": 950484712,
-        "advisorFirstName": "John",
-        "advisorLastName": "Doe",
-        "advisorEmail": "jd@ncat.edu"
-    },
-    "__v": 0
-}
+[
+    {
+        "studentID": 950705799,
+        "studentFirstName": "Jade",
+        "studentLastName": "Jackson",
+        "studentEmail": "jjackson@aggies.ncat.edu",
+        "studentStatus": "Full-Time",
+        "studentClassification": "Senior",
+        "studentGPA": 3.4,
+        "advisorFirstName": "Mariah",
+        "advisorLastName": "Green",
+        "advisorEmail": "mg@ncat.edu"
+    }
+]
  */
 
 

@@ -1,85 +1,86 @@
 const express = require("express");
 const router = express.Router();
-
+const Student = require("../models/Student");
+const Advisor = require("../models/Advisor");
 const { validateInput } = require("../middleware/loginvalidate");
+const bcrypt = require('bcrypt');
 const { roles } = require("../roles/roles");
-const { mockStudents, mockAdvisors } = require("../../test/users");
+const path = require('path');
 
-//To DO: change this to connecting to mysql
-//Validate and Santitize
+//To DO: change this to connecting to mongodb
+//Validate and Santitize user input
 
-//test for querying mockdatabases
-function findStudent(stuEmail, stuPassword) {
-  let found = false;
-  for (let x = 0; x < mockStudents.length; x++) {
-    if (
-      mockStudents[x].email === stuEmail &&
-      mockStudents[x].password === stuPassword
-    ) {
-      found = true;
-      break;
-    } else {
-      continue;
-    }
-  }
-  return found;
-}
-function findAdvisor(advEmail, advPassword) {
-  let found = false;
-  for (let x = 0; x < mockAdvisors.length; x++) {
-    if (
-      mockAdvisors[x].email === advEmail &&
-      mockAdvisors[x].password === advPassword
-    ) {
-      found = true;
-      break;
-    } else {
-      continue;
-    }
-  }
-  return found;
-}
+//have to protect html page and requests made
+//if they do not have a session or required role, they shouldn't be able to make a request so they can not send or put in data
 //get login page
 router.get("/", (req, res) => {
-  console.log(req);
-  res.send("Accessing login page");
+  const absolutePath = path.join(__dirname, '../../frontend/index.html');
+  // If the user is authenticated and has the necessary role, send the HTML file
+  res.sendFile(absolutePath);
+
 });
 
 //auth process
 //I tested the validation, authentication with mockdatabase in a test project
 //TO DO: add tested implmentation here
 
-router.post("/", validateInput, (req, res) => {
-  const userType = req.body.userType;
-  const userEmail = req.body.userEmail;
-  const userPassword = req.body.userPassword;
+router.post('/', validateInput, async (req, res) => {
+  const role = req.body.userType;
+  const email = req.body.userEmail;
+  const password = req.body.userPassword;
+
   try {
-    if (userType === roles.STUDENT && findStudent(userEmail, userPassword)) {
-      //print out user info if thre is a match
-      console.log("User Type:", userType);
-      console.log("User Email:", userEmail);
-      console.log("User Password:", userPassword);
+    if (userType === roles.STUDENT) {
+      // Perform authentication logic for student
+      // Example: Check user credentials in the database
+      const student = await Student.findOne({ studentEmail: email });
 
-      res.send("Login Successful.Found Student with valid credntials");
-    } else if (
-      userType === roles.ADVISOR &&
-      findAdvisor(userEmail, userPassword)
-    ) {
-      //print out user info if there is a match
-      console.log("User Type:", userType);
-      console.log("User Email:", userEmail);
-      console.log("User Password:", userPassword);
-
-      res.status(200).send("Found Advisor with valid crdentials");
-    } else {
-      throw new Error(
-        "No existing user with these credentials. Make sure password,email, and userType are correct."
+      const isPasswordValid = await bcrypt.compare(
+        password,
+        student.studentPassword
       );
+
+      // Assuming successful login, set user information in the session
+      const user = {
+        id: student.studentID,
+        firstName: student.studentFirstName,
+        lastName: student.studentLastName,
+        role: roles.STUDENT,
+      };
+
+      req.session.user = user;
+
+      res.send('Login Successful. Found Student with valid credentials');
+    } else if (userType === roles.ADVISOR) {
+      // Perform authentication logic for advisor
+      // Example: Check advisor credentials in the database
+      const advisor = await Advisor.findOne({ advisorEmail: email });
+
+      const isPasswordValid = await bcrypt.compare(
+        password,
+        advisor.advisorPassword
+      );
+
+      // Assuming successful login, set user information in the session
+      const user = {
+        id: advisor.advisorID,
+        firstName: advisor.advisorFirstName,
+        lastName: advisor.advisorLastName,
+        role: roles.ADVISOR,
+      };
+
+      req.session.user = user;
+
+      res.status(200).send('Found Advisor with valid credentials');
+    } else {
+      // Handle other user types or invalid cases
     }
   } catch (error) {
-    console.error("Error:", error.message);
-    res.status(400).send("Bad Request");
+    console.error('Error:', error.message);
+    res.status(400).send('Bad Request');
   }
 });
+
+
 
 module.exports = router;
