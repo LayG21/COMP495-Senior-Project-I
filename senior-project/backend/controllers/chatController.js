@@ -62,7 +62,7 @@ const getMessages = async (req, res) => {
         }).select('-_id').sort({ createdAt: -1 });
         //send back messages if there are any
         if (!messages || messages.length === 0) {
-            return res.status(401).json({ message: 'No Messages Found' });
+            return res.status(404).json({ message: 'No Messages Found' });
         }
         return res.status(200).json(messages);
 
@@ -76,7 +76,9 @@ const getMessages = async (req, res) => {
 //Will change this to work with socket io
 const saveSentMessage = async (req, res) => {
     //need sender,receiver, and content
-    const { sender, receiver, content } = req.body;
+    const sender = req.session.user.id;
+    const receiver = req.body.receiver;
+    const content = req.body.content;
     let data = {};
     try {
         //check if request is empty
@@ -113,6 +115,9 @@ const searchUsers = async (req, res) => {
 }
 //socket io logic for sending and receiving messages
 const initializeSocketIO = (io, sessionMiddleware) => {
+    // Socket.IO connection setup with session middleware
+    io.engine.use(sessionMiddleware);
+
     io.on('connection', (socket) => {
         console.log(`User ${socket.id} connected`);
         socket.on('disconnect', () => {
