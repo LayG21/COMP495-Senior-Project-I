@@ -1,72 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home Page</title>
 
-    <link rel="stylesheet" href="./css/nav.css" />
-    <link rel="stylesheet" href="./css/home.css" type="text/css" />
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home Page</title>
 
-  <body>
-    <header class="navbar">
-      <a class="logo" href="home.html">Aggie Advise</a>
-      <input type="checkbox" id="nav-toggle" class="nav-toggle" />
-      <nav>
-        <ul class="links">
-          <li><a class="nav-link" href="student-profile.html">Profile</a></li>
-          <li><a class="nav-link" href="advisor-profile.html">View</a></li>
-          <li><a class="nav-link" href="chat.html">Chat</a></li>
-          <li class="calc-links">
-            <a class="nav-link" href="#">Calculator &#x25BC;</a>
-            <ul class="dropdown" id="dropdown">
-              <li><a href="gpa-calculator.html">GPA Calculator</a></li>
-              <li>
-                <a href="course-calculator.html">Course Calculator</a>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <a class="nav-link" href="class-generator.html">Class Generator</a
-            >
-          </li>
-          <li><a class="nav-link" href ="#">Logout</a></li>
-        </ul>
-      </nav>
-      <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
-    </header>
-    <!--stack divs ontop of each other for responsive layout and side by side for desktop-->
-    <main class="container">
-      <div class="left-column">
-        <h1 class="head">Welcome To Aggie Advise</h1>
-        <h3 class="sub-heading">
-          Streamlining academic advising for student success
-        </h3>
-        <p class="home-context">
-          A page meant to make it easier to get advising done. Our page is based
-          on students and advisors not being able to have contact except through
-          email. However with issues like junk mail, initial contact can be
-          difficult to achieve. This is where Aggie Advise comes in. We created
-          this page with the idea of achieving intial contact. We even have
-          other components that can be used in jump starting the advising
-          process.
-        </p>
-        <p class="home-context">Start With:</p>
-        <button><a href="gpa-calculator.html">Our GPA Calculator</a></button>
-        <button>
-          <a href="course-calculator.html">Our Course Calculator</a>
-        </button>
-        <p id="or">OR</p>
-        <button><a href="class-generator.html">Our Class Generator</a></button>
-      </div>
-      <div class="right-column">
-        <img
-          class="clock-tower"
-          src="./img/home-image.jpeg"
-          alt="home page picture of a student"
-        />
-      </div>
-    </main>
-  </body>
+  <link rel="stylesheet" href="./css/nav.css" />
+  <link rel="stylesheet" href="./css/home.css" type="text/css" />
+
+</head>
+
+<body>
+  <header class="navbar">
+    <a class="logo" href="home.html">Aggie Advise</a>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+    <nav>
+      <ul class="links">
+        <li><a class="nav-link" href="student-profile.html">Profile</a></li>
+        <li><a class="nav-link" href="advisee-view.html">View</a></li>
+        <li><a class="nav-link" href="chat.html">Chat</a></li>
+        <li class="calc-links">
+          <a class="nav-link" href="#">Calculator &#x25BC;</a>
+          <ul class="dropdown" id="dropdown">
+            <li><a href="gpa-calculator.html">GPA Calculator</a></li>
+            <li>
+              <a href="course-calculator.html">Course Calculator</a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <a class="nav-link" href="class-generator.html">Class Generator</a>
+        </li>
+        <li><a class="nav-link" id="logout-link" href="#">Logout</a></li>
+      </ul>
+    </nav>
+    <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
+  </header>
+  <!--stack divs ontop of each other for responsive layout and side by side for desktop-->
+  <main class="container">
+    <div class="left-column">
+      <h1 class="head">Welcome To Aggie Advise</h1>
+      <h3 class="sub-heading">
+        Streamlining academic advising for student success
+      </h3>
+      <p class="home-context">
+        A page meant to make it easier to get advising done. Our page is based
+        on students and advisors not being able to have contact except through
+        email. However with issues like junk mail, initial contact can be
+        difficult to achieve. This is where Aggie Advise comes in. We created
+        this page with the idea of achieving intial contact. We even have
+        other components that can be used in jump starting the advising
+        process.
+      </p>
+      <p class="home-context">Start With:</p>
+      <button><a href="gpa-calculator.html">Our GPA Calculator</a></button>
+      <button>
+        <a href="course-calculator.html">Our Course Calculator</a>
+      </button>
+      <p id="or">OR</p>
+      <button><a href="class-generator.html">Our Class Generator</a></button>
+    </div>
+    <div class="right-column">
+      <img class="clock-tower" src="./img/home-image.jpeg" alt="home page picture of a student" />
+    </div>
+  </main>
+  <script src="./javascript/logout.js"></script>
+</body>
+
 </html>

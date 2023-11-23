@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 //not sure what to do about that
 
 const advisorSchema = new mongoose.Schema({
-  _id: {
+  advisorID: {
     type: Number,
     required: true,
     unique: true,

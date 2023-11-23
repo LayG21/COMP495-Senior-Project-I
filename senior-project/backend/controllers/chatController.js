@@ -2,30 +2,33 @@
 //imports
 const express = require("express");
 const mongoose = require("mongoose");
-const {roles} = require('../roles/roles');
+const { roles } = require('../roles/roles');
 //const Conversation = require("../models/Conversation");
 const Message = require("../models/Message");
 const Student = require("../models/Student");
 const Advisor = require("../models/Advisor");
 
-/* For Current Idea */
+//Stored users with sockets
+const userSockets = new Map();
 
+/* For Current Idea */
+//get list of advisor or students based on current user type
 const getUsers = async (req, res) => {
-    const userType = req.body.userType;
+    const userType = req.session.user.role;
     let results = null;
     try {
         //get users based on current user role
         if (userType === roles.STUDENT) {
-            results = await Advisor.find({}).select('_id advisorFirstName advisorLastName');
+            results = await Advisor.find({}).select('-_id advisorID advisorFirstName advisorLastName');
             //console.log(results);
         }
         else if (userType === roles.ADVISOR) {
-            results = await Student.find({}).select('_id studentFirstName studentLastName');
+            results = await Student.find({}).select('-_id studentID studentFirstName studentLastName');
             //console.log(results);
         }
         //check if they are neither role or if role is empty
-        else if (userType !== roles.STUDENT || userType !== roles.ADVISOR || userType === null) {
-            return res.status(401).json({msg: "Invalid User Type"});
+        else if (!userType || (userType !== roles.STUDENT && userType !== roles.ADVISOR)) {
+            return res.status(401).json({ msg: "Invalid User Type" });
         }
         //check if anything was found
         if (!results || results.length === 0) {
@@ -36,45 +39,42 @@ const getUsers = async (req, res) => {
     } catch (error) {
         //error Message
         console.error(error);
-        return res.status(500).json({ message:'An error occured.' });
+        return res.status(500).json({ message: 'An error occured.' });
     }
 }
 
 //get messages between two users
 const getMessages = async (req, res) => {
     //would need the sender and receiver
-    const currentUser = req.body.id;
-    const otherUser = req.params.userID;
+    const currentUser = req.session.user.id;
+    const selectedUser = req.params.userID;
     try {
         //check if request is empty
-        if (!currentUser || !otherUser) {
+        if (!currentUser || !selectedUser) {
             return res.status(400).json({ message: 'Please fill all fields' });
         }
         //if not empty get the messages
         const messages = await Message.find({
             $or: [
-                { sender: currentUser, receiver: otherUser },
-                { sender: otherUser, receiver: currentUser },
+                { senderID: currentUser, receiverID: selectedUser },
+                { senderID: selectedUser, receiverID: currentUser },
             ],
-        }).sort({ createdAt: -1 });
+        }).select('-_id').sort({ createdAt: -1 });
         //send back messages if there are any
         if (!messages || messages.length === 0) {
-            return res.status(401).json({message:'No Messages Found'});
+            return res.status(401).json({ message: 'No Messages Found' });
         }
         return res.status(200).json(messages);
-        
+
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message:'An Error Occured'});
+        return res.status(500).json({ message: 'An Error Occured' });
     }
-   
-
-
-    
 }
 
 //save sent messages
-const saveSentMessage = async (req, res) => { 
+//Will change this to work with socket io
+const saveSentMessage = async (req, res) => {
     //need sender,receiver, and content
     const { sender, receiver, content } = req.body;
     let data = {};
@@ -85,8 +85,8 @@ const saveSentMessage = async (req, res) => {
         }
         //create new message object to be saved in db
         data = {
-            sender,
-            receiver,
+            senderID: sender,
+            receiverID: receiver,
             content,
         }
         //save message to database
@@ -94,9 +94,9 @@ const saveSentMessage = async (req, res) => {
 
         //check if message was successfully saved
         if (!newMessage) {
-            return res.status(500).json({message:'Failed to save message.'})
+            return res.status(500).json({ message: 'Failed to save message.' })
         }
-        return res.status(200).json({ success: true, newMessage});
+        return res.status(200).json({ success: true, newMessage });
 
     } catch (error) {
         console.error(error);
@@ -109,8 +109,22 @@ const saveSentMessage = async (req, res) => {
 //search through students if current user is advisor
 const searchUsers = async (req, res) => {
     const query = req.query.searchQuery;
+
 }
-module.exports = { getUsers,searchUsers,getMessages,saveSentMessage};
+//socket io logic for sending and receiving messages
+const initializeSocketIO = (io, sessionMiddleware) => {
+    io.on('connection', (socket) => {
+        console.log(`User ${socket.id} connected`);
+        socket.on('disconnect', () => {
+            console.log(`User ${socket.id} disconnected`);
+        });
+    });
+}
+
+/*io.on('connection', (socket) => {
+    console.log('a user connected');
+});*/
+module.exports = { getUsers, searchUsers, getMessages, saveSentMessage, initializeSocketIO };
 
 
 /*
@@ -165,7 +179,7 @@ const searchUser = async (req, res) => {
         //return results as the advisorid, firstname, and last name
         //could update to handle case where not stydent or advisor
     } catch (error) {
-        
+
     }
 };
 const openConversation = async (req, res) => {
@@ -175,9 +189,9 @@ const openConversation = async (req, res) => {
     //If there is no previous conversation, create a new conversation
 
     try {
-        
+
     } catch (error) {
-        
+
     }
 };
 

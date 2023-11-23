@@ -7,3 +7,9 @@
 - separated the routes
 - originally tested the current pages and 
 i was able to render the pages even after changing the url
+
+-installed mongoose for connecting to mongodb
+-tested calls to database for student profiile and advisor page
+-installed jest for unit testing
+-I was abe to change the queries to allow the use of custom ids. However, since the custom ids are not _id or object id. 
+Some of the refrences are not allowed to be used with populate beccause it will try to use _id or an objectid

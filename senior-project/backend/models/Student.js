@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 //not sure what to do about that
 
 const studentSchema = new mongoose.Schema({
-  _id: {
+  studentID: {
     type: Number,
     required: true,
     unique: true,
@@ -37,7 +37,7 @@ const studentSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  advisor: {
+  advisorID: {
     type: Number,
     ref: 'Advisor',
     required: true,
