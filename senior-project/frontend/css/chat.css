@@ -1,5 +1,7 @@
 /*change chat page and container to not be all the way at bottom and to fit screen*/
 
+/*Style for chat page*/
+
 html,
 body {
   height: 100%;

@@ -1,3 +1,4 @@
+//File used by each html page to logout the user
 var logoutLink = document.getElementById('logout-link');
 
 // Add a click event listener to the "Logout" link

@@ -13,10 +13,12 @@ const { Server } = require('socket.io');
 const server = http.createServer(app);
 const io = new Server(server);
 
+//import list of roles
+const { roles } = require("./roles/roles.js");
 
 //import middleware 
 //middleware to protect routes
-const { roles } = require("./roles/roles.js");
+
 const { isAuthenticated } = require("./middleware/authenticationMiddleware.js");
 const { isAuthorized } = require("./middleware/authorizationMiddleware.js");
 
@@ -57,6 +59,7 @@ const sessionMiddleware = session({
   saveUninitialized: true,
 });
 
+//use session middleware
 app.use(sessionMiddleware);
 
 //routes
@@ -124,9 +127,6 @@ app.get('/class-generator.html', isAuthenticated, (req, res) => {
 app.use(express.static(path.join(__dirname, "../frontend")));
 
 //add socket io middleware to associate the user with the session
-
-
-
 //socket io connection:
 chatController.initializeSocketIO(io, sessionMiddleware);
 

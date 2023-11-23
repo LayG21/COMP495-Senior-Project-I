@@ -23,13 +23,13 @@ const { isAuthorized } = require("../middleware/authorizationMiddleware");
 router.get("/users", isAuthenticated, isAuthorized([roles.ADVISOR, roles.STUDENT]), getUsers);
 
 //get users based on search
-router.post("/chat/search/", isAuthenticated, isAuthorized([roles.ADVISOR, roles.STUDENT]), searchUsers);
+router.post("/search/", isAuthenticated, isAuthorized([roles.ADVISOR, roles.STUDENT]), searchUsers);
 
 //get messages between users
 router.get("/messages/:userID", isAuthenticated, isAuthorized([roles.ADVISOR, roles.STUDENT]), getMessages);
 
 //send message and save it
-router.post("/chat/message", isAuthenticated, isAuthorized([roles.STUDENT, roles.ADVISOR]), saveSentMessage);
+router.post("/message", isAuthenticated, isAuthorized([roles.STUDENT, roles.ADVISOR]), saveSentMessage);
 
 //for original implementation
 

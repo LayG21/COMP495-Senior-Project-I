@@ -4,7 +4,7 @@ const router = express.Router();
 const { isAuthorized } = require("../middleware/authorizationMiddleware");
 const { isAuthenticated } = require("../middleware/authenticationMiddleware");
 const { roles } = require("../roles/roles");
-const { getStudents, getSpecificStudent } = require("../controllers/advisorControlleer");
+const { getStudents, getSpecificStudent } = require("../controllers/advisorController");
 const path = require('path');
 
 //DONE SO FAR:
