@@ -1,47 +1,53 @@
 /*stack divs on top of each other for responsive layout and side by side for desktop*/
 /*now just have to style buttons and text*/
-/*Stling of home page*/
+/*Styling of home page*/
 main {
     padding: 30px;
     margin: 10px;
     display: flex;
     flex-direction: row;
 }
-.left-column{
-    padding:10px;
+
+.left-column {
+    padding: 10px;
 }
-p#or{
+
+p#or {
     align-self: center;
 }
-button a{
-    color:black;
+
+button a {
+    color: black;
     text-decoration: none;
     font-weight: bold;
     font-size: 16px;
     align-items: center;
     text-transform: uppercase;
 }
-button{
-    border:none;
+
+button {
+    border: none;
     background-color: white;
 }
 
-p.home-context{
-    font-size:19px;
+p.home-context {
+    font-size: 19px;
     line-height: 28px;
     display: block;
 }
-button a:hover{
-    color:#fdb927;
+
+button a:hover {
+    color: #fdb927;
 }
 
 /*for view of phone*/
-@media (max-width:810px){
+@media (max-width:810px) {
     main {
         flex-direction: column;
         padding: 10px;
     }
-    img.clock-tower{
+
+    img.clock-tower {
         width: 100%;
     }
 }

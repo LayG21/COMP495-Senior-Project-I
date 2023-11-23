@@ -1,12 +1,13 @@
-/*Styling for profile page.*/
-main{
+/*Styling for student profile page.*/
+main {
     align-items: center;
     padding-top: 20px;
     padding-bottom: 40px;
     margin-left: 200px;
     margin-right: 200px;
-   
+
 }
+
 /*div only becomes visible if there is something inside it*/
 div.profile-container {
     align-items: center;
@@ -22,11 +23,11 @@ div.profile-container {
     align-self: center;
 }
 
-@media (max-width: 768px){
-    main{
+@media (max-width: 768px) {
+    main {
         align-items: center;
         margin-left: 100px;
         margin-right: 100px;
-       
+
     }
 }

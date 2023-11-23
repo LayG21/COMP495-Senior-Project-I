@@ -5,7 +5,10 @@ let selectedUserID = null;
 let selectedUserName = null;
 let isChatWindowOpened = false;
 
-//event listener for when the user is selected
+//Need on load event for displaying the list of users as the user goes to the page
+//Need to add event listener to the list of users to select a user
+//Need to add event listener to the chat window to send a message
+
 // Event listener for when the user is selected
 function handleUserSelection() {
     allUsers = document.querySelectorAll('.sidebar-user');
@@ -44,27 +47,27 @@ socket.on('disconnect', function () {
 
 //Updates links displayed in navigation bar based on logged in users role that is stored in the session
 document.addEventListener('DOMContentLoaded', () => {
-    // Function to update navigation based on user role
-    const updateNavigation = (userRole) => {
-        const navItems = document.querySelectorAll('.links li');
-
-        navItems.forEach((item) => {
-            const role = item.getAttribute('data-role');
-            if (role && role !== userRole) {
-                item.remove(); // Remove the navigation item from the DOM if the role doesn't match
-            }
-        });
-    };
 
     // Example usage: Assuming you have retrieved the user role from the server-side or session data
-    const userRole = 'advisor'; // Replace with the actual user role
+    //const userRole = 'ADVISOR'; // Replace with the actual user role
 
-    updateNavigation(userRole);
+    //updateNavigation(userRole);
 
     //call to the function that adds clicklisteners to all the users in the sidebar
     handleUserSelection();
 });
 
+// Function to update navigation based on user role
+/*function updateNavigation(userRole) {
+    const navItems = document.querySelectorAll('.links li');
+
+    navItems.forEach((item) => {
+        const role = item.getAttribute('data-role');
+        if (role && role !== userRole) {
+            item.remove(); // Remove the navigation item from the DOM if the role doesn't match
+        }
+    });
+}*/
 
 
 /*document.addEventListener('DOMContentLoaded', () => {

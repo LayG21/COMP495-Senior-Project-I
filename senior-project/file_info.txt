@@ -1,0 +1,121 @@
+- routes folder
+    - Has endpoints for pages
+        
+        -advisorroute.js
+            -get(/advisor/students):
+                endpoint for getting all students assigned to advisor
+            -get(/advisor/students/:studentID):
+                endpoint for getting a specific student assigned to advisor
+        
+        -studentroute.js
+            -get(/student/profile):
+                endpoint for getting student profile
+        
+        -chatroute.js
+            -get(/chat/users):
+                endpoint for getting a list if users that logged in user can chat with
+            -get(/chat/messages:userID):
+                endpoint for getting messages between current user and selected user
+            -post(/chat/search) (NOT implemented yet and might change):
+                endpoint for searching for users to chat with
+            -post(/chat/message):
+                endpoint for sending messages and saving to database
+        
+        -loginroute.js
+            -get(/):
+                endpoint for getting login pages
+            -post(/login):
+                endpoint for sending user credentials and creating sessions
+        
+        -logoutroute.js
+            -post(/logout):
+                endpoint for logging user out
+
+-scripts folder:
+    -has files for prepopulating data into database
+
+-controllers folder:
+    -has files for handling requests and responses
+   
+    -advisorController.js
+        -getStudents():
+            gets all students assigned to advisor
+        -getSpecificStudent:
+            gets specific student profile that is assigned to advisor
+   
+    -authController.js
+        loginController():
+            handles login request
+    
+    -chatController.js
+        getUsers():
+            gets a list of users that current user can chat with. If they are a student they get a list of advisors. If they are an advisor they get a list of students.
+        getMessages():
+            gets messages between current user and user they selected 
+        saveSentMessages():
+            saves messages between current user and selected user
+            -Note: i will be changing this to a regular function to be used by socket io. I will save messagges before emitting back to user
+        searchUsers():
+            -NOTE: not implemented
+            Will be used for searching for users and dispaying the first 5 matching users based on what the client types into search bar
+        initializeSocketIO():
+            Used for real time communication. Will be updated to check if user has a session and if they do, they can make a socket connection.
+            Used for listening to events and then emitting events
+    
+    -studentController.js
+        getProfile():
+            gets student profile
+
+-models folder:
+    Advisor.js:
+        schema for advisors
+    Class.js:
+        schema for classes
+    ClassSelections.js:
+        has to be added
+    Conversation.js:
+        Originally meant to be used for conversation collection but as of right now it is not being used
+    Message.js:
+        schema for messagges
+    Student.js:
+        schema for students
+
+-middleware folder:
+    -authenticationMiddleware.js
+        middleware for checkong if te user has a session. If not they are redirected to the login page(index.html)
+    -authorizationMiddleware.js
+        middleware for checking if the logged in user matches the roles required for the endpoint/page
+    -loginvalidate.js
+        middleware for checking if user sent necessary input for logging in 
+
+-roles folder:
+    Just the list of allowed roles. It is supposed to be a enum.
+
+-config folder:
+    originally had mongodb connection there but moved connection into the index.js file
+
+-index.js:
+    main server file
+    has get for all html pages so that I can use the authentication and authorization middleware on it.
+    As a result only people that are logged in and have permission can go to these pages
+
+Dependencies:
+    -express session:
+        for creating session for the user
+    -socket.io:
+        for enabling real time communication
+    -bcrypt:
+        for hashing passwords
+    -mongoose:
+        used for querying or updating database
+    -nodemon:
+        for restarting server automatically as changes are made
+    -jest:
+        for testing(haven't used because I used postman for testing)
+    -express-validator
+        for server side validation and sanitization
+        Note: haven't actually used yet, only downloaded it
+    -express:
+        for creating backend
+
+    
