@@ -3,31 +3,33 @@ const router = express.Router();
 const { roles } = require("../roles/roles");
 const { getUsers, searchUsers, getMessages, saveSentMessage } = require("../controllers/chatController");
 const path = require('path');
+const { isAuthenticated } = require("../middleware/authenticationMiddleware");
+const { isAuthorized } = require("../middleware/authorizationMiddleware");
 
 //To DO: change this to connecting to mysql
 //Validate and Santitize
 
 //get page
 //have to protect html page
-router.get("/", (req, res) => {
+/*router.get("/", (req, res) => {
   const absolutePath = path.join(__dirname, '../../frontend/chat.html');
   // If the user is authenticated and has the necessary role, send the HTML file
-  res.sendFile(absolutePath);
-});
+  res.send("Hey from chat");
+});*/
 
 //For current implementation
 
 //get users to chat with
-router.get("/users", getUsers);
+router.get("/users", isAuthenticated, isAuthorized([roles.ADVISOR, roles.STUDENT]), getUsers);
 
 //get users based on search
-router.post("/chat/search/", searchUsers);
+router.post("/chat/search/", isAuthenticated, isAuthorized([roles.ADVISOR, roles.STUDENT]), searchUsers);
 
 //get messages between users
-router.get("/messages/:userID", getMessages);
+router.get("/messages/:userID", isAuthenticated, isAuthorized([roles.ADVISOR, roles.STUDENT]), getMessages);
 
 //send message and save it
-router.post("/chat/message", saveSentMessage);
+router.post("/chat/message", isAuthenticated, isAuthorized([roles.STUDENT, roles.ADVISOR]), saveSentMessage);
 
 //for original implementation
 

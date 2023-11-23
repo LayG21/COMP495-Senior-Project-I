@@ -8,6 +8,9 @@ const Message = require("../models/Message");
 const Student = require("../models/Student");
 const Advisor = require("../models/Advisor");
 
+//Stored users with sockets
+const userSockets = new Map();
+
 /* For Current Idea */
 //get list of advisor or students based on current user type
 const getUsers = async (req, res) => {
@@ -43,7 +46,7 @@ const getUsers = async (req, res) => {
 //get messages between two users
 const getMessages = async (req, res) => {
     //would need the sender and receiver
-    const currentUser = req.body.id;
+    const currentUser = req.session.user.id;
     const selectedUser = req.params.userID;
     try {
         //check if request is empty
@@ -70,6 +73,7 @@ const getMessages = async (req, res) => {
 }
 
 //save sent messages
+//Will change this to work with socket io
 const saveSentMessage = async (req, res) => {
     //need sender,receiver, and content
     const { sender, receiver, content } = req.body;
@@ -105,8 +109,22 @@ const saveSentMessage = async (req, res) => {
 //search through students if current user is advisor
 const searchUsers = async (req, res) => {
     const query = req.query.searchQuery;
+
 }
-module.exports = { getUsers, searchUsers, getMessages, saveSentMessage };
+//socket io logic for sending and receiving messages
+const initializeSocketIO = (io, sessionMiddleware) => {
+    io.on('connection', (socket) => {
+        console.log(`User ${socket.id} connected`);
+        socket.on('disconnect', () => {
+            console.log(`User ${socket.id} disconnected`);
+        });
+    });
+}
+
+/*io.on('connection', (socket) => {
+    console.log('a user connected');
+});*/
+module.exports = { getUsers, searchUsers, getMessages, saveSentMessage, initializeSocketIO };
 
 
 /*

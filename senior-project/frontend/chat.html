@@ -1,90 +1,99 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./css/nav.css" />
-    <link rel="stylesheet" href="./css/chat.css" />
-    <script src="./javascript/chat.js"></script>
-    <!--Create socket io connection to server-->
-   <!--<script src="/socket.io/socket.io.js"></script>--> 
 
-    <title>Chat Page</title>
-  </head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!--Stylesheets for navbar and individual page-->
+<link rel="stylesheet" href="./css/nav.css" />
+<link rel="stylesheet" href="./css/chat.css" />
+<!--Create socket io connection to server-->
+<!--<script src="/socket.io/socket.io.js"></script>-->
 
-  <body>
-    <!--Navbar-->
-    <!--It is responsive-->
-    <header class="navbar">
-      <a class="logo" href="home.html">Aggie Advise</a>
-      <input type="checkbox" id="nav-toggle" class="nav-toggle" />
-      <nav>
-        <ul class="links">
-          <li data-role="student"><a class="nav-link" href="student.html">Profile</a></li>
-          <li data-role="advisor"><a class="nav-link" href="advisor.html">View</a></li>
-          <li><a class="nav-link" href="chat.html">Chat</a></li>
-          <li class="calc-links">
-            <a class="nav-link" href="#">Calculator &#x25BC;</a>
-            <ul class="dropdown" id="dropdown">
-              <li><a href="gpa-calculator.html">GPA Calculator</a></li>
-              <li>
-                <a href="course-calculator.html">Course Calculator</a>
-              </li>
-            </ul>
-          </li>
-          <li data-role="student">
-            <a class="nav-link" href="class-generator.html">Class Generator</a
-            >
-          </li>
-          <li><a class="nav-link" href ="#">Logout</a></li>
-        </ul>
-      </nav>
-      <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
-    </header>
+<script src="./javascript/chat.js"></script>
 
-    <!--Body of chat page-->
-    <main class="chat-container">
-      <!--Sidebar-->
-      <div class="sidebar">
-        <!--Search Bar-->
-        <div class="search-bar">
-            <input type="text" id="search-input" placeholder="Search.." name="search">
-        </div>
-        <!--List of users to select from-->
-        <div class="user-list">
-          <h3>Users:</h3>
-          <ul class="users">
+
+
+<title>Chat Page</title>
+</head>
+
+<body>
+  <!--Navbar-->
+  <!--It is responsive-->
+  <header class="navbar">
+    <a class="logo" href="home.html">Aggie Advise</a>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+    <nav>
+      <ul class="links">
+        <li data-role="student"><a class="nav-link" href="student-profile.html">Profile</a></li>
+        <li data-role="advisor"><a class="nav-link" href="advisee-view.html">View</a></li>
+        <li><a class="nav-link" href="chat.html">Chat</a></li>
+        <li class="calc-links">
+          <a class="nav-link" href="#">Calculator &#x25BC;</a>
+          <ul class="dropdown" id="dropdown">
+            <li><a href="gpa-calculator.html">GPA Calculator</a></li>
             <li>
-              <span>User 1</span>
+              <a href="course-calculator.html">Course Calculator</a>
             </li>
           </ul>
+        </li>
+        <li data-role="student">
+          <a class="nav-link" href="class-generator.html">Class Generator</a>
+        </li>
+        <li><a class="nav-link" id="logout-link" href="#">Logout</a></li>
+      </ul>
+    </nav>
+    <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
+  </header>
+
+  <!--Body of chat page-->
+  <main class="chat-container">
+    <!--Sidebar-->
+    <div class="sidebar">
+      <!--Search Bar-->
+      <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Search.." name="search">
+        <button type="submit" onclick="openConversation()">Chat</button>
+      </div>
+      <!--List of users to select from-->
+      <div class="user-list">
+        <h3 id="sidebar-header">Users:</h3>
+        <ul class="sidebar-userlist">
+          <li class="sidebar-user" data-userID="950723111">
+            <span class="sidebar-username">User 1</span>
+          </li>
+          <li class="sidebar-user" data-userID="950723000">
+            <span class="sidebar-username">User 2</span>
+          </li>
+        </ul>
       </div>
     </div>
-      <!--Chat Window-->
-      <div class="chat-window">
+    <!--Chat Window-->
+    <div class="chat-window">
 
-        <!--Chat Header-->
-        <div class="chat-header">
-          <span id=" user-name">Jane Doe</span>
-          <button id="close-button">Close</button>
-        </div>
+      <!--Chat Header-->
+      <div class="chat-header">
+        <span id="selected-username">Jane Doe</span>
+        <button id="close-button">Close</button>
+      </div>
 
-        <!--Chat Body-->
-        <div class="chat-body">
-          <!--Chat Messages-->
-          <div class="messages">
-            <p>Hi, how can I help you?</p>
-          </div>
-          <div class="messages">
-            </div>
-        </div>
+      <!--Chat Body-->
+      <div class="chat-body">
 
-        <!--Chat Footer-->
-        <div class="chat-footer">
-          <input id="chat-input"type="text" placeholder="Type Message...">
-          <button onclick="sendMessage()">Send</button>
+        <!--Chat Messages-->
+        <div class="messages">
+          <p>Hi, how can I help you?</p>
         </div>
       </div>
-    </main>
-  </body>
+
+      <!--Chat Footer-->
+      <div class="chat-footer">
+        <input id="chat-input" type="text" placeholder="Type Message...">
+        <button onclick="sendMessage()">Send</button>
+      </div>
+    </div>
+  </main>
+  <!--Function for logging the user out-->
+  <script src="./javascript/logout.js"></script>
+</body>
+
 </html>

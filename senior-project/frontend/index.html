@@ -3,11 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link rel="stylesheet" href="./css/login.css">
     <title>Login Page</title>
+    <link rel="stylesheet" type="text/css" href="css/login.css ">
 </head>
 
 <body>
@@ -17,19 +15,21 @@
     <div class="login-container">
         <main>
             <div class="login-form">
-                <form method ="post">
+                <form method="post" action="/login">
                     <div>
                         <h2>Log In</h2>
                     </div>
                     <!--The label should be ontop of the input box-->
                     <label for="user-email">Enter Email:</label>
-                    <input type="email" class="user-email" id="user-email" name ="userEmail" placeholder="Email" required>
+                    <input type="email" class="user-email" id="user-email" name="userEmail" placeholder="Email"
+                        required>
 
                     <label for="user-password">Enter Password:</label>
-                    <input type="password" class="user-password" id="user-password" name = "userPassword"placeholder="Password" required>
+                    <input type="password" class="user-password" id="user-password" name="userPassword"
+                        placeholder="Password" required>
 
                     <label for="user-type">Select User Type:</label>
-                    <select class="user-type" id="usertype" name= "userType"required>
+                    <select class="user-type" id="usertype" name="userType" required>
                         <option value="" disabled selected></option>
                         <option value="STUDENT">STUDENT</option>
                         <option value="ADVISOR">ADVISOR</option>
@@ -37,12 +37,7 @@
                     <input type="submit" class="login-btn" value="Login">
                 </form>
             </div>
-    </div>
-
-
-    </main>
-
-    </div>
+        </main>
     </div>
 </body>
 

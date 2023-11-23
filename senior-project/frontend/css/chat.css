@@ -25,6 +25,10 @@ body {
   overflow: auto;
 }
 
+/*For search bar and button in the sidebar*/
+
+/*For user list in the sidebar*/
+
 .chat-window {
   border-style: solid;
   border-top-width: 1px;
@@ -38,30 +42,32 @@ body {
   overflow: hidden;
 }
 
+/*Header of chat window*/
 .chat-header {
   background-color: rgb(230, 230, 230);
   ;
   height: 3.9em;
 }
 
+/*Body of chat window where messages are displayed*/
 .chat-body {
   flex: 1;
   overflow-y: auto;
   /* Add this to enable vertical scrolling if needed */
 }
 
+/*Messages in the chat body*/
 .messages {
   background-color: #add8e6;
 }
 
-/* Chat Footer */
+/* Chat Footer that contains field for typing message and send button*/
 .chat-footer {
   background-color: #C0C0C0;
   margin-top: auto;
   position: fixed;
   width: 70%;
   height: 3.9em;
-  /* Adjust the width based on your design */
   bottom: 0;
 }
 

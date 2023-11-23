@@ -8,7 +8,7 @@ const Advisor = require("../models/Advisor");
 
 //get list of assigned students
 const getStudents = async (req, res) => {
-  const advisorID = parseInt(req.body.id);
+  const advisorID = parseInt(req.session.user.id);
 
   try {
     const assignedStudents = await Student.aggregate([
@@ -63,7 +63,7 @@ const getStudents = async (req, res) => {
 
 //get specific assigned  student
 const getSpecificStudent = async (req, res) => {
-  const advisorID = parseInt(req.body.id);
+  const advisorID = parseInt(req.session.user.id);
   const studentID = parseInt(req.params.studentID);
 
   try {
@@ -166,4 +166,4 @@ Example Response get specific student:
 
 
 
-module.exports = { getStudents,getSpecificStudent};
+module.exports = { getStudents, getSpecificStudent };
