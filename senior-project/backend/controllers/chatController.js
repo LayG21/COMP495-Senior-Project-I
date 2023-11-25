@@ -119,8 +119,40 @@ const initializeSocketIO = (io, sessionMiddleware) => {
     io.engine.use(sessionMiddleware);
 
     io.on('connection', (socket) => {
-        console.log(`User ${socket.id} connected`);
+        const { user } = socket.request.session;
+
+        if (user && user.id) {
+            userSockets.set(user.id, socket);
+            console.log(`User ${user.id} connected. This is their socket id: ${socket.id}`);
+        }
+
+        else {
+            console.log('User information not available.');
+        }
+
+        socket.on('sendMessage', ({ receiverId, content }) => {
+            const senderId = socket.request.session.user.id;
+
+            const receiverSocket = userSockets.get(parseInt(receiverId, 10));
+
+            //save message first and then emit to user if they have a socket
+            //console.log(`Received message from ${senderId} to ${receiverId}: ${content}`);
+            //console.log(`This is the socket of the receiverID ${receiverSocket}`);
+
+            if (receiverSocket) {
+                //Emit message to specific socket
+                console.log(`Receiver socket found for ${receiverId}: ${receiverSocket.id}`);
+                receiverSocket.emit('newMessage', { senderId, content });
+            }
+            else {
+                console.log(`Receiver ${receiverId} not found or does not have an active socket.`);
+            }
+        });
         socket.on('disconnect', () => {
+            if (user && user.id) {
+                userSockets.delete(user.id);
+                console.log(`Socket removed from userSockets Map for user ${user.id}`);
+            }
             console.log(`User ${socket.id} disconnected`);
         });
     });

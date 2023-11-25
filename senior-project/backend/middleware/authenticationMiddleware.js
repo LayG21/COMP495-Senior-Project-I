@@ -13,5 +13,6 @@ const isAuthenticated = (req, res, next) => {
     }
 };
 
+
 // Export the middleware function
 module.exports = { isAuthenticated };

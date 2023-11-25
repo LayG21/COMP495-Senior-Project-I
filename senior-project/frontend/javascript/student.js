@@ -23,7 +23,9 @@ function getProfile() {
     })
         .then(response => {
             if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+                return response.json().then(errorData => {
+                    throw new Error(`${errorData.error}`);
+                });
             }
             return response.json();
         })
@@ -41,10 +43,13 @@ function getProfile() {
             document.getElementById('advisor-email-input').textContent = data.advisorEmail;
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error(error);
+
+            // Log the full response details for debugging
+            //console.log('Full response:', error);
 
             // Display the error to the user
-            errorContainer.textContent = `An error occurred: ${error.message}`;
+            errorContainer.textContent = `Error Message: ${error.message}`;
         });
 }
 

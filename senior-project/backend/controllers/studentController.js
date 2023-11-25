@@ -46,12 +46,12 @@ const getProfile = async (req, res) => {
     ]);
 
     if (!studentInfo || studentInfo.length === 0) {
-      return res.status(404).json({ message: 'Student not found' });
+      return res.status(404).json({ error: 'Student not found' });
     }
 
     res.status(200).json(studentInfo[0]);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ error: error.message });
   }
 
 };
