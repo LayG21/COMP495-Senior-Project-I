@@ -8,9 +8,40 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 //server side requests
 //Gets students information
-function getProfile() {
+/*function getProfile() {
+    const errorContainer = document.getElementById('error-container');
 
-}
+    // Fetch student profile data
+    fetch('/student/profile', {
+        method: 'GET',
+        credentials: 'include'
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Update HTML elements with fetched data
+            document.getElementById('name-input').textContent = `${data.studentFirstName} ${data.studentLastName}`;
+            document.getElementById('email-input').textContent = data.studentEmail;
+            document.getElementById('classification-input').textContent = data.studentClassification;
+            document.getElementById('credit-input').textContent = data.studentCredit;
+            document.getElementById('gpa-input').textContent = data.studentGPA;
+            document.getElementById('major-input').textContent = data.studentMajor;
+            document.getElementById('advisor-input').textContent = `${data.advisorFirstName} ${data.advisorLastName}`;
+            document.getElementById('advisor-email-input').textContent = data.advisorEmail;
+            // Update other elements similarly
+        })
+        .catch(error => {
+            console.error('Error:', error);
+
+            // Display the error to the user
+            errorContainer.textContent = `An error occurred: ${error.message}`;
+        });
+});
+}*/
 
 //Upadating of UI with the data
 

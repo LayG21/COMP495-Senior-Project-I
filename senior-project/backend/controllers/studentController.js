@@ -35,6 +35,8 @@ const getProfile = async (req, res) => {
           studentStatus: 1,
           studentClassification: 1,
           studentGPA: 1,
+          studentMajor: 1,
+          studentCredit: 1,
           advisorFirstName: '$advisorInfo.advisorFirstName',
           advisorLastName: '$advisorInfo.advisorLastName',
           advisorEmail: '$advisorInfo.advisorEmail', // Exclude advisor _id
@@ -61,15 +63,17 @@ module.exports = { getProfile };
 /*
 Example Response:
 {
-    "studentID": 950705799,
-    "studentFirstName": "Jade",
-    "studentLastName": "Jackson",
-    "studentEmail": "jjackson@aggies.ncat.edu",
+    "studentID": 950405789,
+    "studentFirstName": "Leighana",
+    "studentLastName": "Glover",
+    "studentEmail": "llglover@aggies.ncat.edu",
     "studentStatus": "Full-Time",
     "studentClassification": "Senior",
-    "studentGPA": 3.4,
-    "advisorFirstName": "Mariah",
-    "advisorLastName": "Green",
-    "advisorEmail": "mg@ncat.edu"
+    "studentGPA": 3.5,
+    "studentCredit": 102,
+    "studentMajor": "Computer Science",
+    "advisorFirstName": "John",
+    "advisorLastName": "Kelly",
+    "advisorEmail": "jk@ncat.edu"
 }
 */
