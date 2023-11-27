@@ -92,6 +92,7 @@ app.get("/home.html", isAuthenticated, isAuthorized([roles.STUDENT, roles.ADVISO
 });
 
 //get chat.html
+//removed so i can edit
 app.get("/chat.html", isAuthenticated, isAuthorized([roles.STUDENT, roles.ADVISOR]), (req, res) => {
   // console.log("reached the chat page");
   res.sendFile(path.join(__dirname, "../frontend/chat.html"));

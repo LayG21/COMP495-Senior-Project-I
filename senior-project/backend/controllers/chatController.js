@@ -109,8 +109,9 @@ const saveSentMessage = async (req, res) => {
 
 //search through advisors if current user is a student
 //search through students if current user is advisor
+//To do: implement search
 const searchUsers = async (req, res) => {
-    const query = req.query.searchQuery;
+    const qsearchuery = req.query.searchQuery;
 
 }
 //socket io logic for sending and receiving messages

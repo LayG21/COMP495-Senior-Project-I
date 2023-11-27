@@ -6,6 +6,8 @@
                 endpoint for getting all students assigned to advisor
             -get(/advisor/students/:studentID):
                 endpoint for getting a specific student assigned to advisor
+            -get(/advisor/students/search):
+                endpoint for seaching the database for students
         
         -studentroute.js
             -get(/student/profile):
@@ -40,8 +42,10 @@
     -advisorController.js
         -getStudents():
             gets all students assigned to advisor
-        -getSpecificStudent:
+        -getSpecificStudent():
             gets specific student profile that is assigned to advisor
+        -searchStudents():
+            gets students thatmatch search input
    
     -authController.js
         loginController():
