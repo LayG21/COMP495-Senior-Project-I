@@ -38,12 +38,6 @@ const getStudents = async (req, res) => {
           studentFirstName: 1,
           studentLastName: 1,
           studentEmail: 1,
-          studentStatus: 1,
-          studentClassification: 1,
-          studentGPA: 1,
-          advisorFirstName: '$advisorInfo.advisorFirstName',
-          advisorLastName: '$advisorInfo.advisorLastName',
-          advisorEmail: '$advisorInfo.advisorEmail',
         },
       },
     ]);
@@ -98,6 +92,8 @@ const getSpecificStudent = async (req, res) => {
           studentStatus: 1,
           studentClassification: 1,
           studentGPA: 1,
+          studentCredit: 1,
+          studentMajor: 1,
           advisorFirstName: '$advisorInfo.advisorFirstName',
           advisorLastName: '$advisorInfo.advisorLastName',
           advisorEmail: '$advisorInfo.advisorEmail',
@@ -116,6 +112,17 @@ const getSpecificStudent = async (req, res) => {
   }
 };
 
+//TO DO ass a searh controller for displaying students that match what is typed in input
+const searchStudents = async (req, res) => {
+  const advisorID = parseInt(req.session.user.id);
+  const searchQuery = req.query;
+  try {
+
+  } catch (error) {
+
+  }
+};
+
 /*
 Example Response getstudents:
 [
@@ -127,6 +134,8 @@ Example Response getstudents:
         "studentStatus": "Full-Time",
         "studentClassification": "Senior",
         "studentGPA": 3.4,
+        "studentCredit": 95,
+        "studentMajor": "Computer Science",
         "advisorFirstName": "Mariah",
         "advisorLastName": "Green",
         "advisorEmail": "mg@ncat.edu"
@@ -139,6 +148,8 @@ Example Response getstudents:
         "studentStatus": "Full-Time",
         "studentClassification": "Senior",
         "studentGPA": 3.4,
+        "studentCredit": 100,
+        "studentMajor": "Computer Science",
         "advisorFirstName": "Mariah",
         "advisorLastName": "Green",
         "advisorEmail": "mg@ncat.edu"
@@ -157,6 +168,8 @@ Example Response get specific student:
         "studentStatus": "Full-Time",
         "studentClassification": "Senior",
         "studentGPA": 3.4,
+        "studentCredit": 100,
+        "studentMajor": "Computer Science",
         "advisorFirstName": "Mariah",
         "advisorLastName": "Green",
         "advisorEmail": "mg@ncat.edu"
@@ -166,4 +179,4 @@ Example Response get specific student:
 
 
 
-module.exports = { getStudents, getSpecificStudent };
+module.exports = { getStudents, getSpecificStudent, searchStudents };

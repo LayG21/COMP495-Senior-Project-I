@@ -36,6 +36,8 @@ const getProfile = async (req, res) => {
           studentStatus: 1,
           studentClassification: 1,
           studentGPA: 1,
+          studentMajor: 1,
+          studentCredit: 1,
           advisorFirstName: '$advisorInfo.advisorFirstName',
           advisorLastName: '$advisorInfo.advisorLastName',
           advisorEmail: '$advisorInfo.advisorEmail', // Exclude advisor _id
@@ -47,7 +49,6 @@ const getProfile = async (req, res) => {
     console.log('After aggregation, studentInfo:', studentInfo);
 
     if (!studentInfo || studentInfo.length === 0) {
-      console.log('Student Info:', studentInfo);
       return res.status(404).json({ message: 'Student not found' });
     }
 
@@ -55,7 +56,6 @@ const getProfile = async (req, res) => {
 
     res.status(200).json(studentInfo[0]);
   } catch (error) {
-    console.error('Error in getProfile:', error.message);
     res.status(500).json({ message: error.message });
   }
 
@@ -68,15 +68,17 @@ module.exports = { getProfile };
 /*
 Example Response:
 {
-    "studentID": 950705799,
-    "studentFirstName": "Jade",
-    "studentLastName": "Jackson",
-    "studentEmail": "jjackson@aggies.ncat.edu",
+    "studentID": 950405789,
+    "studentFirstName": "Leighana",
+    "studentLastName": "Glover",
+    "studentEmail": "llglover@aggies.ncat.edu",
     "studentStatus": "Full-Time",
     "studentClassification": "Senior",
-    "studentGPA": 3.4,
-    "advisorFirstName": "Mariah",
-    "advisorLastName": "Green",
-    "advisorEmail": "mg@ncat.edu"
+    "studentGPA": 3.5,
+    "studentCredit": 102,
+    "studentMajor": "Computer Science",
+    "advisorFirstName": "John",
+    "advisorLastName": "Kelly",
+    "advisorEmail": "jk@ncat.edu"
 }
 */

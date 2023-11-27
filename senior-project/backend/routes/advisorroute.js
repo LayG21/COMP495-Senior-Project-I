@@ -4,7 +4,7 @@ const router = express.Router();
 const { isAuthorized } = require("../middleware/authorizationMiddleware");
 const { isAuthenticated } = require("../middleware/authenticationMiddleware");
 const { roles } = require("../roles/roles");
-const { getStudents, getSpecificStudent } = require("../controllers/advisorController");
+const { getStudents, getSpecificStudent, searchStudents } = require("../controllers/advisorController");
 const path = require('path');
 
 //DONE SO FAR:
@@ -20,5 +20,8 @@ router.get("/students", isAuthenticated, isAuthorized([roles.ADVISOR]), getStude
 
 //get specific assigned student by id
 router.get("/students/:studentID", isAuthenticated, isAuthorized([roles.ADVISOR]), getSpecificStudent);
+
+//get students based on search
+router.get("/students/search", isAuthenticated, isAuthorized([roles.ADVISOR]), searchStudents);
 
 module.exports = router;

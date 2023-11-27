@@ -39,30 +39,39 @@
     </nav>
     <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
   </header>
-  <strong>Student ID:</strong>
-  <p id="studentId"></p>
-  <br/>
-  <strong>Name:</strong>
-  <p id="name-input"></p>
-  <br/>
-  <strong>Student Email:</strong>
-  <p id="student-email"></p>
-  <br/>
-  <strong>Stauts:</strong>
-  <p id="student-status"></p>
-  <br/>
-  <strong>Classification:</strong>
-  <p id="classification-input">
-  </p>
-  <br />
-  <strong>GPA:</strong>
-  <p id="gpa-input"></p>
-  <br />
-  <strong>Advisor:</strong>
-  <p id="advisor-input"></p>
-  <br />
-  <strong>Advisor Email:</strong>
-  <p id="email-input"></p>
+
+  <main>
+    <div class="profile-container">
+      <!--Needs to be filled and fetched on login-->
+      <div id="profile-circle">
+        <p id="profile-letters">JD</p>
+      </div>
+      <div class="profile-info">
+        <p>Name:</p>
+        <p class="name-input" id="name-input">Jane Doe</p>
+        <br />
+        <p>Classification:</p>
+        <p class="classification-input" id="classification-input">
+          Sophomore
+        </p>
+        <br />
+        <p>Credits:</p>
+        <p class="credit-input" id="credit-input">40</p>
+        <br />
+        <p>GPA:</p>
+        <p class="gpa-input" id="gpa-input">3.60</p>
+        <br />
+        <p>Major:</p>
+        <p class="major-input" id="major-input">Computer Science</p>
+        <br />
+        <p>Advisor:</p>
+        <p class="advisor-input" id="advisor-input">John Doe</p>
+        <br />
+        <p>Advisor Email:</p>
+        <p class="email-input" id="email-input">john.doe@example.com</p>
+      </div>
+    </div>
+  </main>
   <!--Function for logging the user out-->
   <script src="./javascript/logout.js"></script>
   <!--File for updating UI or making requests-->

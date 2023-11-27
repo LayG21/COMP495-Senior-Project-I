@@ -1,1 +1,143 @@
 /*Css for advisee view page*/
+/* Reset styles */
+table,
+th,
+tr,
+td {
+    border: 1px solid rgb(184, 178, 178);
+    border-collapse: collapse;
+}
+
+/*Fill whole page with input and table*/
+table,
+.search-container {
+    width: 70%;
+    margin: 15px auto;
+}
+
+/*Center Header*/
+#page-header {
+    text-align: center;
+}
+
+/*Stretch The search bar to fit the full box*/
+#advisee-input {
+    width: 100%;
+    height: 3.0em;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 0.9em;
+    box-sizing: border-box;
+}
+
+/*Change button radius for table*/
+td button {
+    border-color: grey;
+    border-radius: 2px;
+    width: 100%;
+}
+
+/*Update text inside td and th to be left aligned*/
+td,
+th {
+    text-align: left;
+}
+
+
+/*Do not display instructions right now*/
+#page-instructions {
+    display: none;
+}
+
+/*From tutorial*/
+/*Modal design*/
+#profile-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+/*Modal content*/
+#modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 60%;
+    /* Could be more or less, depending on screen size */
+}
+
+#modal-content h2 {
+    text-align: center;
+    /* Center the heading */
+}
+
+#modal-content label {
+    color: black;
+    font-weight: bold;
+}
+
+/*Close button*/
+#close-modal {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/*Responsive design*/
+@media only screen and (max-width: 600px) {
+    table {
+        border: 0;
+    }
+
+
+    table th {
+        border: none;
+        clip: rect(0 0 0 0);
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        padding: 0;
+        position: absolute;
+        width: 1px;
+    }
+
+    table tr {
+        border-bottom: 3px solid #ddd;
+        display: block;
+        margin-bottom: .625em;
+    }
+
+    table td {
+        border-bottom: 1px solid #ddd;
+        display: block;
+        font-size: .8em;
+        text-align: right;
+    }
+
+    table td::before {
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+    }
+
+    td button {
+        border-color: grey;
+        border-radius: 2px;
+        width: 20%;
+    }
+
+    table td:last-child {
+        border-bottom: 0;
+    }
+}

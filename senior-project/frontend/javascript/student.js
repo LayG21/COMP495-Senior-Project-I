@@ -1,37 +1,17 @@
 // Js file that will make requests based on user interaction and update html page if needed
 
-//DOMEvent to update html page as theuser goes to the page
+//DOMEvent to update html page as the user goes to the page
 document.addEventListener('DOMContentLoaded', (event) => {
     const userRole = 'STUDENT'; // Replace with the actual user role
 
+    //Change navbar to display links user has access to
     updateNavigation(userRole);
-
-        getProfile();
 });
+
 //server side requests
+//gets and displays student information or will display error
 //Gets students information
 function getProfile() {
-    console.log('Fetching profile...');
-    fetch('/student/profile')
-    .then(response => {
-        console.log('Response received:', response);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log('Retrieved data:', data); // Log the data to the console
-        displayProfile(data); // Update the UI with the data received from the server
-
-       
-
-    })
-    .catch(error => {
-        console.error('There was a problem with the fetch operation: ', error);
-    });
-
-    
 
 }
 

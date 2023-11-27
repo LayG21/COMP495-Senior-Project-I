@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>GPA Calculator</title>
 
     <link rel="stylesheet" href="./css/nav.css" />
@@ -56,9 +56,9 @@
                 <ul class="course-calc">
                     <li>
                         <ul class="labels">
-                            <label for="course-name">Course(Optional)</label>
-                            <label for="course-grade">Grade</label>
-                            <label for="course-weight">Weight</label>
+                            <li><label for="course-name">Course(Optional)</label></li>
+                            <li><label for="course-grade">Grade</label></li>
+                            <li><label for="course-weight">Weight</label></li>
                         </ul>
                     </li>
                     <li class="calc-fields">
@@ -82,21 +82,21 @@
                         <input type="text" class="course-weight" placeholder="Enter Weight">
                     </li>
                     <div class="added-row" id="added-row"></div>
-                    <div calc-butons>
-                        <input type="button" class="add-button" onclick="addMore()" value="Add">
-                        <input type="reset" value="Reset" class="reset-button" onclick="changeDefault()">
-                        <input type="submit" value="Submit" class="submit-button" onclick="gparesultAdd()">
-                    </div>
+                    div calc-butons>
+                    <input type="button" class="add-button" onclick="addMore()" value="Add">
+                    <input type="reset" value="Reset" class="reset-button" onclick="changeDefault()">
+                    <input type="submit" value="Submit" class="submit-button" onclick="gparesultAdd()">
+        </div>
 
-                    <div class="bottom-div">
-                        <input type="text" placeholder="Grade Results" class="calc-results" id="calc-results" readonly>
-                        <input type="text" placeholder="Classification" class="calc-classification"
-                            id="calc-classification" readonly>
-                        <input type="text" placeholder="Credits" class="calc-credits" id="calc-credits" readonly>
-                    </div>
-                    <!--allow user to input credit and  gpa that they want to start calculating from-->
-                </ul>
-            </form>
+        <div class="bottom-div">
+            <input type="text" placeholder="Grade Results" class="calc-results" id="calc-results" readonly>
+            <input type="text" placeholder="Classification" class="calc-classification" id="calc-classification"
+                readonly>
+            <input type="text" placeholder="Credits" class="calc-credits" id="calc-credits" readonly>
+        </div>
+        <!--allow user to input credit and gpa that they want to start calculating from-->
+        </ul>
+        </form>
 
         </div>
 

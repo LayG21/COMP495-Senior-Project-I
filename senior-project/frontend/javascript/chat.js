@@ -55,6 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //call to the function that adds clicklisteners to all the users in the sidebar
     handleUserSelection();
+    //Dispaly all users you can chat with
 });
 
 // Function to update navigation based on user role
