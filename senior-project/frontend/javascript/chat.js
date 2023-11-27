@@ -9,21 +9,83 @@ let isChatWindowOpened = false;
 //Need to add event listener to the list of users to select a user
 //Need to add event listener to the chat window to send a message
 
+//Note: happens faster with the selection on the side
 // Event listener for when the user is selected
 function handleUserSelection() {
-    allUsers = document.querySelectorAll('.sidebar-user');
-    allUsers.forEach((user) => {
-        user.addEventListener('click', () => {
-            selectedUserID = user.getAttribute('data-userID');
-            selectedUserName = user.querySelector('.sidebar-username').textContent;
+    const sidebarContainer = document.querySelector(".sidebar-userlist");
+
+
+    sidebarContainer.addEventListener("click", function (event) {
+        // Check if the clicked element or its ancestor has the "sidebar-user" class
+        const clickedUser = event.target.closest('.sidebar-user');
+
+        if (clickedUser) {
+            selectedUserID = clickedUser.getAttribute('data-userID');
+            selectedUserName = clickedUser.querySelector('.sidebar-username').textContent;
 
             // Test printing out user when they are selected
             console.log(selectedUserID);
             console.log(selectedUserName);
-        });
+        }
     });
 }
 
+//Updates links displayed in navigation bar based on logged in users role that is stored in the session
+document.addEventListener('DOMContentLoaded', () => {
+    //call to the function that adds clicklisteners to all the users in the sidebar
+    handleUserSelection();
+
+    //Dispaly all users you can chat with
+    getUsers();
+});
+
+//get users for sidebar display
+function getUsers() {
+    //fetch users
+    fetch('/chat/users', {
+        method: "GET",
+        credentials: 'include',
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errorData => {
+                    throw new Error(`Message: ${errorData.error}`);
+                });
+            }
+            return response.json();
+        })
+        .then(users => {
+            //console.log(users.data);
+            updateUserList(users.data);
+        })
+        .catch(error => {
+            alert('Error:' + error.message);
+        });
+}
+
+//function for updating sidebar with users
+function updateUserList(users) {
+    let sidebarContainer;
+    if (!sidebarContainer) {
+        sidebarContainer = document.querySelector(".sidebar-userlist");
+    }
+    //console.log(sidebarContainer.textContent);
+    //console.log(users);
+
+    users.forEach(user => {
+        const listItem = document.createElement('li');
+        listItem.classList.add('sidebar-user');
+        listItem.setAttribute('data-userID', user.id);
+
+        const username = document.createElement('p');
+        username.classList.add('sidebar-username');
+        username.textContent = `${user.firstName} ${user.lastName}`;
+
+        listItem.appendChild(username);
+        //console.log(listItem);
+        sidebarContainer.appendChild(listItem);
+    });
+}
 // chat.js
 
 // Your Socket.IO logic goes here
@@ -37,63 +99,12 @@ socket.on('disconnect', function () {
     console.log('Disconnected from server');
 });*/
 
-// Other Socket.IO logic specific to your chat page
-// ...
+//function to send message. Will need to grab the selectedUserID that was stored when the currentuser selected someone to chat with
+function sendMessage() {
+    //get message and send through socket event
 
 
-
-
-
-
-//Updates links displayed in navigation bar based on logged in users role that is stored in the session
-document.addEventListener('DOMContentLoaded', () => {
-
-    // Example usage: Assuming you have retrieved the user role from the server-side or session data
-    //const userRole = 'ADVISOR'; // Replace with the actual user role
-
-    //updateNavigation(userRole);
-
-    //call to the function that adds clicklisteners to all the users in the sidebar
-    handleUserSelection();
-    //Dispaly all users you can chat with
-});
-
-// Function to update navigation based on user role
-/*function updateNavigation(userRole) {
-    const navItems = document.querySelectorAll('.links li');
-
-    navItems.forEach((item) => {
-        const role = item.getAttribute('data-role');
-        if (role && role !== userRole) {
-            item.remove(); // Remove the navigation item from the DOM if the role doesn't match
-        }
-    });
-}*/
-
-
-/*document.addEventListener('DOMContentLoaded', () => {
-    // Function to update navigation based on user role
-    const updateNavigation = (userRole) => {
-        const navItems = document.querySelectorAll('.links li');
-
-        navItems.forEach((item) => {
-            const role = item.getAttribute('data-role');
-            if (role && role !== userRole) {
-                item.style.display = 'none'; // Hide the navigation item if the role doesn't match
-            } else {
-                item.style.display = ''; // Show the navigation item if the role matches or there's no data-role attribute
-            }
-        });
-    };
-
-    // Example usage: Assuming you have retrieved the user role from the server-side or session data
-    const userRole = 'student'; // Replace with the actual user role
-
-    updateNavigation(userRole);
-});*/
-
-//function to update the user when a user is selected from the div
-//selectedUsersId is stored in a data attribute and name is stored in the span that shows user name
+}
 
 
 //function to window and set current user as being no one because there is no open conversation/window
@@ -103,4 +114,4 @@ document.addEventListener('DOMContentLoaded', () => {
 //Should also work to change chat window or open chat window depending on if you selected a different user or the chat window was never open
 //function selectUser() { }
 
-//function to send message. Will need to grab the selectedUserID that was stored when the currentuser selected someone to chat with
+

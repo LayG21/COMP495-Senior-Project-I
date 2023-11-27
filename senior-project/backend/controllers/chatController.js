@@ -19,11 +19,34 @@ const getUsers = async (req, res) => {
     try {
         //get users based on current user role
         if (userType === roles.STUDENT) {
-            results = await Advisor.find({}).select('-_id advisorID advisorFirstName advisorLastName');
+            //give alias names as response
+            //results = await Advisor.find({}).select('-_id advisorID advisorFirstName advisorLastName');
+            results = await Advisor.aggregate([
+                {
+                    $project: {
+                        _id: 0,
+                        id: '$advisorID',
+                        firstName: '$advisorFirstName',
+                        lastName: '$advisorLastName',
+                        email: '$advisorEmail',
+                    },
+                },
+            ]);
             //console.log(results);
         }
         else if (userType === roles.ADVISOR) {
-            results = await Student.find({}).select('-_id studentID studentFirstName studentLastName');
+            //results = await Student.find({}).select('-_id studentID studentFirstName studentLastName');
+            results = await Student.aggregate([
+                {
+                    $project: {
+                        _id: 0,
+                        id: '$studentID',
+                        firstName: '$studentFirstName',
+                        lastName: '$studentLastName',
+                        email: '$studentEmail',
+                    },
+                },
+            ]);
             //console.log(results);
         }
         //check if they are neither role or if role is empty

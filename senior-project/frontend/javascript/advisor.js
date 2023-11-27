@@ -44,7 +44,7 @@ tableBody.addEventListener("click", function (event) {
         // Open the modal and fetch user information
         modal.style.display = "block";
         var userID = event.target.closest("tr").querySelector("[data-label='ID']").textContent;
-        console.log(userID);
+        getSpecificStudent(userID);
         //fetchUserInformation(userID);
     }
 });
@@ -131,7 +131,38 @@ function searchStudent() {
 
 
 //get a specific students full profile based on their ID
-function getSpecificStudent() {
+function getSpecificStudent(userID) {
+    fetch(`/advisor/students/${userID}`, {
+        method: 'GET',
+        credentials: 'include',
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errorData => {
+                    throw new Error(`${errorData.error}`);
+                });
+            }
+            //console.log(response);
+            return response.json();
+        })
+        .then(data => {
+            //console.log('Received data:', data); // Log the received data
+            document.getElementById("studentID").textContent = data.studentID;
+            document.getElementById("firstName").textContent = data.studentFirstName;
+            //console.log('Updated firstName:', document.getElementById("firstName").textContent);
+            document.getElementById("lastName").textContent = data.studentLastName;
+            document.getElementById("email").textContent = data.studentEmail;
+            document.getElementById("status").textContent = data.studentStatus;
+            document.getElementById("major").textContent = data.studentMajor;
+            document.getElementById("classification").textContent = data.studentClassification;
+            document.getElementById("credits").textContent = data.studentCredit;
+            document.getElementById("gpa").textContent = data.studentGPA;
 
+        })
+        .catch(error => {
+            alert('Error: ' + error.message);
+        });
 }
 
+//TO do implement search function and updating table to show what was sent
+//Update CSS

@@ -105,7 +105,7 @@ const getSpecificStudent = async (req, res) => {
       return res.status(404).json({ message: 'No Matching Student' });
     }
 
-    res.status(200).json(specificStudent);
+    res.status(200).json(specificStudent[0]);
   } catch (error) {
     console.log('Error with getting specific student', error);
     res.status(500).json({ message: error.message });
@@ -130,29 +130,13 @@ Example Response getstudents:
         "studentID": 950505789,
         "studentFirstName": "Lisa",
         "studentLastName": "Wade",
-        "studentEmail": "lwade@aggies.ncat.edu",
-        "studentStatus": "Full-Time",
-        "studentClassification": "Senior",
-        "studentGPA": 3.4,
-        "studentCredit": 95,
-        "studentMajor": "Computer Science",
-        "advisorFirstName": "Mariah",
-        "advisorLastName": "Green",
-        "advisorEmail": "mg@ncat.edu"
+        "studentEmail": "lwade@aggies.ncat.edu"
     },
     {
         "studentID": 950705799,
         "studentFirstName": "Jade",
         "studentLastName": "Jackson",
-        "studentEmail": "jjackson@aggies.ncat.edu",
-        "studentStatus": "Full-Time",
-        "studentClassification": "Senior",
-        "studentGPA": 3.4,
-        "studentCredit": 100,
-        "studentMajor": "Computer Science",
-        "advisorFirstName": "Mariah",
-        "advisorLastName": "Green",
-        "advisorEmail": "mg@ncat.edu"
+        "studentEmail": "jjackson@aggies.ncat.edu"
     }
 ]
  */
