@@ -40,4 +40,4 @@ const classselectionSchema = new mongoose.Schema({
 });
 
 const ClassSelections = mongoose.model('ClassSelections', classselectionSchema);
-module.exports = Student;
+module.exports = ClassSelections;
