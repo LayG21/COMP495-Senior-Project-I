@@ -10,4 +10,6 @@ const path = require('path');
 //get student profile
 router.get("/profile", isAuthorized([roles.STUDENT]), getProfile);
 
+
+
 module.exports = router;
