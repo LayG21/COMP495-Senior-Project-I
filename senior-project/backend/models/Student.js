@@ -42,6 +42,14 @@ const studentSchema = new mongoose.Schema({
     ref: 'Advisor',
     required: true,
   },
+  studentMajor: {
+    type: String,
+    required: true,
+  },
+  studentCredit: {
+    type: Number,
+    required: true,
+  }
 });
 
 const Student = mongoose.model('Student', studentSchema);

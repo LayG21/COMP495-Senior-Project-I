@@ -19,7 +19,8 @@ const loginController = async (req, res) => {
             // Example: Check user credentials in the database
             const student = await Student.findOne({ studentEmail: email });
             if (!student) {
-                return res.status(404).send('Student not found');
+                console.log("No User with matching Email");
+                return res.status(404).send('No User with Matching Credentials');
             }
 
             const isPasswordValid = await bcrypt.compare(
@@ -28,7 +29,8 @@ const loginController = async (req, res) => {
             );
 
             if (!isPasswordValid) {
-                return res.status(401).send('Invalid password');
+                console.log("No user with matching password");
+                return res.status(401).send('No User With Matching Credentials');
             }
 
             // Assuming successful login, set user information in the session
@@ -49,7 +51,8 @@ const loginController = async (req, res) => {
             const advisor = await Advisor.findOne({ advisorEmail: email });
 
             if (!advisor) {
-                return res.status(404).send('Advisor not found');
+                console.log("No user with matching email");
+                return res.status(404).send('No User with Matching Credentials');
             }
 
             const isPasswordValid = await bcrypt.compare(
@@ -58,7 +61,8 @@ const loginController = async (req, res) => {
             );
 
             if (!isPasswordValid) {
-                return res.status(401).send('Invalid password');
+                console.log("No user with matching password");
+                return res.status(401).send('No User with Matching Credentials');
             }
 
             // Assuming successful login, set user information in the session
@@ -74,7 +78,7 @@ const loginController = async (req, res) => {
         }
     } catch (error) {
         console.error('Error:', error.message);
-        res.status(400).send('Bad Request');
+        res.status(500).send('Internal Server Error');
     }
 };
 

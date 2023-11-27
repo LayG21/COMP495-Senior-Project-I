@@ -56,7 +56,7 @@ console.log("Number of connections:", mongoose.connections.length);
 const sessionMiddleware = session({
   secret: "changeit",
   resave: true,
-  saveUninitialized: true,
+  saveUninitialized: false,
 });
 
 //use session middleware
@@ -87,34 +87,40 @@ app.use("/student", studentRoutes);
 
 //get home.html
 app.get("/home.html", isAuthenticated, isAuthorized([roles.STUDENT, roles.ADVISOR]), (req, res) => {
-  console.log("reached the home page");
+  //console.log("reached the home page");
   res.sendFile(path.join(__dirname, "../frontend/home.html"));
 });
 
 //get chat.html
+//removed so i can edit
 app.get("/chat.html", isAuthenticated, isAuthorized([roles.STUDENT, roles.ADVISOR]), (req, res) => {
-  console.log("reached the chat page");
+  // console.log("reached the chat page");
   res.sendFile(path.join(__dirname, "../frontend/chat.html"));
 });
 //get advisee-view.html 
 app.get('/advisee-view.html', isAuthenticated, isAuthorized([roles.ADVISOR]), (req, res) => {
+  //console.log("reached the advisee-view page");
   res.sendFile(path.join(__dirname, "../frontend/advisee-view.html"));
 });
 //get student-profile.html 
 app.get('/student-profile.html', isAuthenticated, isAuthorized([roles.STUDENT]), (req, res) => {
+  //console.log("reached the student profile page");
   res.sendFile(path.join(__dirname, "../frontend/student-profile.html"));
 });
 
 app.get('/gpa-calculator.html', isAuthenticated, isAuthorized([roles.STUDENT, roles.ADVISOR]), (req, res) => {
+  //console.log("reached the gpa calculator page");
   res.sendFile(path.join(__dirname, "../frontend/gpa-calculator.html"));
 });
 
 app.get('/course-calculator.html', isAuthenticated, isAuthorized([roles.STUDENT, roles.ADVISOR]), (req, res) => {
+  //console.log("reached the course calculator page");
   res.sendFile(path.join(__dirname, "../frontend/course-calculator.html"));
 });
 
 //I am not sure about the roles for this page
 app.get('/class-generator.html', isAuthenticated, (req, res) => {
+  //console.log("reached the class generator page");
   res.sendFile(path.join(__dirname, "../frontend/class-generator.html"));
 });
 
@@ -122,6 +128,7 @@ app.get('/class-generator.html', isAuthenticated, (req, res) => {
 
 
 //moved to bottom to make sure it works
+//stops from serving pages until they are checked for authentication and authroization
 //set static folder
 //serve html,css, and js
 app.use(express.static(path.join(__dirname, "../frontend")));

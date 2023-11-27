@@ -39,20 +39,80 @@
   </header>
 
   <main>
-    <h2>Advisor Proile Page</h2>
-    <form action="" method="get">
-      <label for="search-name-input">Enter Name</label>
-      <input type="search" class="search-name-input" id="search-name-input" />
-      <label for="search-major-input">Enter Major</label>
-      <input type="search" class="search-major-input" id="search-major-input" />
-      <label for="search-email-input">Enter Email</label>
-      <input type="search" class="search-email-input" id="search-email-input" />
+    <h2 id="page-header">Advisee Profile Page</h2>
+    <!--Box for displaying instructions-->
+    <div id="page-instructions">
+      <p>This page allows you to view your advisees' information and their grades.</p>
+      <button onclick="closeInstructions()">X</button>
+    </div>
+    <!--Search bar to search for users-->
+    <div class="search-container">
+      <input type="text" id="advisee-input" onkeyup="userSearch()" placeholder="Search For User...">
+    </div>
+    <!--Table of advisees with their information-->
+    <table id="advisee-list">
+      <thead>
+        <tr id="table-header">
+          <th>ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td data-label="ID">10348</td>
+          <td data-label="First Name">John</td>
+          <td data-label="Last Name">Smith</td>
+          <td data-label="Email">johnsmith@gmail.com</td>
+          <td data-label="Action"><button class="open-modal">View</button></td>
+        </tr>
+        <tr>
+          <td data-label="ID">10300</td>
+          <td data-label="First Name">Jane</td>
+          <td data-label="Last Name">Joe</td>
+          <td data-label="Email">janejoe@gmail.com</td>
+          <td data-label="Action"><button class="open-modal">View</button></td>
+        </tr>
+        <tr>
+          <td data-label="ID">10301</td>
+          <td data-label="First Name">Linda</td>
+          <td data-label="Last Name">Jane</td>
+          <td data-label="Email">lindajane@gmail.com</td>
+          <td data-label="Action"><button class="open-modal">View</button></td>
+        </tr>
+      </tbody>
 
-      <input type="submit" value="Search" onclick="searchStudent()" />
-      <input type="reset" value="Reset" />
-
-      <div class="output-search" id="output-search"></div>
-    </form>
+    </table>
+    <!--Modal for profile info-->
+    <div id="profile-modal">
+      <div id="modal-content">
+        <span id="close-modal">&times</span>
+        <h2>User Information</h2>
+        <hr />
+        <label for="studentID">ID:</label>
+        <p id="studentID">950432500</p>
+        <label for="firstName">First Name:</label>
+        <p id="firstName">Jane</p>
+        <label for="lastName">Last Name:</label>
+        <p id="lastName">Doe</p>
+        <label for="email">Email:</label>
+        <p id="email">janedoe@gmail.com</p>
+        <label for="status">Status:</label>
+        <p id="status">Full-Time</p>
+        <label for="major">Major:</label>
+        <p id="major">Computer Science</p>
+        <label for="classification">Classification:</label>
+        <p id="classification">Sophomore</p>
+        <label for="gpa">GPA:</label>
+        <p id="gpa">3.5</p>
+        <label for="credits">Credits:</label>
+        <p id="credits">67</p>
+      </div>
+    </div>
+    <!--Container for pagination-->
+    <div id="pagination-container"></div>
   </main>
   <!--Function for logging the user out-->
   <script src="./javascript/logout.js"></script>
