@@ -82,4 +82,23 @@ const loginController = async (req, res) => {
     }
 };
 
-module.exports = { loginController };
+//logout controller
+//works
+const logoutController = async (req, res) => {
+    // Destroy the session
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Error destroying session:', err);
+            res.status(500).send('An error occurred during logout');
+        } else {
+            // Clear the session cookie
+            console.log("Clearing session");
+            res.clearCookie('connect.sid');
+
+            // Redirect to the root URL
+            res.redirect('/');
+        }
+    });
+};
+
+module.exports = { loginController, logoutController };
