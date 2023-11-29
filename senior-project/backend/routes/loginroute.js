@@ -22,6 +22,7 @@ router.get("/", (req, res) => {
 
 
 //post request for when user adds credentials ad presses login
+//Sanitize because it takes in user input
 router.post('/login', validateInput, loginController);
 
 

@@ -5,7 +5,6 @@ let selectedUserID = null;
 let selectedUserName = null;
 let isChatWindowOpened = false;
 
-//Need on load event for displaying the list of users as the user goes to the page
 //Need to add event listener to the list of users to select a user
 //Need to add event listener to the chat window to send a message
 
