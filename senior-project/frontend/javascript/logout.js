@@ -4,7 +4,7 @@ var logoutLink = document.getElementById('logout-link');
 // Add a click event listener to the "Logout" link
 logoutLink.addEventListener('click', function (event) {
     // Prevent the default behavior of the link (e.g., navigating to "#" in this case)
-    console.log('Logout link clicked');
+    // console.log('Logout link clicked');
     event.preventDefault();
 
     // Call your existing logout function

@@ -30,17 +30,7 @@ function getProfile() {
             return response.json();
         })
         .then(data => {
-            // Update HTML elements with fetched data
-            document.getElementById('name-input').textContent = `${data.studentFirstName} ${data.studentLastName}`;
-            document.getElementById('id-input').textContent = data.studentID;
-            document.getElementById('email-input').textContent = data.studentEmail;
-            document.getElementById('status-input').textContent = data.studentStatus;
-            document.getElementById('classification-input').textContent = data.studentClassification;
-            document.getElementById('credit-input').textContent = data.studentCredit;
-            document.getElementById('gpa-input').textContent = data.studentGPA;
-            document.getElementById('major-input').textContent = data.studentMajor;
-            document.getElementById('advisor-input').textContent = `${data.advisorFirstName} ${data.advisorLastName}`;
-            document.getElementById('advisor-email-input').textContent = data.advisorEmail;
+            displayProfile(data);
         })
         .catch(error => {
             console.error(error);
@@ -67,8 +57,18 @@ function updateNavigation(userRole) {
     });
 }
 
-function displayProfile() {
-
+//UI function for updating page with data
+function displayProfile(data) {
+    document.getElementById('name-input').textContent = `${data.studentFirstName} ${data.studentLastName}`;
+    document.getElementById('id-input').textContent = data.studentID;
+    document.getElementById('email-input').textContent = data.studentEmail;
+    document.getElementById('status-input').textContent = data.studentStatus;
+    document.getElementById('classification-input').textContent = data.studentClassification;
+    document.getElementById('credit-input').textContent = data.studentCredit;
+    document.getElementById('gpa-input').textContent = data.studentGPA;
+    document.getElementById('major-input').textContent = data.studentMajor;
+    document.getElementById('advisor-input').textContent = `${data.advisorFirstName} ${data.advisorLastName}`;
+    document.getElementById('advisor-email-input').textContent = data.advisorEmail;
 }
 //Change links displayed
 //Upload student information onto the page
