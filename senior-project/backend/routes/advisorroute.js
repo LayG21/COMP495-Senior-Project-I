@@ -12,18 +12,21 @@ const path = require('path');
 
 //To DO: 
 //Validate and Santitize
-//Eventually change to working with express session
+
 
 
 //get all assigned students
+//This does not take in user input, this takes in session information managed on the server side
 router.get("/students", isAuthenticated, isAuthorized([roles.ADVISOR]), getStudents);
+
+//get students based on search
+//sanitize because this takes in user input
+router.get("/students/search", isAuthenticated, isAuthorized([roles.ADVISOR]), searchStudents);
+
 
 //get specific assigned student by id
 //Sanitize because this takes in user input
 router.get("/students/:studentID", isAuthenticated, isAuthorized([roles.ADVISOR]), getSpecificStudent);
 
-//get students based on search
-//sanitize because this takes in user input
-router.get("/students/search", isAuthenticated, isAuthorized([roles.ADVISOR]), searchStudents);
 
 module.exports = router;
