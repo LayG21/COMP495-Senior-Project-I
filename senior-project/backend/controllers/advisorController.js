@@ -104,7 +104,7 @@ const searchStudents = async (req, res) => {
     );
 
     if (searchResults.length === 0) {
-      return res.status(204).json({ message: 'No Matching Students' });
+      return res.status(204).json();
     }
     // Format the response to match the structure of getStudents
     const formattedResponse = searchResults.map(student => ({
