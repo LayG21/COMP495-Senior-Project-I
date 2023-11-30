@@ -85,6 +85,30 @@ function updateUserList(users) {
         sidebarContainer.appendChild(listItem);
     });
 }
+
+//function for when something is typed in input field of search box
+
+function searchUsers() {
+    let searchInput = document.getElementById("search-input").value;
+    console.log(`something typed in search field:${searchInput}`)
+}
+
+//function for displaying users on search
+function displaySearchResults(users) {
+
+}
+
+//Function for UI updates
+//Makes UI update by adding message to window as a receiver
+
+function makeReceiverMessage() {
+
+}
+//function for UI updates
+//Makes UI update by adding message to window as sender
+function makeSendermessage() {
+
+}
 // chat.js
 
 // Your Socket.IO logic goes here
@@ -99,8 +123,9 @@ socket.on('disconnect', function () {
 });*/
 
 //function to send message. Will need to grab the selectedUserID that was stored when the currentuser selected someone to chat with
+//trigger socket event for sending message
 function sendMessage() {
-    //get message and send through socket event
+
 
 
 }
