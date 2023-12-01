@@ -9,6 +9,6 @@ const { roles } = require("../roles/roles");
 const path = require('path');
 
 // Logout route
-router.post('/logout', isAuthenticated, logoutController);
+router.post('/logout', logoutController);
 
 module.exports = router;
