@@ -134,7 +134,48 @@ const saveSentMessage = async (req, res) => {
 //search through students if current user is advisor
 //To do: implement search
 const searchUsers = async (req, res) => {
-    const qsearchuery = req.query.searchQuery;
+    const role = req.session.user.role;
+    const searchQuery = req.query.searchQuery;
+    let searchResults = [];
+    try {
+        if (role === roles.STUDENT) {
+            searchResults = await Advisor.find({
+                $or: [
+                    { advisorFirstName: { $regex: new RegExp(searchQuery, 'i') } },
+                    { advisorLastName: { $regex: new RegExp(searchQuery, 'i') } },
+                ],
+            },
+                { advisorID: 1, advisorFirstName: 1, advisorLastName: 1, _id: 0 }
+            ).limit(5);
+        }
+        else if (role === roles.ADVISOR) {
+            searchResults = await Student.find({
+                $or: [
+                    { studentFirstName: { $regex: new RegExp(searchQuery, 'i') } },
+                    { studentLastName: { $regex: new RegExp(searchQuery, 'i') } },
+                ],
+            },
+                { studentID: 1, studentFirstName: 1, studentLastName: 1, _id: 0 }
+            ).limit(5);
+        }
+
+        //if empty return nothing but the status
+
+        if (searchResults.length === 0) {
+            return res.status(204).json();
+        }
+
+        //format response
+        const formattedResponse = searchResults.map(result => ({
+            id: result.studentID || result.advisorID,
+            firstName: result.studentFirstName || result.advisorFirstName,
+            lastName: result.studentLastName || result.advisorLastName,
+        }));
+        res.status(200).json(formattedResponse);
+    } catch (error) {
+        console.log('Error in Search Users Controller');
+        res.status(500).json({ message: error.message })
+    }
 
 }
 //socket io logic for sending and receiving messages

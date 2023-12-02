@@ -24,7 +24,7 @@ router.get("/users", isAuthenticated, isAuthorized([roles.ADVISOR, roles.STUDENT
 
 //get users based on search
 //Sanitize because it takes in user input
-router.post("/search/", isAuthenticated, isAuthorized([roles.ADVISOR, roles.STUDENT]), searchUsers);
+router.post("/search", isAuthenticated, isAuthorized([roles.ADVISOR, roles.STUDENT]), searchUsers);
 
 //get messages between users
 //sanitize because it takes in user input
