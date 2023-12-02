@@ -158,11 +158,11 @@ function searchStudent() {
     // if empty display default list of users
     if (searchInput.trim() === "") {
         getStudents();
-        console.log("input is now empty, displaying default");
+        //console.log("input is now empty, displaying default");
     }
     //get other users to update the table with and pass it to the  table display function
     else {
-        fetch(`/advisor/students/search?searchQuery=${searchInput}`, {
+        fetch(`/advisor/students/search?searchQuery=${encodeURIComponent(searchInput)}`, {
             method: 'GET',
             credentials: 'include',
         })
@@ -185,12 +185,12 @@ function searchStudent() {
             });
 
     }
-    console.log(searchInput);
+    //console.log(searchInput);
 }
 
 //get a specific students full profile based on their ID
 function getSpecificStudent(userID) {
-    fetch(`/advisor/students/${userID}`, {
+    fetch(`/advisor/students/${parseInt(userID)}`, {
         method: 'GET',
         credentials: 'include',
     })
