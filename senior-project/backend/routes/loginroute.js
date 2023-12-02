@@ -2,12 +2,11 @@ const express = require("express");
 const router = express.Router();
 const Student = require("../models/Student");
 const Advisor = require("../models/Advisor");
+const { validationRules, validateAndSanitizeInput } = require("../middleware/loginvalidate");
 const { loginController } = require("../controllers/authController");
-const { validateInput } = require("../middleware/loginvalidate");
-const bcrypt = require('bcrypt');
-const { roles } = require("../roles/roles");
 const path = require('path');
 
+router.use(express.json());
 //Validate and Santitize user input
 
 //have to protect html page and requests made
@@ -23,7 +22,7 @@ router.get("/", (req, res) => {
 
 //post request for when user adds credentials ad presses login
 //Sanitize because it takes in user input
-router.post('/login', validateInput, loginController);
+router.post('/login', validationRules, validateAndSanitizeInput, loginController);
 
 
 

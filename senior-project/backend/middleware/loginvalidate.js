@@ -1,30 +1,54 @@
-//imports
+const { validationResult, body } = require('express-validator');
 const { roles } = require('../roles/roles');
+
 const emailRegex = /^[\w-]+(?:\.[\w-]+)*@(?:ncat\.edu|aggies\.ncat\.edu)$/;
-//login validation middleware to be used during login
-//can not trust user input so you sanitize and validate
-//change the way errors are thrown
-function validateInput(req, res, next) {
 
-    const userType = req.body.userType;
-    const userEmail = req.body.userEmail;
-    const userPassword = req.body.userPassword;
+// Define your validation and sanitation rules so it can be looked through
+const validationRules = [
+    // validate and sanitize email
+    body('userEmail')
+        .notEmpty().withMessage('Email is required')
+        .custom(value => {
+            if (!emailRegex.test(value)) {
+                throw new Error('Please login with your NCAT email');
+            }
+            return true;
+        })
+        .trim()
+        .escape(),
 
-    //check for missing data
-    if (!userType || !userEmail || !userPassword) {
-        return res.status(400).send("Missing Form Data. Please Try Again");
-    }
-    //check for correct email used
-    if (!emailRegex.test(userEmail)) {
-        return res.status(400).send("Please login with your NCAT email");
-    }
-    //check if the correct userType was selected
-    if (userType !== roles.STUDENT && userType !== roles.ADVISOR) {
-        return res.status(400).send("Invalid user type");
+    // validate and sanitize password
+    body('userPassword')
+        .notEmpty().withMessage('Password is required')
+        .trim()
+        .escape(),
 
+    // validate and sanitize user type
+    body('userType')
+        .notEmpty().withMessage('User type not defined')
+        .custom(value => {
+            if (value !== roles.STUDENT && value !== roles.ADVISOR) {
+                throw new Error('Invalid user type');
+            }
+            return true;
+        })
+        .trim()
+        .escape(),
+];
+
+// Create a middleware function using the defined validation rules
+function validateAndSanitizeInput(req, res, next) {
+    // Apply validation rules
+    // Check for validation errors
+    validationRules.forEach(rule => rule(req, res, () => { }));
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
     }
-    //If all fields are valid, move to the next step
+
+    // No validation errors, proceed to the next middleware (login controller)
     next();
 }
 
-module.exports = { validateInput };
+module.exports = { validationRules, validateAndSanitizeInput };
