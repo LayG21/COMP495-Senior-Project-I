@@ -50,50 +50,118 @@
   <!--Body of chat page-->
   <main class="chat-container">
     <!--Sidebar-->
-    <div class="sidebar">
+    <div id="sidebar">
       <!--Search Bar-->
-      <div id="search-bar">
-        <input type="text" id="search-input" placeholder="Search by name..." name="search" oninput="searchUsers()">
-        <div id="search-results">
-          <!--Results will be displayed here-->
+      <div id="search-overlay">
+        <div id="search-bar">
+          <input type="text" id="search-input" placeholder="Search by name..." name="search" oninput="searchUsers()">
+          <div id="search-results">
+            <!--Results will be displayed here-->
+            <ul id="searched-users">
+              <!--User results go here-->
+              <li class="search">User 1</li>
+              <li class="search">User 2</li>
+              <li class="search">User 3</li>
+              <li class="search">User 4</li>
+              <li class="search">User 5</li>
+            </ul>
+          </div>
         </div>
       </div>
+
       <!--Section for List of users to select from-->
+      <p id="sidebar-header">Users:</p>
       <div class="user-list">
-        <h3 id="sidebar-header">Users:</h3>
         <!--Actual list of users-->
         <ul class="sidebar-userlist">
-          <li class="sidebar-user" data-userID="950723111">
-            <p class="sidebar-username">User 1</p>
-          </li>
-          <li class="sidebar-user" data-userID="950723000">
-            <p class="sidebar-username">User 2</p>
-          </li>
         </ul>
       </div>
+      <div id="sidebar-footer"></div>
     </div>
     <!--Chat Window-->
-    <div class="chat-window">
+    <div id="chat-window">
 
       <!--Chat Header-->
-      <div class="chat-header">
-        <span id="selected-username">Jane Doe</span>
-        <button id="close-button">Close</button>
+      <div id="chat-header">
+        <div id="selecteduserContainer">
+          <span id="selected-username">Jane Doe</span>
+        </div>
+        <div id="closebContainer">
+          <button id="close-button" onclick="closeChat()">Close</button>
+        </div>
+
       </div>
 
       <!--Chat Body-->
-      <div class="chat-body">
+      <div id="chat-body">
 
         <!--Chat Messages-->
         <div class="messages">
-          <p>Hi, how can I help you?</p>
+          <!--Dynamically fill with messages-->
+          <div class="senderMessage">
+            <p>Hi, how can I help you?</p>
+          </div>
+        </div>
+
+        <div class="messages">
+          <div class="senderMessage">
+            <p>I am great what about you?</p>
+          </div>
+        </div>
+
+        <div class="messages">
+          <div class="receiverMessage">
+            <p>Test 1</p>
+          </div>
+        </div>
+
+        <div class="messages">
+          <div class="receiverMessage">
+            <p>Test 2</p>
+          </div>
+        </div>
+
+        <div class="messages">
+          <div class="senderMessage">
+            <p>Test 3</p>
+          </div>
+        </div>
+
+        <div class="messages">
+          <div class="senderMessage">
+            <p>Test 4</p>
+          </div>
+        </div>
+
+        <div class="messages">
+          <div class="receiverMessage">
+            <p>Test 5</p>
+          </div>
+        </div>
+
+        <div class="messages">
+          <div class="receiverMessage">
+            <p>Test 6</p>
+          </div>
+        </div>
+
+        <div class="messages">
+          <div class="senderMessage">
+            <p>Test test</p>
+          </div>
+        </div>
+
+        <div class="messages">
+          <div class="receiverMessage">
+            <p>Test 10</p>
+          </div>
         </div>
       </div>
 
       <!--Chat Footer-->
       <div class="chat-footer">
         <input id="chat-input" type="text" placeholder="Type Message...">
-        <button onclick="sendMessage()">Send</button>
+        <button id="send-button" onclick="sendMessage()">Send</button>
       </div>
     </div>
   </main>
