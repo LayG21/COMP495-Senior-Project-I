@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Classes</title>
+    <link rel="stylesheet" href="css/nav.css" />
+    <link rel="stylesheet" href="css/profile.css" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header class="navbar">
+        <a class="logo" href="home.html">Aggie Advise</a>
+        <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+        <nav>
+          <ul class="links">
+            <li data-role="STUDENT"><a class="nav-link" href="student-profile.html">Profile</a></li>
+            <li data-role="ADVISOR"><a class="nav-link" href="advisee-view.html">View</a></li>
+            <li><a class="nav-link" href="chat.html">Chat</a></li>
+            <li class="calc-links">
+              <a class="nav-link" href="#">Calculator &#x25BC;</a>
+              <ul class="dropdown" id="dropdown">
+                <li><a href="gpa-calculator.html">GPA Calculator</a></li>
+                <li>
+                  <a href="course-calculator.html">Course Calculator</a>
+                </li>
+              </ul>
+            </li>
+            <li data-role="STUDENT">
+              <a class="nav-link" href="class-generator.html">Class Generator</a>
+            </li>
+            <li><a class="nav-link" id="logout-link" href="#">Logout</a></li>
+          </ul>
+        </nav>
+        <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
+    </header>
+    
+    <h1>Class Selection</h1>
+
+    <form id="classSelectionForm" action="/select_classes" method="POST">
+        <label for="classSelect">Choose your classes:</label>
+        <br><br>
+        <label for="class1"><strong>CLASS 1</strong></label>
+        <br><br>
+        class Codename:
+        <select id="classCodename1" size="1">
+            <option value=""></option>
+            <option value="GEEN">GEEN</option>
+            <option value="COMP">COMP</option>
+        </select>
+        class ID:
+        <select id="classID1" size="1">
+            <option value=""></option>
+            <option value="111">111</option>
+            <option value="120">120</option>
+            <option value="121">121</option>
+            <option value="160">160</option>
+            <option value="163">163</option>
+            <option value="167">167</option>
+            <option value="170">170</option>
+            <option value="180">180</option>
+            <option value="200">200</option>
+            <option value="267">267</option>
+            <option value="280">280</option>
+            <option value="285">285</option>
+        </select>
+        class name:
+        <select id="className1" size="1">
+            <option value=""></option>
+            <option value="College of Engineering Colloqium">College of Engineering Colloqium</option>
+            <option value="Computers and Their Use">Computers and Their Use</option>
+            <option value="Computer Science Freshmen Colloqium">Computer Science Freshmen Colloqium</option>
+            <option value="Computer program in C++ for Engineers">Computer program in C++ for Engineers</option>
+            <option value="Introduction to Computer Programming">Introduction to Computer Programming</option>
+            <option value="Computer Programming Design">Computer Programming Design</option>
+            <option value="Introduction to Web Programming">Introduction to Web Programming</option>
+            <option value="Discrete Structures">Discrete Structures</option>
+            <option value="Computer Science Sophomore Colloquium">Computer Science Sophomore Colloquium</option>
+            <option value="Database Design">Database Design</option>
+            <option value="Data Structures">Data Structures</option>
+            <option value="Design and Analysis of Algorithm">Design and Analysis of Algorithm</option>
+        </select>
+        Semester:
+        <select id="semester" name="semester" size="1">
+            <option value=""></option>
+            <option value="fall">Fall</option>
+            <option value="Spring">Spring</option>
+            <option value="Summer I">Summer I</option>
+            <option value="Summer II">Summer II</option>
+        </select>
+        <br><br>
+        <label for="class2"><strong>CLASS 2</strong></label>
+        <br><br>
+        class Codename:
+        <select id="classCodename2" size="1">
+            <option value=""></option>
+            <option value="GEEN">GEEN</option>
+            <option value="COMP">COMP</option>
+        </select>
+        class ID:
+        <select id="classID2" size="1">
+            <option value=""></option>
+            <option value="111">111</option>
+            <option value="120">120</option>
+            <option value="121">121</option>
+            <option value="160">160</option>
+            <option value="163">163</option>
+            <option value="167">167</option>
+            <option value="170">170</option>
+            <option value="180">180</option>
+            <option value="200">200</option>
+            <option value="267">267</option>
+            <option value="280">280</option>
+            <option value="285">285</option>
+        </select>
+        class name:
+        <select id="className2" size="1">
+            <option value=""></option>
+            <option value="College of Engineering Colloqium">College of Engineering Colloqium</option>
+            <option value="Computers and Their Use">Computers and Their Use</option>
+            <option value="Computer Science Freshmen Colloqium">Computer Science Freshmen Colloqium</option>
+            <option value="Computer program in C++ for Engineers">Computer program in C++ for Engineers</option>
+            <option value="Introduction to Computer Programming">Introduction to Computer Programming</option>
+            <option value="Computer Programming Design">Computer Programming Design</option>
+            <option value="Introduction to Web Programming">Introduction to Web Programming</option>
+            <option value="Discrete Structures">Discrete Structures</option>
+            <option value="Computer Science Sophomore Colloquium">Computer Science Sophomore Colloquium</option>
+            <option value="Database Design">Database Design</option>
+            <option value="Data Structures">Data Structures</option>
+            <option value="Design and Analysis of Algorithm">Design and Analysis of Algorithm</option>
+        </select>
+        Semester:
+        <select id="semester" name="semester" size="1">
+            <option value=""></option>
+            <option value="fall">Fall</option>
+            <option value="Spring">Spring</option>
+            <option value="Summer I">Summer I</option>
+            <option value="Summer II">Summer II</option>
+        </select>
+        <br><br>
+        <label for="class3"><strong>CLASS 3</strong></label>
+        <br><br>
+        class Codename:
+        <select id="classCodename3" size="1">
+            <option value=""></option>
+            <option value="GEEN">GEEN</option>
+            <option value="COMP">COMP</option>
+        </select>
+        class ID:
+        <select id="classID3" size="1">
+            <option value=""></option>
+            <option value="111">111</option>
+            <option value="120">120</option>
+            <option value="121">121</option>
+            <option value="160">160</option>
+            <option value="163">163</option>
+            <option value="167">167</option>
+            <option value="170">170</option>
+            <option value="180">180</option>
+            <option value="200">200</option>
+            <option value="267">267</option>
+            <option value="280">280</option>
+            <option value="285">285</option>
+        </select>
+        class name:
+        <select id="className3" size="1">
+            <option value=""></option>
+            <option value="College of Engineering Colloqium">College of Engineering Colloqium</option>
+            <option value="Computers and Their Use">Computers and Their Use</option>
+            <option value="Computer Science Freshmen Colloqium">Computer Science Freshmen Colloqium</option>
+            <option value="Computer program in C++ for Engineers">Computer program in C++ for Engineers</option>
+            <option value="Introduction to Computer Programming">Introduction to Computer Programming</option>
+            <option value="Computer Programming Design">Computer Programming Design</option>
+            <option value="Introduction to Web Programming">Introduction to Web Programming</option>
+            <option value="Discrete Structures">Discrete Structures</option>
+            <option value="Computer Science Sophomore Colloquium">Computer Science Sophomore Colloquium</option>
+            <option value="Database Design">Database Design</option>
+            <option value="Data Structures">Data Structures</option>
+            <option value="Design and Analysis of Algorithm">Design and Analysis of Algorithm</option>
+        </select>
+        Semester:
+        <select id="semester" name="semester" size="1">
+            <option value=""></option>
+            <option value="fall">Fall</option>
+            <option value="Spring">Spring</option>
+            <option value="Summer I">Summer I</option>
+            <option value="Summer II">Summer II</option>
+        </select>
+        <br><br>
+        <label for="class4"><strong>CLASS 4</strong></label>
+        <br><br>
+        class Codename:
+        <select id="classCodename4" size="1">
+            <option value=""></option>
+            <option value="GEEN">GEEN</option>
+            <option value="COMP">COMP</option>
+        </select>
+        class ID:
+        <select id="classID4" size="1">
+            <option value=""></option>
+            <option value="111">111</option>
+            <option value="120">120</option>
+            <option value="121">121</option>
+            <option value="160">160</option>
+            <option value="163">163</option>
+            <option value="167">167</option>
+            <option value="170">170</option>
+            <option value="180">180</option>
+            <option value="200">200</option>
+            <option value="267">267</option>
+            <option value="280">280</option>
+            <option value="285">285</option>
+        </select>
+        class name:
+        <select id="className4" size="1">
+            <option value=""></option>
+            <option value="College of Engineering Colloqium">College of Engineering Colloqium</option>
+            <option value="Computers and Their Use">Computers and Their Use</option>
+            <option value="Computer Science Freshmen Colloqium">Computer Science Freshmen Colloqium</option>
+            <option value="Computer program in C++ for Engineers">Computer program in C++ for Engineers</option>
+            <option value="Introduction to Computer Programming">Introduction to Computer Programming</option>
+            <option value="Computer Programming Design">Computer Programming Design</option>
+            <option value="Introduction to Web Programming">Introduction to Web Programming</option>
+            <option value="Discrete Structures">Discrete Structures</option>
+            <option value="Computer Science Sophomore Colloquium">Computer Science Sophomore Colloquium</option>
+            <option value="Database Design">Database Design</option>
+            <option value="Data Structures">Data Structures</option>
+            <option value="Design and Analysis of Algorithm">Design and Analysis of Algorithm</option>
+        </select>
+        Semester:
+        <select id="semester" name="semester" size="1">
+            <option value=""></option>
+            <option value="fall">Fall</option>
+            <option value="Spring">Spring</option>
+            <option value="Summer I">Summer I</option>
+            <option value="Summer II">Summer II</option>
+        </select>
+        <br><br>
+        <label for="class5"><strong>CLASS 5</strong></label>
+        <br><br>
+        class Codename:
+        <select id="classCodename5" size="1">
+            <option value=""></option>
+            <option value="GEEN">GEEN</option>
+            <option value="COMP">COMP</option>
+        </select>
+        class ID:
+        <select id="classID5" size="1">
+            <option value=""></option>
+            <option value="111">111</option>
+            <option value="120">120</option>
+            <option value="121">121</option>
+            <option value="160">160</option>
+            <option value="163">163</option>
+            <option value="167">167</option>
+            <option value="170">170</option>
+            <option value="180">180</option>
+            <option value="200">200</option>
+            <option value="267">267</option>
+            <option value="280">280</option>
+            <option value="285">285</option>
+        </select>
+        class name:
+        <select id="className5" size="1">
+            <option value=""></option>
+            <option value="College of Engineering Colloqium">College of Engineering Colloqium</option>
+            <option value="Computers and Their Use">Computers and Their Use</option>
+            <option value="Computer Science Freshmen Colloqium">Computer Science Freshmen Colloqium</option>
+            <option value="Computer program in C++ for Engineers">Computer program in C++ for Engineers</option>
+            <option value="Introduction to Computer Programming">Introduction to Computer Programming</option>
+            <option value="Computer Programming Design">Computer Programming Design</option>
+            <option value="Introduction to Web Programming">Introduction to Web Programming</option>
+            <option value="Discrete Structures">Discrete Structures</option>
+            <option value="Computer Science Sophomore Colloquium">Computer Science Sophomore Colloquium</option>
+            <option value="Database Design">Database Design</option>
+            <option value="Data Structures">Data Structures</option>
+            <option value="Design and Analysis of Algorithm">Design and Analysis of Algorithm</option>
+        </select>
+        Semester:
+        <select id="semester" name="semester" size="1">
+            <option value=""></option>
+            <option value="fall">Fall</option>
+            <option value="Spring">Spring</option>
+            <option value="Summer I">Summer I</option>
+            <option value="Summer II">Summer II</option>
+        </select>
+        <br><br>
+        <input type="button" value="Submit" onclick="selectClasses()">
+        <input type="button" value="Clear" onclick="clearClasses()">
+        
+
+
+    </form>
+    <script>
+         // JavaScript to Handle Form Submission
+         function selectClasses() {
+            console.log('selectClasses() called'); // Add this line
+             // Get and prepare the selected classes data (selectedClassesData)
+             const selectedClassesData = [];
+             const promises = [];
+             let lastSelectionID = 0; // Initialize this to the highest SelectionID in your database
+
+             for (let i = 1; i <= 5; i++) {
+                const classCodename = document.getElementById(`classCodename${i}`).value;
+                const classID = document.getElementById(`classID${i}`).value;
+                const className = document.getElementById(`className${i}`).value; // Get class name
+                const semester = document.getElementById('semester').value; // Assuming all classes share the same semester
+
+                //console.log(`classCodename${i}:`, classCodename); // Log classCodename
+                console.log(`classID${i}:`, classID); // Log classID
+                console.log(`className${i}:`, className); // Log className
+                console.log('semester:', semester); // Log semester
+
+                if (classCodename && classID) {
+                    lastSelectionID++; // Increment the last used SelectionID
+                    selectedClassesData.push({
+                        SelectedClassCodeName: classCodename, // Update to match your server-side column names
+                        SelectedClassID: classID, // Update to match your server-side column names
+                        SelectedClassName: className, // Match your server-side column name
+                        Semester: semester,
+                        SelectionDate: new Date().toISOString().slice(0, 19).replace('T', ' '), 
+                     });
+                }
+            }
+
+            console.log('selectedClassesData:', selectedClassesData); // Log selectedClassesData
+            console.log('selectedClassesData:', selectedClassesData);
+            selectedClassesData.forEach((item, index) => {
+                console.log(`Item ${index}:`, item);
+            });
+
+
+
+
+            // Make an AJAX request to send the data to the server
+            $.ajax({
+                type: 'POST',
+                url: '/select_classes',
+                data: {
+                    selectedClasses: JSON.stringify(selectedClassesData), // Your form data
+                },
+                traditional:true,
+
+                
+
+                success: function (response){
+                    // Show a success message to the user
+                    alert(response); // You can use a more user-friendly way to display the message
+                },
+
+                error: function (error){
+                    // Show an error message to the user
+                    alert('Error: ' + error.responseText); // You can customize the error message
+                },
+            
+            });
+                 
+        
+            
+        }
+        // Add an event listener to the form submission
+        document.getElementById('classSelectionForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Prevent the default form submission behavior
+            console.log('Form submitted');
+            selectClasses(); // Call the selectClasses function when the form is submitted
+        });
+
+
+        function clearClasses() {
+            // Get the form element
+            var form = document.getElementById('classSelectionForm'); // replace 'yourFormId' with the actual id of your form
+
+            // Reset the form to its initial state
+            form.reset();
+        }
+    </script>
+    <script src="./javascript/logout.js"></script>
+</body>
+</html>

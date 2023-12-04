@@ -10,7 +10,7 @@ const getProfile = async (req, res) => {
   const studentID = parseInt(req.session.user.id);
 
   try {
-    console.log('Attempting to get profile for studentID:', studentID);
+    
     const studentInfo = await Student.aggregate([
       {
         $match: { studentID: studentID }
@@ -46,13 +46,12 @@ const getProfile = async (req, res) => {
       }
     ]);
 
-    console.log('After aggregation, studentInfo:', studentInfo);
 
     if (!studentInfo || studentInfo.length === 0) {
       return res.status(404).json({ message: 'Student not found' });
     }
 
-    console.log('Sending studentInfo to client:', studentInfo[0]);
+   
 
     res.status(200).json(studentInfo[0]);
   } catch (error) {

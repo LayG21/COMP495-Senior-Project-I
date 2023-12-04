@@ -6,12 +6,27 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     //Change navbar to display links user has access to
     updateNavigation(userRole);
+
+    getProfile();
 });
 
 //server side requests
 //gets and displays student information or will display error
 //Gets students information
 function getProfile() {
+    fetch('/student/profile')
+    .then(response => {
+        if(!response.ok){
+            throw new Error(`HTTP error: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data =>{
+        displayProfile(data); 
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation: ', error);
+    });
 
 }
 
@@ -39,13 +54,17 @@ function displayProfile(data) {
           const gpaElement = document.getElementById('gpa-input');
           const advisorElement = document.getElementById('advisor-input');
           const emailElement = document.getElementById('email-input');
+          const studentMajorElement = document.getElementById('major-input');
+          const studentCreditElement = document.getElementById('credit-input');
    
           // Update the HTML elements with the profile data
           studentIdElement.innerHTML = data.studentID;
           nameElement.innerHTML = data.studentFirstName +" "+ data.studentLastName;
           studentemailElement.innerHTML =  data.studentEmail;
+          studentMajorElement.innerHTML = data.studentMajor;
           statusElement.innerHTML =  data.studentStatus;
           classificationElement.innerHTML = data.studentClassification;
+          studentCreditElement.innerHTML = data.studentCredit;
           gpaElement.innerHTML = data.studentGPA;
           advisorElement.innerHTML = data.advisorFirstName +" "+ data.advisorLastName;
           emailElement.innerHTML = data.advisorEmail;
