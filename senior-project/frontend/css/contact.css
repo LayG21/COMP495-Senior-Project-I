@@ -1,5 +1,0 @@
-/*Styling for contact page. Need to fix*/
-main .left-column, main .right-column {
-    display: flex;
-    flex-direction: row;
-}

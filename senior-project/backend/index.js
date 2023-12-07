@@ -118,11 +118,7 @@ app.get('/course-calculator.html', isAuthenticated, isAuthorized([roles.STUDENT,
   res.sendFile(path.join(__dirname, "../frontend/course-calculator.html"));
 });
 
-//I am not sure about the roles for this page
-app.get('/class-generator.html', isAuthenticated, (req, res) => {
-  //console.log("reached the class generator page");
-  res.sendFile(path.join(__dirname, "../frontend/class-generator.html"));
-});
+
 
 
 
