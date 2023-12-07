@@ -103,53 +103,48 @@ function openConversation(data) {
     chatHeaderName.textContent = "";
     chatHeaderName.textContent = selectedUserName;
 
-    //if the window is closed open it and display messages
-    if (chatWindow.style.visibility === 'hidden') {
-        chatWindow.style.visibility = 'visible';
-        if (data.length === 0) {
-            chatBody.textContent = "No messages";
-        }
-        else {
-            data.forEach(message => {
-                let messageDiv = document.createElement("div");
-                messageDiv.classList.add("messages");
+    // Open the window (or update header if already open)
+    chatWindow.style.visibility = 'visible';
 
-                let messageContent = document.createElement("div");
-                messageContent.classList.add(message.senderID === selectedUserID ? "receiverMessage" : "senderMessage");
+    if (data.length === 0) {
+        displayNoMessages();
+    } else {
+        data.forEach(message => {
+            let nomsgDiv = document.getElementById("noMessage");
+            if (nomsgDiv) {
+                chatBody.removeChild(nomsgDiv);
+            }
+            let messageDiv = document.createElement("div");
+            messageDiv.classList.add("messages");
 
-                let messageText = document.createElement("p");
-                messageText.textContent = message.content;
+            let messageContent = document.createElement("div");
+            messageContent.classList.add(message.senderID === selectedUserID ? "receiverMessage" : "senderMessage");
 
-                messageContent.appendChild(messageText);
-                messageDiv.appendChild(messageContent);
-                chatBody.appendChild(messageDiv);
-            })
-        }
-    }
-    //if it was already open there is no need to open it, just change the header and body
-    else {
-        if (data.length === 0) {
-            chatBody.textContent = "No messages";
-        }
-        else {
-            data.forEach(message => {
-                let messageDiv = document.createElement("div");
-                messageDiv.classList.add("messages");
+            let messageText = document.createElement("p");
+            messageText.textContent = message.content;
 
-                let messageContent = document.createElement("div");
-                messageContent.classList.add(message.senderID === selectedUserID ? "receiverMessage" : "senderMessage");
-
-                let messageText = document.createElement("p");
-                messageText.textContent = message.content;
-
-                messageContent.appendChild(messageText);
-                messageDiv.appendChild(messageContent);
-                chatBody.appendChild(messageDiv);
-            })
-        }
+            messageContent.appendChild(messageText);
+            messageDiv.appendChild(messageContent);
+            chatBody.appendChild(messageDiv);
+        });
     }
 }
 
+//Update UI to tell user there are no messages
+function displayNoMessages() {
+    // Check if the "noMessage" div already exists
+    let nomsgDiv = document.getElementById("noMessage");
+    if (!nomsgDiv) {
+        let nomessageConteiner = document.createElement("div");
+        let nomessage = document.createElement("p");
+
+        nomessageConteiner.setAttribute("id", "noMessage");
+        nomessage.textContent = "No messages found";
+
+        nomessageConteiner.appendChild(nomessage);
+        chatBody.appendChild(nomessageConteiner);
+    }
+}
 
 
 //function for updating sidebar with users
@@ -169,7 +164,6 @@ function updateUserList(users) {
         username.textContent = `${user.firstName} ${user.lastName}`;
 
         listItem.appendChild(username);
-        //console.log(listItem);
         sidebarContainer.appendChild(listItem);
     });
 }
@@ -185,24 +179,28 @@ function searchUsers() {
 function displaySearchResults(users) {
 
 }
-//open chat window and update it with selected user and messages between both parties
-function openChatWindow(userID, userName) {
-    chatHeaderName.textContent = `${userName}`;
-    console.log(`Window is being opened for user with this ID:${userID} and name: ${userName}`);
-}
 
-//clear body and user name on close
-function closeWindow() {
+
+//clear window/ chat and close it
+function closeChat() {
     //clear header
-    //chatHeaderName.textContent = "";
+    selectedUserID = "";
+    selectedUserName = "";
+    chatHeaderName.textContent = "";
     chatBody.textContent = "";
-    //chatWindow.style.display = "none";
+    chatWindow.style.visibility = "hidden";
 }
 
 //Function for UI updates
 //Makes UI update by adding message to window as a receiver
 
 function makeReceiverMessage(content) {
+    //remove no msg div if there is one
+    let nomsgDiv = document.getElementById("noMessage");
+    if (nomsgDiv) {
+        chatBody.removeChild(nomsgDiv);
+    }
+
     let messageDiv = document.createElement("div");
     messageDiv.classList.add("messages");
 
@@ -219,6 +217,12 @@ function makeReceiverMessage(content) {
 //function for UI updates
 //Makes UI update by adding message to window as sender
 function makeSenderMessage(content) {
+    //remove no msg div if there is one
+    let nomsgDiv = document.getElementById("noMessage");
+
+    if (nomsgDiv) {
+        chatBody.removeChild(nomsgDiv);
+    }
     let messageDiv = document.createElement("div");
     messageDiv.classList.add("messages");
 
@@ -246,6 +250,14 @@ socket.on('receiveMessage', function ({ senderID, content }) {
     if (senderID === selectedUserID) {
         makeReceiverMessage(content);
     }
+});
+
+socket.on('errorMessage', (data) => {
+    // Handle the error message
+    console.error('Error:', data.error);
+
+    // Display the error message to the user (you can customize this part)
+    alert(`Error: ${data.error}`);
 });
 
 socket.on('disconnect', function () {

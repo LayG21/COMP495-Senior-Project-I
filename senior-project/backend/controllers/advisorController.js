@@ -32,8 +32,6 @@ const getSpecificStudent = async (req, res) => {
   const advisorID = parseInt(req.session.user.id);
   const studentID = parseInt(req.params.studentID);
 
-  console.log(advisorID);
-
   try {
     const specificStudent = await Student.aggregate([
       {

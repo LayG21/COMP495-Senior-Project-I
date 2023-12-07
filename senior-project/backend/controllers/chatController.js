@@ -82,7 +82,7 @@ const getMessages = async (req, res) => {
                 { senderID: currentUser, receiverID: selectedUser },
                 { senderID: selectedUser, receiverID: currentUser },
             ],
-        }).select('-_id -__v').sort({ createdAt: -1 });
+        }).select('-_id -__v').sort({ createdAt: 1 });
         //send back messages if there are any
         if (!messages || messages.length === 0) {
             return res.status(204).json();
@@ -104,8 +104,8 @@ const saveSentMessage = async (senderID, receiverID, message) => {
     const content = message;
     let data = {};
     try {
-        //check if request is empty
         if (!sender || !receiver || !content) {
+            console.log("Input was missing for saving the message");
             return 400;
         }
         //create new message object to be saved in db
@@ -119,6 +119,7 @@ const saveSentMessage = async (senderID, receiverID, message) => {
 
         //check if message was successfully saved
         if (!newMessage) {
+            console.log("error in function for saving the message");
             return 500;
         }
         return 200;
@@ -196,19 +197,27 @@ const initializeSocketIO = (io, sessionMiddleware) => {
         }
 
         //sending message
-        socket.on('sendMessage', ({ receiverID, content }) => {
+        socket.on('sendMessage', async ({ receiverID, content }) => {
             const senderID = parseInt(socket.request.session.user.id);
             const receiverSocket = userSockets.get(parseInt(receiverID, 10));
 
             console.log(`Received message from ${senderID} to ${receiverID}: ${content}`);
             console.log(`This is the socket of the receiverID ${receiverSocket}`);
 
-            if (receiverSocket) {
-                console.log(`Receiver socket found for ${receiverID}: ${receiverSocket.id}`);
-                io.to(receiverSocket.id).emit('receiveMessage', ({ senderID, content }));
-            }
-            else {
-                console.log(`Receiver ${receiverID} not found or does not have an active socket.`);
+            //save message before emitting and if not saved do no emit message
+            let saveResult = await saveSentMessage(senderID, receiverID, content);
+
+
+            if (saveResult === 200) {
+                if (receiverSocket) {
+                    console.log(`Receiver socket found for ${receiverID}: ${receiverSocket.id}`);
+                    io.to(receiverSocket.id).emit('receiveMessage', ({ senderID, content }));
+                }
+
+            } else {
+                console.log(`Message not saved or receiver ${receiverID} not found or does not have an active socket.`);
+                // Handle the case where the message is not saved or receiver not found
+                socket.emit('errorMessage', { error: 'Message could not be sent.' });
             }
 
         });
@@ -225,121 +234,4 @@ const initializeSocketIO = (io, sessionMiddleware) => {
 }
 module.exports = { getUsers, searchUsers, getMessages, saveSentMessage, initializeSocketIO };
 
-
-/*
-For original implementation
-//get all users the current user has conversation with
-const getConversations = async (req, res) => {
-    const userID = req.body.id;
-    const userType = req.body.userType;
-    console.log(userID);
-    console.log(userType);
-
-    try {
-        let results = null;
-        let fieldToExtract = null;
-
-        if (userType === roles.STUDENT) {
-            results = await Conversation.find({ student: userID })
-                .populate('advisor', '_id advisorFirstName advisorLastName')
-                .select('-_id -student');
-            fieldToExtract = 'advisor';
-        }
-        else if (userType === roles.ADVISOR) {
-            results = await Conversation.find({ advisor: userID })
-                .populate('student', '_id studentFirstName studentLastName')
-                .select('-_id -advisor');
-            fieldToExtract = 'student';
-        }
-
-        if (!results || results.length === 0) {
-            return res.status(404).json({ message: 'No Conversations Found For User' });
-        }
-
-        // The populated fields should already contain the necessary information
-        const modifiedResponse = results.map(result => result[fieldToExtract]);
-        res.status(200).json(modifiedResponse);
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ message: error.message });
-    }
-};
-
-//might need to use regex
-const searchUser = async (req, res) => {
-    try {
-        //if student:
-        //search for advisors where the first name and advsior slightly match
-        //return results as the advisorid, firstname, and last name
-        if (userType === roles.STUDENT) { }
-        else if(userType === roles.ADVISOR){}
-        //else if advisor:
-        //search for advisors where the first name and advsior slightly match
-        //return results as the advisorid, firstname, and last name
-        //could update to handle case where not stydent or advisor
-    } catch (error) {
-
-    }
-};
-const openConversation = async (req, res) => {
-    //get who the requester is
-    //get who the selected user is
-    //if there is a previous conversation, return all messages from that conversation
-    //If there is no previous conversation, create a new conversation
-
-    try {
-
-    } catch (error) {
-
-    }
-};
-
-const saveMessage = async (req, res) => {
-    //save message to db
-    //will need senderId, receiverId, content, and convoId
-};
-module.exports = { getConversations };*/
-
-//create a function that creates convoId as student--advisor
-/*
-let convoID = null;
-let userIsStudent = false;
-let userIsAdvisor = false;
-*/
-//things to do
-/* Original Idea*/
-/*
-getConversations: Gets people that current user has conversations with. 
-If current user is a student, should return whoever is the advisor.
-If currnt user is advisor, should rturn whoever is student
-
-searchUser: search for users that might slightly match the input. 
-Returning the people that slightly match the input.
-If they are an advisor, they should only be searching for students
-If they are students, they should only be looking for advisors
-
-openConversation: when you search and select someone to chat with: 
-if there is a previous conversation with current user and selected user, get all messages from this conversation
-if there is no conversation, create a new one. The convoID could be a combination of ids such such as studentID--advisorID
-
-saveMessage: Save messages sent messages in database
-*/
-
-/*Current Idea */
-/*
-getUsers: 
-get list of users that current user can chat with
-If current user is an advisor, get all students
-If current user is an student, get all advisors
-
-searchUser:
-Searches through list of users that current user can chat with
-If they are an advisor, they should only be searching for students
-If they are students, they should only be looking for advisors
-
-getMessages:
-get all messages between two users, the two users being the current user and other user
-
-saveMessage:save sent messages to database
- */
 

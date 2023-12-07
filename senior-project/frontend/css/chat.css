@@ -115,7 +115,7 @@ header.navbar {
 
 /* For user list in the sidebar */
 #chat-window {
-  /* visibility: hidden;*/
+  visibility: hidden;
   /*display: none !important;*/
   /* Do not display on default */
   border-style: solid;
