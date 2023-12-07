@@ -1,56 +1,63 @@
 const { describe, it, expect } = require('@jest/globals');
-const { validationResultMock, bodyMock } = require('./express-validator.mock');
-const { validationRules, validateAndSanitizeInput } = require('../middleware/loginvalidate');
+//const { validationResultMock, bodyMock } = require('./express-validator.mock');
+const { sanitizationRules, validateInput } = require('../middleware/loginvalidate'); // Replace with the correct path
 
+// Mock Express request and response objects
+beforeEach(() => {
+    // Reset request and response objects before each test
+    req = {
+        body: {
+            userType: 'STUDENT',
+            userEmail: 'test@ncat.edu',
+            userPassword: 'testPassword',
+        },
+    };
 
+    res = {
+        status: jest.fn(() => res),
+        send: jest.fn(),
+    };
+});
 
-
-describe("test for correct input", () => {
-    describe("should return go to next for successful validation", () => {
-        it('should apply validation rules and proceed to next middleware when input is valid', () => {
-            const req = {
-                body: {
-                    userEmail: 'test@aggies.ncat.edu',
-                    userPassword: 'password',
-                    userType: 'STUDENT'
-                }
-            };
-            const res = {
-                status: jest.fn().mockReturnThis(),
-                json: jest.fn()
-            };
-            const next = jest.fn();
-
-            validateAndSanitizeInput(req, res, next);
-
-            expect(res.status).not.toHaveBeenCalled();
-            expect(res.json).not.toHaveBeenCalled();
-            expect(next).toHaveBeenCalled();
+// Test the sanitization rules
+describe('Sanitization Rules', () => {
+    it('should sanitize email, password, and userType', () => {
+        sanitizationRules.forEach(rule => {
+            rule(req, res, () => { });
         });
+
+        expect(req.body.userEmail).toBe('test@ncat.edu');
+        expect(req.body.userPassword).toBe('testPassword');
+        expect(req.body.userType).toBe('STUDENT');
     });
 });
 
-describe("test for missing input", () => {
-    describe("should return 400 and errors", () => {
-        it('should apply validation rules and proceed to next middleware when input is valid', () => {
-            const req = {
-                body: {
-                    userEmail: 'test',
-                    userPassword: 'password',
-                    userType: 'STUDENT'
-                }
-            };
-            const res = {
-                status: jest.fn().mockReturnThis(),
-                json: jest.fn()
-            };
-            const next = jest.fn();
+// Test the custom validation middleware
+describe('Custom Validation Middleware', () => {
+    it('should pass validation for correct input', () => {
+        validateInput(req, res, () => { });
+        expect(res.status).not.toHaveBeenCalled();
+        expect(res.send).not.toHaveBeenCalled();
+    });
 
-            validateAndSanitizeInput(req, res, next);
+    it('should return 400 for missing form data', () => {
+        const invalidReq = { body: {} };
+        validateInput(invalidReq, res, () => { });
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.send).toHaveBeenCalledWith('Missing Form Data. Please Try Again');
+    });
 
-            //expect(res.status).toBe(200);
-            //expect(res.json).toHaveBeenCalled();
-            expect(next).not.toHaveBeenCalled();
-        });
+    it('should return 400 for invalid email format', () => {
+        req.body.userEmail = 'invalidemail@example.com';
+        validateInput(req, res, () => { });
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.send).toHaveBeenCalledWith('Please login with your NCAT email');
+    });
+
+    it('should return 400 for invalid user type', () => {
+        req.body.userType = 'INVALID_TYPE';
+        validateInput(req, res, () => { });
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.send).toHaveBeenCalledWith('Invalid user type');
     });
 });

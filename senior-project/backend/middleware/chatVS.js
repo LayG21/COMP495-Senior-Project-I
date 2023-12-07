@@ -2,26 +2,26 @@
 //req.body, req.params, req.query, and req.session
 
 //imports
-const { validationResult, body, query, param } = require('express-validator');
+const { validationResult, query, param } = require('express-validator');
 
-const queryvalidationRules = [
+const queryRules = [
     query("searchQuery").notEmpty().trim().escape(),
 ]
 
-const paramvalidationRules = [
+const paramRules = [
     param("userID").notEmpty().trim().escape(),
 ]
 
 //validate and sanitize 
 
 function vsQuery(req, res, next) {
-    queryvalidationRules.forEach(rule => rule(req, res, () => { }));
+    queryRules.forEach(rule => rule(req));
     next();
 }
 
 function vsParam(req, res, next) {
-    paramvalidationRules.forEach(rule => rule(req, res, () => { }));
+    paramRules.forEach(rule => rule(req));
     next();
 }
 
-module.exports = { queryvalidationRules, paramvalidationRules, vsQuery, vsParam }
+module.exports = { queryRules, paramRules, vsQuery, vsParam }
