@@ -129,16 +129,14 @@ app.get('/class-generator.html', isAuthenticated, (req, res) => {
 
 //moved to bottom to make sure it works
 //stops from serving pages until they are checked for authentication and authroization
-//set static folder
 //serve html,css, and js
 app.use(express.static(path.join(__dirname, "../frontend")));
 
 //add socket io middleware to associate the user with the session
-//socket io connection:
 chatController.initializeSocketIO(io, sessionMiddleware);
 
-//callback function after PORT
+
 //listening on port
 server.listen(PORT, () => {
-  console.log(`listening on port: ${PORT}`)
+  console.log(`Listening on http://localhost:${PORT}`);
 });

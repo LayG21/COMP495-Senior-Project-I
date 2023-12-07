@@ -6,12 +6,16 @@ const Advisor = require("../models/Advisor");
 const { roles } = require("../roles/roles.js");
 const bcrypt = require('bcrypt');
 
+//this takes input as a the body with the type being string
 const loginController = async (req, res) => {
     const role = req.body.userType;
     const email = req.body.userEmail;
     const password = req.body.userPassword;
     let user = null;
 
+    console.log(role);
+    console.log(email);
+    console.log(password);
     try {
 
         if (role === roles.STUDENT) {
@@ -20,7 +24,7 @@ const loginController = async (req, res) => {
             const student = await Student.findOne({ studentEmail: email });
             if (!student) {
                 console.log("No User with matching Email");
-                return res.status(404).send('No User with Matching Credentials');
+                return res.status(404).json({ error: 'No User with Matching Credentials' });
             }
 
             const isPasswordValid = await bcrypt.compare(
@@ -30,7 +34,7 @@ const loginController = async (req, res) => {
 
             if (!isPasswordValid) {
                 console.log("No user with matching password");
-                return res.status(401).send('No User With Matching Credentials');
+                return res.status(401).json({ error: 'No User With Matching Credentials' });
             }
 
             // Assuming successful login, set user information in the session
@@ -52,7 +56,7 @@ const loginController = async (req, res) => {
 
             if (!advisor) {
                 console.log("No user with matching email");
-                return res.status(404).send('No User with Matching Credentials');
+                return res.status(404).json({ error: 'No User with Matching Credentials' });
             }
 
             const isPasswordValid = await bcrypt.compare(
@@ -62,7 +66,7 @@ const loginController = async (req, res) => {
 
             if (!isPasswordValid) {
                 console.log("No user with matching password");
-                return res.status(401).send('No User with Matching Credentials');
+                return res.status(401).json({ error: 'No User with Matching Credentials' });
             }
 
             // Assuming successful login, set user information in the session
@@ -78,7 +82,7 @@ const loginController = async (req, res) => {
         }
     } catch (error) {
         console.error('Error:', error.message);
-        res.status(500).send('Internal Server Error');
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 };
 
@@ -89,7 +93,7 @@ const logoutController = async (req, res) => {
     req.session.destroy((err) => {
         if (err) {
             console.error('Error destroying session:', err);
-            res.status(500).send('An error occurred during logout');
+            res.status(500).json({ error: 'An error occurred during logout' });
         } else {
             // Clear the session cookie
             console.log("Clearing session");

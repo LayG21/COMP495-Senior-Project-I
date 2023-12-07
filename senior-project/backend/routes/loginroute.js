@@ -2,9 +2,10 @@ const express = require("express");
 const router = express.Router();
 const Student = require("../models/Student");
 const Advisor = require("../models/Advisor");
-const { validationRules, validateAndSanitizeInput } = require("../middleware/loginvalidate");
+const { sanitizationRules, validateInput } = require("../middleware/loginvalidate");
 const { loginController } = require("../controllers/authController");
 const path = require('path');
+const { validationResult } = require("express-validator");
 
 router.use(express.json());
 //Validate and Santitize user input
@@ -22,7 +23,8 @@ router.get("/", (req, res) => {
 
 //post request for when user adds credentials ad presses login
 //Sanitize because it takes in user input
-router.post('/login', validationRules, validateAndSanitizeInput, loginController);
+router.post('/login', validateInput, sanitizationRules, loginController);
+
 
 
 

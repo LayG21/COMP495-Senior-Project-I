@@ -43,7 +43,7 @@ function getProfile() {
         });
 }
 
-//Upadating of UI with the data
+//Functions for updating the UI
 
 // Function to update navigation based on user role
 function updateNavigation(userRole) {
@@ -70,5 +70,3 @@ function displayProfile(data) {
     document.getElementById('advisor-input').textContent = `${data.advisorFirstName} ${data.advisorLastName}`;
     document.getElementById('advisor-email-input').textContent = data.advisorEmail;
 }
-//Change links displayed
-//Upload student information onto the page

@@ -69,8 +69,8 @@ const getUsers = async (req, res) => {
 //get messages between two users
 const getMessages = async (req, res) => {
     //would need the sender and receiver
-    const currentUser = req.session.user.id;
-    const selectedUser = req.params.userID;
+    const currentUser = parseInt(req.session.user.id);
+    const selectedUser = parseInt(req.params.userID);
     try {
         //check if request is empty
         if (!currentUser || !selectedUser) {
@@ -82,10 +82,10 @@ const getMessages = async (req, res) => {
                 { senderID: currentUser, receiverID: selectedUser },
                 { senderID: selectedUser, receiverID: currentUser },
             ],
-        }).select('-_id').sort({ createdAt: -1 });
+        }).select('-_id -__v').sort({ createdAt: -1 });
         //send back messages if there are any
         if (!messages || messages.length === 0) {
-            return res.status(404).json({ message: 'No Messages Found' });
+            return res.status(204).json();
         }
         return res.status(200).json(messages);
 
@@ -97,35 +97,35 @@ const getMessages = async (req, res) => {
 
 //save sent messages
 //Will change this to work with socket io
-const saveSentMessage = async (req, res) => {
+const saveSentMessage = async (senderID, receiverID, message) => {
     //need sender,receiver, and content
-    const sender = req.session.user.id;
-    const receiver = req.body.receiver;
-    const content = req.body.content;
+    const sender = senderID;
+    const receiver = receiverID;
+    const content = message;
     let data = {};
     try {
         //check if request is empty
         if (!sender || !receiver || !content) {
-            return res.status(400).json({ message: 'Please fill all fields' });
+            return 400;
         }
         //create new message object to be saved in db
         data = {
             senderID: sender,
             receiverID: receiver,
-            content,
+            content: content,
         }
         //save message to database
         const newMessage = await Message.create(data);
 
         //check if message was successfully saved
         if (!newMessage) {
-            return res.status(500).json({ message: 'Failed to save message.' })
+            return 500;
         }
-        return res.status(200).json({ success: true, newMessage });
+        return 200;
 
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'An Error Occured' });
+        return 500;
     }
 }
 
@@ -189,38 +189,39 @@ const initializeSocketIO = (io, sessionMiddleware) => {
         if (user && user.id) {
             userSockets.set(user.id, socket);
             console.log(`User ${user.id} connected. This is their socket id: ${socket.id}`);
+            // console.log('Current userSockets map:', userSockets);
+
+        } else {
+            //console.log('User information not available.');
         }
 
-        else {
-            console.log('User information not available.');
-        }
+        //sending message
+        socket.on('sendMessage', ({ receiverID, content }) => {
+            const senderID = parseInt(socket.request.session.user.id);
+            const receiverSocket = userSockets.get(parseInt(receiverID, 10));
 
-        socket.on('sendMessage', ({ receiverId, content }) => {
-            const senderId = socket.request.session.user.id;
-
-            const receiverSocket = userSockets.get(parseInt(receiverId, 10));
-
-            //save message first and then emit to user if they have a socket
-            //console.log(`Received message from ${senderId} to ${receiverId}: ${content}`);
-            //console.log(`This is the socket of the receiverID ${receiverSocket}`);
+            console.log(`Received message from ${senderID} to ${receiverID}: ${content}`);
+            console.log(`This is the socket of the receiverID ${receiverSocket}`);
 
             if (receiverSocket) {
-                //Emit message to specific socket
-                console.log(`Receiver socket found for ${receiverId}: ${receiverSocket.id}`);
-                receiverSocket.emit('newMessage', { senderId, content });
+                console.log(`Receiver socket found for ${receiverID}: ${receiverSocket.id}`);
+                io.to(receiverSocket.id).emit('receiveMessage', ({ senderID, content }));
             }
             else {
-                console.log(`Receiver ${receiverId} not found or does not have an active socket.`);
+                console.log(`Receiver ${receiverID} not found or does not have an active socket.`);
             }
+
         });
+
         socket.on('disconnect', () => {
             if (user && user.id) {
                 userSockets.delete(user.id);
                 console.log(`Socket removed from userSockets Map for user ${user.id}`);
             }
-            console.log(`User ${socket.id} disconnected`);
+            console.log(`User ${socket.id}, disconnected`);
         });
     });
+
 }
 
 /*io.on('connection', (socket) => {

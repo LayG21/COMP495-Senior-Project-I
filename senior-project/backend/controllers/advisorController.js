@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const Student = require("../models/Student");
 const Advisor = require("../models/Advisor");
 
+//inputs in here is the req.session.user.id which is a number, studentID which is a number and params, and searchQuery which is a query and string
+
 //get list of assigned students
 const getStudents = async (req, res) => {
   const advisorID = parseInt(req.session.user.id);

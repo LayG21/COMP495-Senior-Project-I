@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
@@ -9,9 +9,8 @@
   <link rel="stylesheet" href="./css/nav.css" />
   <link rel="stylesheet" href="./css/chat.css" />
   <!--Create socket io connection to server-->
-  <!--<script src="/socket.io/socket.io.js"></script>-->
+  <script src="/socket.io/socket.io.js"></script>
 
-  <script src="./javascript/chat.js"></script>
 
 
 
@@ -59,6 +58,8 @@
             <!--Results will be displayed here-->
             <ul id="searched-users">
               <!--User results go here-->
+
+              <!--Hard coded for testing-->
               <li class="search">User 1</li>
               <li class="search">User 2</li>
               <li class="search">User 3</li>
@@ -71,9 +72,9 @@
 
       <!--Section for List of users to select from-->
       <p id="sidebar-header">Users:</p>
-      <div class="user-list">
+      <div id="user-list">
         <!--Actual list of users-->
-        <ul class="sidebar-userlist">
+        <ul id="sidebar-userlist">
         </ul>
       </div>
       <div id="sidebar-footer"></div>
@@ -167,6 +168,7 @@
   </main>
   <!--Function for logging the user out-->
   <script src="./javascript/logout.js"></script>
+  <script src="./javascript/chat.js"></script>
 </body>
 
 </html>

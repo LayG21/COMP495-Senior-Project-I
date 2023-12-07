@@ -8,6 +8,14 @@ body {
   /* Prevent default body scrolling */
 }
 
+/*Change to navbar so that it can be viewed*/
+header.navbar {
+  z-index: 1;
+  position: relative;
+}
+
+
+
 /* This is the container for chat */
 .chat-container {
   display: flex;
@@ -32,14 +40,14 @@ body {
 
 
 
-.user-list {
+#user-list {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
   flex: 1;
 }
 
-.sidebar-userlist {
+#sidebar-userlist {
   margin-bottom: 2px;
   margin-right: 2px;
   margin-left: 2px;
@@ -226,7 +234,7 @@ body {
 }
 
 /* Change user based on if they click and change cursor */
-.sidebar-userlist .sidebar-user:hover {
+#sidebar-userlist .sidebar-user:hover {
   cursor: pointer;
 }
 

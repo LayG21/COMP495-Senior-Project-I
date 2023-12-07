@@ -1,54 +1,52 @@
-const { validationResult, body } = require('express-validator');
+//File for validating and sanitizing input
+//If validated input is then sanitized
+const { body } = require('express-validator');
 const { roles } = require('../roles/roles');
 
 const emailRegex = /^[\w-]+(?:\.[\w-]+)*@(?:ncat\.edu|aggies\.ncat\.edu)$/;
 
-// Define your validation and sanitation rules so it can be looked through
-const validationRules = [
-    // validate and sanitize email
+
+// Sanitization rules
+const sanitizationRules = [
+    // Sanitize email
     body('userEmail')
-        .notEmpty().withMessage('Email is required')
-        .custom(value => {
-            if (!emailRegex.test(value)) {
-                throw new Error('Please login with your NCAT email');
-            }
-            return true;
-        })
         .trim()
         .escape(),
 
-    // validate and sanitize password
+    // Sanitize password
     body('userPassword')
-        .notEmpty().withMessage('Password is required')
         .trim()
         .escape(),
 
-    // validate and sanitize user type
+    // Sanitize user type
     body('userType')
-        .notEmpty().withMessage('User type not defined')
-        .custom(value => {
-            if (value !== roles.STUDENT && value !== roles.ADVISOR) {
-                throw new Error('Invalid user type');
-            }
-            return true;
-        })
         .trim()
         .escape(),
 ];
 
-// Create a middleware function using the defined validation rules
-function validateAndSanitizeInput(req, res, next) {
-    // Apply validation rules
-    // Check for validation errors
-    validationRules.forEach(rule => rule(req, res, () => { }));
-    const errors = validationResult(req);
+// Middleware for custom validation
+function validateInput(req, res, next) {
+    const userType = req.body.userType;
+    const userEmail = req.body.userEmail;
+    const userPassword = req.body.userPassword;
 
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
+    // Check for missing data
+    if (!userType || !userEmail || !userPassword) {
+        return res.status(400).send("Missing Form Data. Please Try Again");
     }
 
-    // No validation errors, proceed to the next middleware (login controller)
+    // Check for correct email format
+    if (!emailRegex.test(userEmail)) {
+        return res.status(400).send("Please login with your NCAT email");
+    }
+
+    // Check if the correct userType was selected
+    if (userType !== roles.STUDENT && userType !== roles.ADVISOR) {
+        return res.status(400).send("Invalid user type");
+    }
+
+    // Proceed to the next step (sanitization)
     next();
 }
 
-module.exports = { validationRules, validateAndSanitizeInput };
+module.exports = { sanitizationRules, validateInput };

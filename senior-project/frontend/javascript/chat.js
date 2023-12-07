@@ -1,6 +1,8 @@
 // Variables for storing information
-//const socket = io();
+const socket = io();
 //let allUsers = null;
+let selectedUserID = "";
+let selectedUserName = "";
 
 //console.log(chatBody);
 
@@ -16,47 +18,32 @@ document.addEventListener('DOMContentLoaded', () => {
     getUsers();
 });
 
-let selectedUserID = "";
-let selectedUserName = "";
+let sidebarUserlist = document.getElementById("user-list");
 let sidebar = document.getElementById("sidebar");
 let chatWindow = document.getElementById("chat-window");
 let chatHeaderName = document.getElementById("selected-username");
 let chatBody = document.getElementById("chat-body");
 
+//event listener for selecting user in sidebar
+sidebarUserlist.addEventListener("click", function (event) {
+    let clickedUser = event.target.closest(".sidebar-user");
+    if (clickedUser) {
+        selectedUserID = parseInt(clickedUser.getAttribute("data-userID"));
+        selectedUserName = clickedUser.querySelector(".sidebar-username").textContent;
+
+        printSelected();
+        getMessages(selectedUserID, selectedUserName);
+    }
+});
+
+//Test for seeing if the user is selected and can be accessed in different function
+function printSelected() {
+    console.log(`This is a test: the selected usersID: ${selectedUserID} and this is their username ${selectedUserName}`);
+}
+
 //console.log(sidebar);
 //Note: happens faster with the selection on the side
 // Event listener for when the user is selected
-
-/*function sidebarcheck() {
-if (sidebarContainer) {
-    sidebarContainer.addEventListener("click", function (event) {
-        // Check if the clicked element or its ancestor has the "sidebar-user" class
-        const clickedUser = event.target.closest('#sidebar-user');
-
-        if (clickedUser) {
-            selectedUserID = parseInt(clickedUser.getAttribute('data-userID'));
-            selectedUserName = clickedUser.querySelector('.sidebar-username').textContent;
-
-            openChatWindow(selectedUserID, selectedUserName);
-
-            // Test printing out user when they are selected
-            console.log(selectedUserID);
-            console.log(selectedUserName);
-
-        }
-    });
-}
-else {
-    console.error("Element with class'user-list' not found");
-}
-}*/
-
-
-
-
-
-
-
 
 
 //get users for sidebar display
@@ -82,15 +69,92 @@ function getUsers() {
             alert('Error:' + error.message);
         });
 }
-/*function getMessages() {
-    fetch('/chat/messages/userID'{
- 
+
+function getMessages(selectedUserID, selectedUserName) {
+    fetch(`/chat/messages/${parseInt(selectedUserID)}`, {
+        method: "GET",
+        credentials: "include",
     })
-}*/
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errorData => {
+                    throw new Error(`${errorData.error}`);
+                })
+            };
+            if (response.status === 204) {
+                console.log(" No messages foung between selected User and current user");
+                return [];
+            };
+            return response.json();
+        })
+        .then(data => {
+            openConversation(data);
+            //console.log("Received Messages");
+            //console.log(data);
+        })
+        .catch(error => {
+            alert('Error: ' + error.message);
+        });
+}
+
+//Function for updating UI with messages if there Are Any
+function openConversation(data) {
+    chatBody.textContent = "";
+    chatHeaderName.textContent = "";
+    chatHeaderName.textContent = selectedUserName;
+
+    //if the window is closed open it and display messages
+    if (chatWindow.style.visibility === 'hidden') {
+        chatWindow.style.visibility = 'visible';
+        if (data.length === 0) {
+            chatBody.textContent = "No messages";
+        }
+        else {
+            data.forEach(message => {
+                let messageDiv = document.createElement("div");
+                messageDiv.classList.add("messages");
+
+                let messageContent = document.createElement("div");
+                messageContent.classList.add(message.senderID === selectedUserID ? "receiverMessage" : "senderMessage");
+
+                let messageText = document.createElement("p");
+                messageText.textContent = message.content;
+
+                messageContent.appendChild(messageText);
+                messageDiv.appendChild(messageContent);
+                chatBody.appendChild(messageDiv);
+            })
+        }
+    }
+    //if it was already open there is no need to open it, just change the header and body
+    else {
+        if (data.length === 0) {
+            chatBody.textContent = "No messages";
+        }
+        else {
+            data.forEach(message => {
+                let messageDiv = document.createElement("div");
+                messageDiv.classList.add("messages");
+
+                let messageContent = document.createElement("div");
+                messageContent.classList.add(message.senderID === selectedUserID ? "receiverMessage" : "senderMessage");
+
+                let messageText = document.createElement("p");
+                messageText.textContent = message.content;
+
+                messageContent.appendChild(messageText);
+                messageDiv.appendChild(messageContent);
+                chatBody.appendChild(messageDiv);
+            })
+        }
+    }
+}
+
+
 
 //function for updating sidebar with users
 function updateUserList(users) {
-    let sidebarContainer = document.querySelector(".sidebar-userlist");
+    let sidebarContainer = document.querySelector("#sidebar-userlist");
 
     //console.log(sidebarContainer.textContent);
     //console.log(users);
@@ -138,42 +202,68 @@ function closeWindow() {
 //Function for UI updates
 //Makes UI update by adding message to window as a receiver
 
-function makeReceiverMessage() {
+function makeReceiverMessage(content) {
+    let messageDiv = document.createElement("div");
+    messageDiv.classList.add("messages");
 
+    let messageContent = document.createElement("div");
+    messageContent.classList.add("receiverMessage");
+
+    let messageText = document.createElement("p");
+    messageText.textContent = content;
+
+    messageContent.appendChild(messageText);
+    messageDiv.appendChild(messageContent);
+    chatBody.appendChild(messageDiv);
 }
 //function for UI updates
 //Makes UI update by adding message to window as sender
-function makeSendermessage() {
+function makeSenderMessage(content) {
+    let messageDiv = document.createElement("div");
+    messageDiv.classList.add("messages");
 
+    let messageContent = document.createElement("div");
+    messageContent.classList.add("senderMessage");
+
+    let messageText = document.createElement("p");
+    messageText.textContent = content;
+
+    messageContent.appendChild(messageText);
+    messageDiv.appendChild(messageContent);
+    chatBody.appendChild(messageDiv);
 }
 // chat.js
 
 // Your Socket.IO logic goes here
 
 
-/*socket.on('connect', function () {
+socket.on('connect', function () {
     console.log('Connected to server');
+});
+
+socket.on('receiveMessage', function ({ senderID, content }) {
+    //if the person you are currently chatting with is the matching senderID, display the message
+    if (senderID === selectedUserID) {
+        makeReceiverMessage(content);
+    }
 });
 
 socket.on('disconnect', function () {
     console.log('Disconnected from server');
-});*/
+});
 
 //function to send message. Will need to grab the selectedUserID that was stored when the currentuser selected someone to chat with
 //trigger socket event for sending message
 function sendMessage() {
+    let receiverID = parseInt(selectedUserID);
+    let content = document.getElementById("chat-input").value;
+    if (content !== "" && receiverID !== null) {
+        socket.emit('sendMessage', { receiverID, content });
 
-
-
+        //call to display message that was sent
+        makeSenderMessage(content);
+    }
+    else {
+        alert("Please type in input before sending and select a user");
+    }
 }
-
-
-//function to window and set current user as being no one because there is no open conversation/window
-//function closeConversation() { }
-
-//function where you select a user and it stores that selected user to be used for api requests
-//Should also work to change chat window or open chat window depending on if you selected a different user or the chat window was never open
-//function selectUser() { }
-
-
-//sidebarcheck();
