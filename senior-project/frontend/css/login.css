@@ -44,6 +44,33 @@ header .logo {
     width: 200px;
 }
 
+/* The alert message box */
+.closebtn {
+    color: #f00;
+    /* Red color for close button */
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Styling for error container */
+#error-container {
+    display: none;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #f44336;
+    /* Red border color */
+    color: black;
+    margin-bottom: 15px;
+    position: relative;
+}
+
+/* Styling for close button on hover */
+.closebtn:hover {
+    color: black;
+}
+
 @media (max-width: 753px) {
     .login-form {
         margin: 0;

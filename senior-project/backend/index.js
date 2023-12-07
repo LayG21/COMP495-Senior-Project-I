@@ -55,7 +55,7 @@ console.log("Number of connections:", mongoose.connections.length);
 //session middleware
 const sessionMiddleware = session({
   secret: "changeit",
-  resave: true,
+  resave: false,
   saveUninitialized: false,
 });
 

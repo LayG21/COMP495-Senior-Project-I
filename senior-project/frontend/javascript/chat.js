@@ -1,19 +1,11 @@
 // Variables for storing information
 const socket = io();
-//let allUsers = null;
 let selectedUserID = "";
 let selectedUserName = "";
-
-//console.log(chatBody);
-
-
-//Need to add event listener to the list of users to select a user
-//Need to add event listener to the chat window to send a message
 
 //event listener for when user goes to page
 
 document.addEventListener('DOMContentLoaded', () => {
-    //console.log("domcontentloaded");
     //Dispaly all users you can chat with
     getUsers();
 });
@@ -23,6 +15,7 @@ let sidebar = document.getElementById("sidebar");
 let chatWindow = document.getElementById("chat-window");
 let chatHeaderName = document.getElementById("selected-username");
 let chatBody = document.getElementById("chat-body");
+let searchResultsContainer = document.getElementById("searched-users");
 
 //event listener for selecting user in sidebar
 sidebarUserlist.addEventListener("click", function (event) {
@@ -31,20 +24,9 @@ sidebarUserlist.addEventListener("click", function (event) {
         selectedUserID = parseInt(clickedUser.getAttribute("data-userID"));
         selectedUserName = clickedUser.querySelector(".sidebar-username").textContent;
 
-        printSelected();
         getMessages(selectedUserID, selectedUserName);
     }
 });
-
-//Test for seeing if the user is selected and can be accessed in different function
-function printSelected() {
-    console.log(`This is a test: the selected usersID: ${selectedUserID} and this is their username ${selectedUserName}`);
-}
-
-//console.log(sidebar);
-//Note: happens faster with the selection on the side
-// Event listener for when the user is selected
-
 
 //get users for sidebar display
 function getUsers() {
@@ -66,6 +48,7 @@ function getUsers() {
             updateUserList(users.data);
         })
         .catch(error => {
+            //change this to be different and display to users
             alert('Error:' + error.message);
         });
 }
@@ -172,13 +155,93 @@ function updateUserList(users) {
 
 function searchUsers() {
     let searchInput = document.getElementById("search-input").value;
-    console.log(`something typed in search field:${searchInput}`)
+    if (searchInput !== '') {
+        fetch(`/chat/search?searchQuery=${encodeURIComponent(searchInput)}`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then(response => {
+                if (response.status === 204) {
+                    return [];
+                }
+                return response.json();
+            })
+            .then(users => {
+                displaySearchResults(users);
+            })
+            .catch(error => {
+                console.error('Error during search:', error);
+            });
+    } else {
+        clearSearchResults();
+    }
 }
 
-//function for displaying users on search
+// function for displaying users on search
 function displaySearchResults(users) {
+    let searchInput = document.getElementById("search-input").value.trim();
 
+    // Check if the search input is empty
+    if (searchInput === '') {
+        clearSearchResults();
+        return;
+    }
+
+    // Show the container
+    searchResultsContainer.style.display = "block";
+
+    // Check if there are no search results
+    if (!users || users.length === 0) {
+        searchResultsContainer.style.display = "block";
+        searchResultsContainer.innerHTML = '';
+
+        let noResultsMessage = document.createElement('li');
+        noResultsMessage.classList.add('noSearch');
+        noResultsMessage.textContent = 'No Results Found'
+
+        searchResultsContainer.appendChild(noResultsMessage);
+        return;
+    }
+
+    // Display search results
+    searchResultsContainer.innerHTML = '';
+    users.forEach(user => {
+        let listItem = document.createElement('li');
+        listItem.classList.add('search');
+        listItem.setAttribute('data-userID', user.id);
+        listItem.textContent = `${user.firstName} ${user.lastName}`;
+        searchResultsContainer.appendChild(listItem);
+    });
 }
+function clearSearchResults() {
+    searchResultsContainer.style.display = "none";
+    searchResultsContainer.innerHTML = ''; // Clear content
+}
+
+function setSelectedUser(userID, userName) {
+    selectedUserID = userID;
+    selectedUserName = userName;
+    document.getElementById("search-input").value = "";
+    getMessages(selectedUserID, selectedUserName);
+}
+
+// Event listener for selecting user from search results
+searchResultsContainer.addEventListener("click", function (event) {
+    let clickedUser = event.target.closest(".search");
+    if (clickedUser) {
+        let userID = parseInt(clickedUser.getAttribute("data-userID"));
+        let userName = clickedUser.textContent.trim();
+        setSelectedUser(userID, userName);
+        clearSearchResults();
+    }
+});
+
+
+
+
 
 
 //clear window/ chat and close it
@@ -269,7 +332,7 @@ socket.on('disconnect', function () {
 function sendMessage() {
     let receiverID = parseInt(selectedUserID);
     let content = document.getElementById("chat-input").value;
-    if (content !== "" && receiverID !== null) {
+    if (content !== "" && !isNaN(receiverID)) {
         socket.emit('sendMessage', { receiverID, content });
 
         //call to display message that was sent

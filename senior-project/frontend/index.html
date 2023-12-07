@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
-    <link rel="stylesheet" type="text/css" href="css/login.css ">
+    <link rel="stylesheet" type="text/css" href="css/login.css">
 </head>
 
 <body>
@@ -13,9 +13,18 @@
         <p class="logo" id="logo">Aggie Advise</p>
     </header>
     <div class="login-container">
+
         <main>
+            <div id="error-container">
+                <div><span class="closebtn" onclick="closeErrorContainer()">&times;</span></div>
+
+                <ul id="listed-messages">
+                    <!--Display for errors-->
+                </ul>
+            </div>
             <div class="login-form">
-                <form id="form" method="post" action="/login">
+
+                <form id="form">
                     <div>
                         <h2>Log In</h2>
                     </div>
@@ -39,5 +48,6 @@
         </main>
     </div>
 </body>
+<script src="./javascript/login.js"></script>
 
 </html>

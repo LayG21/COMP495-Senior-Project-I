@@ -78,20 +78,32 @@ header.navbar {
   border-color: #add8e6;
   border-radius: 10px;
   box-sizing: border-box;
+  font-size: 0.9em;
 }
+
 
 #searched-users {
   display: none;
   /*Do not display until typing*/
-  background-color: white;
+  background-color: rgb(234, 232, 232);
+  border-radius: 2px;
   width: 100%;
   padding: 0;
 }
 
+.noSearch,
 #searched-users .search {
-  border: 1px solid black;
-  height: 2em;
+  border: 1px solid rgb(147, 146, 146);
+  border-radius: 5px;
+  text-align: left;
+  margin-bottom: 3px;
+  padding: 9px;
+  font-size: 1.0em;
+  height: 1.5em;
+  background-color: white;
+
 }
+
 
 /* Styling for user boxes */
 .sidebar-user {
@@ -102,7 +114,7 @@ header.navbar {
 
 /*change weight of user name*/
 .sidebar-username {
-  font-size: 1.0em;
+  font-size: 1.09em;
 }
 
 /* Styling for sidebar header */
@@ -157,7 +169,7 @@ header.navbar {
 
 #close-button {
   cursor: pointer;
-  height: 2em;
+  height: 3em;
 }
 
 /* Body of chat window where messages are displayed */
@@ -173,6 +185,18 @@ header.navbar {
 .messages {
   display: flex;
   flex-direction: column;
+}
+
+.messages p {
+  font-size: 1.12em;
+}
+
+/*Centering message about no message*/
+#noMessage {
+  text-align: center;
+  font-size: 1.1em;
+  text-transform: capitalize;
+  border-bottom: 1px solid #afafaf;
 }
 
 .senderMessage {
@@ -204,18 +228,19 @@ header.navbar {
 .chat-footer {
   background-color: #c0c0c0;
   margin-top: auto;
+  margin-bottom: 2vh;
   width: 100%;
   padding-top: 15px;
-  padding-bottom: 30px;
+  padding-bottom: 4.9vh;
   padding-left: 14px;
-  height: 8.5em;
+  height: 7.9em;
 }
 
 #sidebar-footer {
   background-color: rgb(230, 230, 230);
   margin-top: auto;
   padding-top: 15px;
-  padding-bottom: 30px;
+  padding-bottom: 40px;
   padding-left: 14px;
   height: 8.5em;
 }
@@ -226,10 +251,12 @@ header.navbar {
   padding: 3px;
   border-radius: 10px;
   border: groove #add8e6;
+  font-size: 0.9em;
 }
 
 #send-button {
-  height: 2.5em;
+  height: 3.0em;
+  font-size: 0.9em;
   width: 13%;
 }
 

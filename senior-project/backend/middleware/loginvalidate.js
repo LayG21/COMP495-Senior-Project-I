@@ -30,22 +30,36 @@ function validateInput(req, res, next) {
     const userEmail = req.body.userEmail;
     const userPassword = req.body.userPassword;
 
-    // Check for missing data
+    console.log(userType);
+    console.log(userEmail);
+    console.log(userPassword);
+
+    let validationErrors = [];
+
+    // Check for missing data first and tell the user
     if (!userType || !userEmail || !userPassword) {
-        return res.status(400).send("Missing Form Data. Please Try Again");
+        validationErrors.push("Missing Form Data. Please Try Again");
+    }
+    //if no mising data, check what the data is
+    else {
+        // Check email format
+        if (!emailRegex.test(userEmail)) {
+            validationErrors.push("Please login with your NCAT email");
+        }
+
+        // Check user type
+        if (userType !== roles.STUDENT && userType !== roles.ADVISOR) {
+            validationErrors.push("Please select a valida userType");
+        }
     }
 
-    // Check for correct email format
-    if (!emailRegex.test(userEmail)) {
-        return res.status(400).send("Please login with your NCAT email");
+    // If there are any errors, return the response
+    if (validationErrors.length > 0) {
+        return res.status(400).json({ errors: validationErrors });
     }
 
-    // Check if the correct userType was selected
-    if (userType !== roles.STUDENT && userType !== roles.ADVISOR) {
-        return res.status(400).send("Invalid user type");
-    }
 
-    // Proceed to the next step (sanitization)
+    // If all checks pass, proceed to the next step (sanitization)
     next();
 }
 
