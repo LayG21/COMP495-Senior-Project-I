@@ -9,6 +9,7 @@ const isAuthenticated = (req, res, next) => {
         next();
     } else {
         // User is not authenticated, redirect to the login page or send an error response
+        console.log("User not authenticated, going back to login");
         res.redirect('/');
     }
 };
