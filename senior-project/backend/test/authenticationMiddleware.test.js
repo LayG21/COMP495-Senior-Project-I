@@ -30,4 +30,4 @@ describe("isAuthenticated middlware", () => {
         expect(res.redirect).toHaveBeenCalledWith("/");
 
     });
-})
+});

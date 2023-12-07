@@ -223,10 +223,6 @@ const initializeSocketIO = (io, sessionMiddleware) => {
     });
 
 }
-
-/*io.on('connection', (socket) => {
-    console.log('a user connected');
-});*/
 module.exports = { getUsers, searchUsers, getMessages, saveSentMessage, initializeSocketIO };
 
 

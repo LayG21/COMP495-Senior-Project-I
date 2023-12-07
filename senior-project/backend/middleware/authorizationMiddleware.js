@@ -1,18 +1,11 @@
 //imports
-const roles = require("../roles/roles");
+const { roles } = require("../roles/roles");
 
-//role middleware that should be applied to certain routes
 //based on role in session
 //Authorization middleware that checks if user has permission to access resource
 function isAuthorized(requiredRoles) {
     return function (req, res, next) {
-        // Check if req.session and req.session.user are defined
-        if (!req.session || !req.session.user) {
-            console.log('Error in role middleware: User not authenticated.');
-        }
         const userType = req.session.user.role;
-        //console.log('User Type:', userType);
-        //console.log('Required Roles:', requiredRoles);
         if (!userType) {
             console.log('Error in role middleware: User type not provided.');
         }
@@ -27,6 +20,5 @@ function isAuthorized(requiredRoles) {
 
     };
 }
-
 
 module.exports = { isAuthorized };
