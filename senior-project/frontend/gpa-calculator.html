@@ -40,7 +40,7 @@
 
             <ul id="listed-messages">
                 <!--Display for errors-->
-                <li>hey</li>
+
             </ul>
         </div>
 
@@ -53,8 +53,6 @@
             </p>
             <p>These are the instructions: From left to right input the optional course name, assignment grade, and
                 assignment weight. The weight has to be a value. </p>
-            <p class="calc-description">Want to use the Course Calculator, click below</p>
-            <button><a href="course-calculator.html">Course Calculator</a></button>
 
         </div>
         <div class="calculator">
@@ -68,10 +66,16 @@
                 </thead>
                 <tbody id="gpa-calc-table-body">
                     <!-- Rows for user input -->
+                    <tr>
+                        <td class="course-name"><input type="text" placeholder="Enter Course Name"></td>
+                        <td class="course-grade"><input type="text" placeholder="Enter Course Grade"></td>
+                        <td class="course-weight"><input type="text" placeholder="Enter Course Weight"></td>
+                    </tr>
                 </tbody>
             </table>
             <button onclick="addMore()">Add Row</button>
-            <button onclick="resetTable()">Reset Table</button>
+            <button onclick="resetCalculator()">Reset Calculator</button>
+            <button onclick="deleteRow()">Delete Row</button>
             <button onclick="calculateGPA()">Calculate GPA</button>
         </div>
         <div class="bottom-div">

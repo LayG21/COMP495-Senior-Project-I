@@ -24,6 +24,10 @@ let credit_output = 0;
 let errorContainer = document.getElementById('error-container');
 let errorMessages = document.getElementById('listed-messages');
 
+/****************************************
+ *        UI Functions        *
+ ****************************************/
+
 //create more fields
 function addMore() {
     var calcTable = document.getElementById("gpa-calc-table");
@@ -33,93 +37,66 @@ function addMore() {
     var nameInput = document.createElement("input");
     nameInput.className = "course-name";
     nameInput.setAttribute("type", "text");
-    nameInput.setAttribute("placeholder", "Enter Name");
+    nameInput.setAttribute("placeholder", "Enter Course Name");
     nameCell.appendChild(nameInput);
 
     var gradeCell = newRow.insertCell(1);
     var gradeInput = document.createElement("input");
     gradeInput.className = "course-grade";
     gradeInput.setAttribute("type", "text");
-    gradeInput.setAttribute("placeholder", "Enter Grade");
+    gradeInput.setAttribute("placeholder", "Enter Course Grade");
     gradeCell.appendChild(gradeInput);
 
     var weightCell = newRow.insertCell(2);
     var weightInput = document.createElement("input");
     weightInput.className = "course-weight";
     weightInput.setAttribute("type", "text");
-    weightInput.setAttribute("placeholder", "Enter Weight");
+    weightInput.setAttribute("placeholder", "Enter Course Weight");
     weightCell.appendChild(weightInput);
 }
 
-//reset back to normal
-function resetTable() {
-    //clear rows if there are any
+
+//reset calculator back to normal
+function resetCalculator() {
+    // Clear content in all rows, starting from the second row
     var calcTable = document.getElementById("gpa-calc-table");
-    while (calcTable.rows.length > 1) {
-        calcTable.deleteRow(1);
-    }
+    var rows = calcTable.getElementsByTagName("tr");
 
-    // Clear content in the bottom-div
-    var bottomDiv = document.querySelector(".bottom-div");
-    bottomDiv.textContent = "";
+    for (var i = rows.length - 1; i > 0; i--) {
+        var cells = rows[i].getElementsByTagName("td");
+
+        for (var j = 0; j < cells.length; j++) {
+            var input = cells[j].querySelector("input");
+            if (input) {
+                input.value = "";
+            }
+        }
+        if (i > 1) {
+            rows[i].remove();
+        }
+    }
+    // Clear error messages
+    closeErrorContainer();
 }
 
-function resultAdd() {
-    grades = document.getElementsByClassName('course-grade');
-    weights = document.getElementsByClassName('course-weight');
-    let grade_output_element = document.getElementById('calc-results');
 
-    math = 0;
-    var p1 = 0;
-    var p2 = 0;
-    let message = "";
-    let messageArray = [];
 
-    for (var i = 0; i < weights.length; i++) {
-        // if no grade input
-        if ((!grades[i].value) && (weights[i].value)) {
-            message = "Please input course grade";
-            //grade_output_element.textContent = "";
-            messageArray.push(message);
-        }
-        // if no weight input
-        if ((grades[i].value) && (!weights[i].value)) {
-            message = "Please input course weight";
-            //grade_output_element.textContent = "";
-            messageArray.push(message);
-        }
-        //if not a number 
-        if (isNaN(grades[i].value) || isNaN(weights[i].value)) {
-            messageArray.push("Please enter valid numeric values for grade and weight");
-        }
-        // if both are empty search for not empty, this just means the user did not input in this field
-        if ((!grades[i].value) && (!weights[i].value)) {
-            continue;
-        }
-        // if one field is not empty and both are not empty, add up input values
-        else {
-            p1 += (+(grades[i].value * weights[i].value));
-            p2 += (+(weights[i].value));
-        }
-    }
-    if (messageArray.length > 0) {
-        handleResponse(messageArray);
-    }
-    else {
-        if (errorContainer.style.display === "block") {
-            closeErrorContainer();
-            math = Number(p1 / p2);
-            grade_output = math;
-            credit_output = p2;
-            classification_output = classification(credit_output);
-        }
-        math = Number(p1 / p2);
-        grade_output = math;
-        credit_output = p2;
-        classification_output = classification(credit_output);
 
+
+
+
+//function for deleting rows ecept for default
+
+function deleteRow() {
+    var calcTable = document.getElementById("gpa-calc-table");
+    var rowCount = calcTable.rows.length;
+
+    if (rowCount > 2) {
+        calcTable.deleteRow(rowCount - 1);
     }
 }
+
+
 
 //close error-container
 function closeErrorContainer() {
@@ -127,12 +104,13 @@ function closeErrorContainer() {
     errorContainer.style.display = "none";
 }
 
-//add error
+//add error to display to user
 function handleResponse(data) {
     let errorContainer = document.getElementById("error-container");
     let listErrors = document.getElementById("listed-messages");
     listErrors.textContent = '';
 
+    //if errors are an array
     if (Array.isArray(data)) {
         // Handle array of errors
         data.forEach(error => {
@@ -141,19 +119,32 @@ function handleResponse(data) {
             errorDiv.textContent = error;
             listErrors.appendChild(errorDiv);
         });
-        errorContainer.appendChild(listErrors);
-    } else {
-        // Handle single error
+    }
+    //for single error
+    else if (data) {
         errorContainer.style.display = "block";
         let errorDiv = document.createElement('li');
         errorDiv.textContent = data;
         listErrors.appendChild(errorDiv);
-        errorContainer.appendChild(listErrors);
     }
+    errorContainer.appendChild(listErrors);
 }
 
 
-//gets classification based on earned hours
+// UI Function to update navigation based on user role
+function updateNavigation(userRole) {
+    const navItems = document.querySelectorAll('.links li');
+    Role = userRole
+    navItems.forEach((item) => {
+        const role = item.getAttribute('data-role');
+        if (role && role !== userRole) {
+            item.remove();
+        }
+    });
+}
+
+
+//gets classification based on credit input
 function classification(input) {
     if ((input >= 0) && (input <= 29)) {
         return "Freshman";
@@ -171,69 +162,136 @@ function classification(input) {
 }
 
 
-//changes the added row back to default
 
-//output for course calculator
-/*function courseOutput() {
-    if (credit_output > 100) {
-        alert("You are going over the 100 percentage");
-    }
-    grade_output = document.getElementById('calc-results');
-    grade_output.value = "Your grade: " + math.toFixed(2) + "%";
-}*/
-
-//gpa output calculates grade the same way ncat does, it trunacates.
-function gpaOutput() {
-    //the math.floor is not meant to round up, just stop at two decimals
-    //ncat does not round up last decimal
-    let results = document.querySelector(".bottom-div");
-    results.textContent = "";   //clear before running
-
-    let grade = document.createElement("p");
-    let classfication = document.createElement("p");
-    let credits = document.createElement("p");
-
-    grade.setAttribute("id", "calc-results");
-    classfication.setAttribute("id", "calc-classification");
-    credits.setAttribute("id", "calc-credits");
-
-    grade.textContent = "Your Grade: " + Math.floor(math * 100) / 100;;
-    classfication.textContent = "Your Classification: " + classification_output;
-    credits.textContent = "Your Credits: " + credit_output;
-
-    results.appendChild(grade);
-    results.appendChild(classfication);
-    results.appendChild(credits);
-}
-
-//works and rounds up second decimal
-/*function courseresultAdd() {
-    //calculates grades
-    resultAdd();
-
-    //outputs results
-    courseOutput();
-}*/
-
-//works and does not round up, it truncates it.
+//triggers calculator
 function calculateGPA() {
-    //calculates grade
+    //clear errors if any
+    closeErrorContainer();
+
+    // function to do the math
     resultAdd();
 
-    //outputs results
-    gpaOutput();
 }
-// UI Function to update navigation based on user role
-function updateNavigation(userRole) {
-    const navItems = document.querySelectorAll('.links li');
-    Role = userRole
-    navItems.forEach((item) => {
-        const role = item.getAttribute('data-role');
-        if (role && role !== userRole) {
-            item.remove(); // Remove the navigation item from the DOM if the role doesn't match
+function resultAdd() {
+    let rows = document.querySelectorAll('#gpa-calc-table-body tr');
+    let hasError = false;
+    let errorMessage = "Please fix the following issues:\n";
+    let totalPoints = 0;
+    let totalWeight = 0;
+    let validRows = 0;
+
+    for (let i = 0; i < rows.length; i++) {
+        let cells = rows[i].cells;
+        let gradeInput = cells[1].querySelector('input');
+        let weightInput = cells[2].querySelector('input');
+
+        // If entire row is empty consider it skipped
+        if (!gradeInput.value && !weightInput.value) {
+            continue;
         }
-    });
+
+        // Handle missing grade 
+        if (!gradeInput.value) {
+            hasError = true;
+            errorMessage += `\nRow ${i + 1}: Please input grade.\n`;
+        }
+
+        // Handle missing weight
+        else if (!weightInput.value) {
+            hasError = true;
+            errorMessage += `\nRow ${i + 1}: Please input weight.\n`;
+        }
+
+        // Handle valid numbers
+        if (!hasError) {
+            let grade = parseFloat(gradeInput.value.trim());
+            let weight = parseFloat(weightInput.value.trim());
+
+            if (isNaN(grade)) {
+                hasError = true;
+                errorMessage += `\nRow ${i + 1}: Invalid grade.\n`;
+            }
+            if (isNaN(weight)) {
+                hasError = true;
+                errorMessage += `\nRow ${i + 1}:Invalid weight.\n`;
+            }
+            //do math for rows with input that matches a number
+            else {
+                totalPoints += grade * weight;
+                totalWeight += weight;
+                validRows++;
+            }
+        }
+    }
+
+    // Display error message if there's an issue
+    if (hasError) {
+        handleResponse(errorMessage);
+    }
+    else {
+        if (validRows > 0) {
+            math = totalPoints / totalWeight;
+            grade_output = `Your GPA: ${math.toFixed(2)}`;
+            credit_output = totalWeight;
+            classification_output = classification(credit_output);
+
+            // Display results
+            displayResults();
+        }
+    }
 }
+
+
+
+
+
+function displayResults() {
+    // Display results in the bottom-div
+    var bottomDiv = document.querySelector(".bottom-div");
+    bottomDiv.textContent = ""; // Clear previous content
+
+    // Create input elements
+    var gpaInput = document.createElement("input");
+    gpaInput.type = "text";
+    gpaInput.placeholder = "GPA";
+    gpaInput.className = "calc-results";
+    gpaInput.id = "calc-results";
+    gpaInput.value = grade_output;
+    gpaInput.readOnly = true;
+
+    var classificationInput = document.createElement("input");
+    classificationInput.type = "text";
+    classificationInput.placeholder = "Classification";
+    classificationInput.className = "calc-classification";
+    classificationInput.id = "calc-classification";
+    classificationInput.value = classification_output;
+    classificationInput.readOnly = true;
+
+    var creditsInput = document.createElement("input");
+    creditsInput.type = "text";
+    creditsInput.placeholder = "Credits";
+    creditsInput.className = "calc-credits";
+    creditsInput.id = "calc-credits";
+    creditsInput.value = credit_output;
+    creditsInput.readOnly = true;
+
+    // Append input elements to bottomDiv
+    bottomDiv.appendChild(gpaInput);
+    bottomDiv.appendChild(classificationInput);
+    bottomDiv.appendChild(creditsInput);
+
+    bottomDiv.style.display = "block";
+}
+
+
+
+
+
+
+/****************************************
+ *        Request Functions        *
+ ****************************************/
+
 //fetch request to get role
 function getRole() {
     fetch(`/user/role`, {
@@ -250,3 +308,4 @@ function getRole() {
             console.log("Error in getting role");
         });
 }
+
