@@ -1,40 +1,38 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/nav.css" />
     <link rel="stylesheet" href="css/profile.css" />
-      <!-- Add the following line for the favicon -->
+    <!-- Add the following line for the favicon -->
     <link rel="icon" href="data:;base64,iVBORw0KGgo=">
 
-    <title>Selected classes</title> 
+    <title>Selected classes</title>
 </head>
+
 <body>
     <header class="navbar">
         <a class="logo" href="home.html">Aggie Advise</a>
-        <input type="checkbox" id="nav-toggle" class="nav-toggle"/>
+        <input type="checkbox" id="nav-toggle" class="nav-toggle" />
         <nav>
             <ul class="links">
                 <li data-role="STUDENT"><a class="nav-link" href="student-profile.html">Profile</a></li>
                 <li data-role="STUDENT"><a class="nav-link" href="class.html">Classes</a></li>
-                <li data-role="ADVISOR"><a class="nav-link" href="advisee-view.html">View</a></li>
                 <li><a class="nav-link" href="chat.html">Chat</a></li>
                 <li class="calc-links">
-                  <a class="nav-link" href="#">Calculator &#x25BC;</a>
-                  <ul class="dropdown" id="dropdown">
-                    <li><a href="gpa-calculator.html">GPA Calculator</a></li>
-                    <li>
-                      <a href="course-calculator.html">Course Calculator</a>
-                    </li>
-                  </ul>
-                </li>
-                <li data-role="STUDENT">
-                  <a class="nav-link" href="class-generator.html">Class Generator</a>
+                    <a class="nav-link" href="#">Calculator &#x25BC;</a>
+                    <ul class="dropdown" id="dropdown">
+                        <li><a href="gpa-calculator.html">GPA Calculator</a></li>
+                        <li>
+                            <a href="course-calculator.html">Course Calculator</a>
+                        </li>
+                    </ul>
                 </li>
                 <li><a class="nav-link" id="logout-link" href="#">Logout</a></li>
-              </ul>
+            </ul>
         </nav>
         <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
     </header>
@@ -62,12 +60,12 @@
                                     <strong>Class Credits:</strong> ${unselectedClass.ClassCredits}
                                     <strong>Class Pre-requisite:</strong> ${unselectedClass.ClassPrerequisite}
                                 </li>`
-                             );
-                         });
-                          $('#unselectedClassesContainer').empty().append(list);
-                     } else {
+                            );
+                        });
+                        $('#unselectedClassesContainer').empty().append(list);
+                    } else {
                         $('#unselectedClassesContainer').text('All classes selected.');
-                     }
+                    }
                 });
             });
         });
@@ -78,4 +76,5 @@
     <div id="unselectedClassesContainer"></div>
     <button id="showUnselectedClassesButton">Show Classes</button>
 </body>
+
 </html>
