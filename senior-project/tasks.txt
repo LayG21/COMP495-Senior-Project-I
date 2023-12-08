@@ -1,0 +1,7 @@
+- create models for database
+- connect to database (connction works)
+- sanitize and validate input
+- update routes
+- add prepopulated data to mongodb
+- eventually add the sessions or tokens because with each request i either need the current user, 
+current user and selected user, or current user, selected user, and message
