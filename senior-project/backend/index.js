@@ -69,6 +69,10 @@ const chatRoutes = require("./routes/chatroute.js");
 const advisorRoutes = require("./routes/advisorroute.js");
 const studentRoutes = require("./routes/studentroute.js");
 const roleRoutes = require("./routes/roleroute.js");
+const classSelectionRoute = require("./routes/classSelectionRoute.js");
+const selected_classesRoute = require("./routes/selected_classesRoute.js");
+const unselected_classesRoute = require("./routes/unselected_classesRoute.js");
+
 
 
 
@@ -80,6 +84,11 @@ app.use("/chat", chatRoutes);
 app.use("/advisor", advisorRoutes);
 app.use("/student", studentRoutes);
 app.use("/", roleRoutes);
+app.use("/", classSelectionRoute);
+app.use("/", selected_classesRoute);
+app.use("/", unselected_classesRoute);
+
+
 
 
 

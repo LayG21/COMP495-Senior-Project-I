@@ -8,4 +8,6 @@ const { isAuthenticated } = require("../middleware/authenticationMiddleware");
 //get student profile
 router.get("/profile", isAuthenticated, isAuthorized([roles.STUDENT]), getProfile);
 
+
+
 module.exports = router;

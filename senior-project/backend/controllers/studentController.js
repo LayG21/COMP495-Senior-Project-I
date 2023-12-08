@@ -9,6 +9,7 @@ const getProfile = async (req, res) => {
   const studentID = parseInt(req.session.user.id);
 
   try {
+    
     const studentInfo = await Student.aggregate([
       {
         $match: { studentID: studentID }
@@ -44,9 +45,12 @@ const getProfile = async (req, res) => {
       }
     ]);
 
+
     if (!studentInfo || studentInfo.length === 0) {
-      return res.status(404).json({ error: 'Student not found' });
+      return res.status(404).json({ message: 'Student not found' });
     }
+
+   
 
     res.status(200).json(studentInfo[0]);
   } catch (error) {

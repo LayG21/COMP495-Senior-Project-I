@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     //Change navbar to display links user has access to
     updateNavigation(userRole);
-    //update front end to dispay data
+
     getProfile();
 });
 
@@ -14,12 +14,12 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
 //Gets students information
 function getProfile() {
-    const errorContainer = document.getElementById('error-container');
-
-    // Fetch student profile data
-    fetch('/student/profile', {
-        method: 'GET',
-        credentials: 'include'
+    fetch('/student/profile')
+    .then(response => {
+        if(!response.ok){
+            throw new Error(`HTTP error: ${response.status}`);
+        }
+        return response.json();
     })
         .then(response => {
             if (!response.ok) {
@@ -37,6 +37,7 @@ function getProfile() {
             showErrorMessage(error);
 
         });
+
 }
 
 /****************************************
@@ -55,6 +56,7 @@ function updateNavigation(userRole) {
         }
     });
 }
+
 
 //UI function for updating page with data
 function displayProfile(data) {
