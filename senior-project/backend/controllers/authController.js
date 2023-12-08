@@ -6,21 +6,19 @@ const Advisor = require("../models/Advisor");
 const { roles } = require("../roles/roles.js");
 const bcrypt = require('bcrypt');
 
+//this takes input as a the body with the type being string
 const loginController = async (req, res) => {
     const role = req.body.userType;
     const email = req.body.userEmail;
     const password = req.body.userPassword;
     let user = null;
-
     try {
 
         if (role === roles.STUDENT) {
-            // Perform authentication logic for student
-            // Example: Check user credentials in the database
             const student = await Student.findOne({ studentEmail: email });
             if (!student) {
                 console.log("No User with matching Email");
-                return res.status(404).send('No User with Matching Credentials');
+                return res.status(404).json({ error: 'No User with Matching Credentials' });
             }
 
             const isPasswordValid = await bcrypt.compare(
@@ -30,7 +28,7 @@ const loginController = async (req, res) => {
 
             if (!isPasswordValid) {
                 console.log("No user with matching password");
-                return res.status(401).send('No User With Matching Credentials');
+                return res.status(401).json({ error: 'No User With Matching Credentials' });
             }
 
             // Assuming successful login, set user information in the session
@@ -46,13 +44,11 @@ const loginController = async (req, res) => {
             res.redirect('/home.html');
         }
         else if (role === roles.ADVISOR) {
-            // Perform authentication logic for advisor
-            // Example: Check advisor credentials in the database
             const advisor = await Advisor.findOne({ advisorEmail: email });
 
             if (!advisor) {
                 console.log("No user with matching email");
-                return res.status(404).send('No User with Matching Credentials');
+                return res.status(404).json({ error: 'No User with Matching Credentials' });
             }
 
             const isPasswordValid = await bcrypt.compare(
@@ -62,7 +58,7 @@ const loginController = async (req, res) => {
 
             if (!isPasswordValid) {
                 console.log("No user with matching password");
-                return res.status(401).send('No User with Matching Credentials');
+                return res.status(401).json({ error: 'No User with Matching Credentials' });
             }
 
             // Assuming successful login, set user information in the session
@@ -78,8 +74,26 @@ const loginController = async (req, res) => {
         }
     } catch (error) {
         console.error('Error:', error.message);
-        res.status(500).send('Internal Server Error');
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 };
 
-module.exports = { loginController };
+//logout controller
+const logoutController = async (req, res) => {
+    // Destroy the session
+    req.session.destroy((err) => {
+        if (err) {
+            console.error('Error destroying session:', err);
+            res.status(500).json({ error: 'An error occurred during logout' });
+        } else {
+            // Clear the session cookie
+            console.log("Clearing session");
+            res.clearCookie('connect.sid');
+
+            // Redirect to the root URL
+            res.redirect('/');
+        }
+    });
+};
+
+module.exports = { loginController, logoutController };

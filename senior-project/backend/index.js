@@ -55,7 +55,7 @@ console.log("Number of connections:", mongoose.connections.length);
 //session middleware
 const sessionMiddleware = session({
   secret: "changeit",
-  resave: true,
+  resave: false,
   saveUninitialized: false,
 });
 
@@ -68,9 +68,11 @@ const logoutRoutes = require("./routes/logoutroute.js");
 const chatRoutes = require("./routes/chatroute.js");
 const advisorRoutes = require("./routes/advisorroute.js");
 const studentRoutes = require("./routes/studentroute.js");
+const roleRoutes = require("./routes/roleroute.js");
 const classSelectionRoute = require("./routes/classSelectionRoute.js");
 const selected_classesRoute = require("./routes/selected_classesRoute.js");
 const unselected_classesRoute = require("./routes/unselected_classesRoute.js");
+
 
 
 
@@ -81,9 +83,11 @@ app.use("/", logoutRoutes);
 app.use("/chat", chatRoutes);
 app.use("/advisor", advisorRoutes);
 app.use("/student", studentRoutes);
+app.use("/", roleRoutes);
 app.use("/", classSelectionRoute);
 app.use("/", selected_classesRoute);
 app.use("/", unselected_classesRoute);
+
 
 
 
@@ -125,27 +129,20 @@ app.get('/course-calculator.html', isAuthenticated, isAuthorized([roles.STUDENT,
   res.sendFile(path.join(__dirname, "../frontend/course-calculator.html"));
 });
 
-//I am not sure about the roles for this page
-app.get('/class-generator.html', isAuthenticated, (req, res) => {
-  //console.log("reached the class generator page");
-  res.sendFile(path.join(__dirname, "../frontend/class-generator.html"));
-});
 
 
 
 
 //moved to bottom to make sure it works
 //stops from serving pages until they are checked for authentication and authroization
-//set static folder
 //serve html,css, and js
 app.use(express.static(path.join(__dirname, "../frontend")));
 
 //add socket io middleware to associate the user with the session
-//socket io connection:
 chatController.initializeSocketIO(io, sessionMiddleware);
 
-//callback function after PORT
+
 //listening on port
 server.listen(PORT, () => {
-  console.log(`listening on port: ${PORT}`)
+  console.log(`Listening on http://localhost:${PORT}`);
 });

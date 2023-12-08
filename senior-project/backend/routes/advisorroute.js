@@ -3,25 +3,28 @@ const express = require("express");
 const router = express.Router();
 const { isAuthorized } = require("../middleware/authorizationMiddleware");
 const { isAuthenticated } = require("../middleware/authenticationMiddleware");
+const { vsParam, vsQuery, paramvalidationRules, queryvalidationRules } = require("../middleware/advisorVS");
 const { roles } = require("../roles/roles");
 const { getStudents, getSpecificStudent, searchStudents } = require("../controllers/advisorController");
-const path = require('path');
 
 //DONE SO FAR:
 //Tested route calls after applying role middleware
 
 //To DO: 
 //Validate and Santitize
-//Eventually change to working with express session
+
 
 
 //get all assigned students
 router.get("/students", isAuthenticated, isAuthorized([roles.ADVISOR]), getStudents);
 
-//get specific assigned student by id
-router.get("/students/:studentID", isAuthenticated, isAuthorized([roles.ADVISOR]), getSpecificStudent);
 
 //get students based on search
-router.get("/students/search", isAuthenticated, isAuthorized([roles.ADVISOR]), searchStudents);
+router.get("/students/search", queryvalidationRules, vsQuery, isAuthenticated, isAuthorized([roles.ADVISOR]), searchStudents);
+
+
+//get specific assigned student by id
+router.get("/students/:studentID", paramvalidationRules, vsParam, isAuthenticated, isAuthorized([roles.ADVISOR]), getSpecificStudent);
+
 
 module.exports = router;

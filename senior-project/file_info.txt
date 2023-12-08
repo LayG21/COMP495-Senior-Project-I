@@ -37,7 +37,8 @@
     -has files for prepopulating data into database
 
 -controllers folder:
-    -has files for handling requests and responses
+    -has files for receiving requests from view/frontend
+    -updates data or gets data through the use of the model 
    
     -advisorController.js
         -getStudents():
@@ -45,11 +46,15 @@
         -getSpecificStudent():
             gets specific student profile that is assigned to advisor
         -searchStudents():
-            gets students thatmatch search input
+            gets students that match search input
+            Note: Not implemented yet
    
     -authController.js
-        loginController():
+        -loginController():
             handles login request
+        
+        -logoutController():
+            handles logout request
     
     -chatController.js
         getUsers():
@@ -76,7 +81,7 @@
     Class.js:
         schema for classes
     ClassSelections.js:
-        has to be added
+        schema for selected classes
     Conversation.js:
         Originally meant to be used for conversation collection but as of right now it is not being used
     Message.js:

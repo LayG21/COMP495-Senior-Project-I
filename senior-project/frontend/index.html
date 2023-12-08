@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Page</title>
-    <link rel="stylesheet" type="text/css" href="css/login.css ">
+    <link rel="stylesheet" type="text/css" href="css/login.css">
 </head>
 
 <body>
@@ -13,23 +13,31 @@
         <p class="logo" id="logo">Aggie Advise</p>
     </header>
     <div class="login-container">
+
         <main>
+            <div id="error-container">
+                <div><span class="closebtn" onclick="closeErrorContainer()">&times;</span></div>
+
+                <ul id="listed-messages">
+                    <!--Display for errors-->
+                </ul>
+            </div>
             <div class="login-form">
-                <form method="post" action="/login">
+
+                <form id="form">
                     <div>
                         <h2>Log In</h2>
                     </div>
                     <!--The label should be ontop of the input box-->
                     <label for="user-email">Enter Email:</label>
-                    <input type="email" class="user-email" id="user-email" name="userEmail" placeholder="Email"
-                        required>
+                    <input type="email" class="user-email" id="user-email" name="userEmail" placeholder="Email">
 
                     <label for="user-password">Enter Password:</label>
                     <input type="password" class="user-password" id="user-password" name="userPassword"
-                        placeholder="Password" required>
+                        placeholder="Password">
 
                     <label for="user-type">Select User Type:</label>
-                    <select class="user-type" id="usertype" name="userType" required>
+                    <select class="user-type" id="usertype" name="userType">
                         <option value="" disabled selected></option>
                         <option value="STUDENT">STUDENT</option>
                         <option value="ADVISOR">ADVISOR</option>
@@ -40,5 +48,6 @@
         </main>
     </div>
 </body>
+<script src="./javascript/login.js"></script>
 
 </html>

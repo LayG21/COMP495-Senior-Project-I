@@ -19,11 +19,34 @@ const getUsers = async (req, res) => {
     try {
         //get users based on current user role
         if (userType === roles.STUDENT) {
-            results = await Advisor.find({}).select('-_id advisorID advisorFirstName advisorLastName');
+            //give alias names as response
+            //results = await Advisor.find({}).select('-_id advisorID advisorFirstName advisorLastName');
+            results = await Advisor.aggregate([
+                {
+                    $project: {
+                        _id: 0,
+                        id: '$advisorID',
+                        firstName: '$advisorFirstName',
+                        lastName: '$advisorLastName',
+                        email: '$advisorEmail',
+                    },
+                },
+            ]);
             //console.log(results);
         }
         else if (userType === roles.ADVISOR) {
-            results = await Student.find({}).select('-_id studentID studentFirstName studentLastName');
+            //results = await Student.find({}).select('-_id studentID studentFirstName studentLastName');
+            results = await Student.aggregate([
+                {
+                    $project: {
+                        _id: 0,
+                        id: '$studentID',
+                        firstName: '$studentFirstName',
+                        lastName: '$studentLastName',
+                        email: '$studentEmail',
+                    },
+                },
+            ]);
             //console.log(results);
         }
         //check if they are neither role or if role is empty
@@ -46,8 +69,8 @@ const getUsers = async (req, res) => {
 //get messages between two users
 const getMessages = async (req, res) => {
     //would need the sender and receiver
-    const currentUser = req.session.user.id;
-    const selectedUser = req.params.userID;
+    const currentUser = parseInt(req.session.user.id);
+    const selectedUser = parseInt(req.params.userID);
     try {
         //check if request is empty
         if (!currentUser || !selectedUser) {
@@ -59,10 +82,10 @@ const getMessages = async (req, res) => {
                 { senderID: currentUser, receiverID: selectedUser },
                 { senderID: selectedUser, receiverID: currentUser },
             ],
-        }).select('-_id').sort({ createdAt: -1 });
+        }).select('-_id -__v').sort({ createdAt: 1 });
         //send back messages if there are any
         if (!messages || messages.length === 0) {
-            return res.status(404).json({ message: 'No Messages Found' });
+            return res.status(204).json();
         }
         return res.status(200).json(messages);
 
@@ -74,211 +97,147 @@ const getMessages = async (req, res) => {
 
 //save sent messages
 //Will change this to work with socket io
-const saveSentMessage = async (req, res) => {
+const saveSentMessage = async (senderID, receiverID, message) => {
     //need sender,receiver, and content
-    const sender = req.session.user.id;
-    const receiver = req.body.receiver;
-    const content = req.body.content;
+    const sender = senderID;
+    const receiver = receiverID;
+    const content = message;
     let data = {};
     try {
-        //check if request is empty
         if (!sender || !receiver || !content) {
-            return res.status(400).json({ message: 'Please fill all fields' });
+            console.log("Input was missing for saving the message");
+            return 400;
         }
         //create new message object to be saved in db
         data = {
             senderID: sender,
             receiverID: receiver,
-            content,
+            content: content,
         }
         //save message to database
         const newMessage = await Message.create(data);
 
         //check if message was successfully saved
         if (!newMessage) {
-            return res.status(500).json({ message: 'Failed to save message.' })
+            console.log("error in function for saving the message");
+            return 500;
         }
-        return res.status(200).json({ success: true, newMessage });
+        return 200;
 
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ message: 'An Error Occured' });
+        return 500;
     }
 }
 
 
 //search through advisors if current user is a student
 //search through students if current user is advisor
-//To do: implement search
 const searchUsers = async (req, res) => {
-    const qsearchuery = req.query.searchQuery;
+    const role = req.session.user.role;
+    const searchQuery = req.query.searchQuery;
+    let searchResults = [];
+    try {
+        if (role === roles.STUDENT) {
+            searchResults = await Advisor.find({
+                $or: [
+                    { advisorFirstName: { $regex: new RegExp(searchQuery, 'i') } },
+                    { advisorLastName: { $regex: new RegExp(searchQuery, 'i') } },
+                ],
+            },
+                { advisorID: 1, advisorFirstName: 1, advisorLastName: 1, _id: 0 }
+            ).limit(5);
+        }
+        else if (role === roles.ADVISOR) {
+            searchResults = await Student.find({
+                $or: [
+                    { studentFirstName: { $regex: new RegExp(searchQuery, 'i') } },
+                    { studentLastName: { $regex: new RegExp(searchQuery, 'i') } },
+                ],
+            },
+                { studentID: 1, studentFirstName: 1, studentLastName: 1, _id: 0 }
+            ).limit(5);
+        }
+
+        //if empty return nothing but the status
+
+        if (searchResults.length === 0) {
+            return res.status(204).json();
+        }
+
+        //format response
+        const formattedResponse = searchResults.map(result => ({
+            id: result.studentID || result.advisorID,
+            firstName: result.studentFirstName || result.advisorFirstName,
+            lastName: result.studentLastName || result.advisorLastName,
+        }));
+        res.status(200).json(formattedResponse);
+    } catch (error) {
+        console.log('Error in Search Users Controller');
+        res.status(500).json({ message: error.message + "server" })
+    }
 
 }
 //socket io logic for sending and receiving messages
 const initializeSocketIO = (io, sessionMiddleware) => {
     // Socket.IO connection setup with session middleware
     io.engine.use(sessionMiddleware);
-
+    io.use((socket, next) => {
+        // Access the session data to check if the user is authenticated
+        const session = socket.request.session;
+        if (session && session.user) {
+            return next();
+        }
+        return next(new Error("Unauthorized"));
+    });
     io.on('connection', (socket) => {
         const { user } = socket.request.session;
 
         if (user && user.id) {
             userSockets.set(user.id, socket);
-            console.log(`User ${user.id} connected. This is their socket id: ${socket.id}`);
+            //console.log(`User ${user.id} connected. This is their socket id: ${socket.id}`);
+            // console.log('Current userSockets map:', userSockets);
+
+        } else {
+            //console.log('User information not available.');
         }
 
-        else {
-            console.log('User information not available.');
-        }
+        //sending message
+        socket.on('sendMessage', async ({ receiverID, content }) => {
+            const senderID = parseInt(socket.request.session.user.id);
+            const receiverSocket = userSockets.get(parseInt(receiverID, 10));
 
-        socket.on('sendMessage', ({ receiverId, content }) => {
-            const senderId = socket.request.session.user.id;
-
-            const receiverSocket = userSockets.get(parseInt(receiverId, 10));
-
-            //save message first and then emit to user if they have a socket
-            //console.log(`Received message from ${senderId} to ${receiverId}: ${content}`);
+            // console.log(`Received message from ${senderID} to ${receiverID}: ${content}`);
             //console.log(`This is the socket of the receiverID ${receiverSocket}`);
 
-            if (receiverSocket) {
-                //Emit message to specific socket
-                console.log(`Receiver socket found for ${receiverId}: ${receiverSocket.id}`);
-                receiverSocket.emit('newMessage', { senderId, content });
+            //save message before emitting and if not saved do no emit message
+            let saveResult = await saveSentMessage(senderID, receiverID, content);
+
+
+            if (saveResult === 200) {
+                if (receiverSocket) {
+                    //console.log(`Receiver socket found for ${receiverID}: ${receiverSocket.id}`);
+                    io.to(receiverSocket.id).emit('receiveMessage', ({ senderID, content }));
+                }
+
+            } else {
+                //console.log(`Message not saved or receiver ${receiverID} not found or does not have an active socket.`);
+                // Handle the case where the message is not saved or receiver not found
+                socket.emit('errorMessage', { error: 'Message could not be sent.' });
             }
-            else {
-                console.log(`Receiver ${receiverId} not found or does not have an active socket.`);
-            }
+
         });
+
         socket.on('disconnect', () => {
             if (user && user.id) {
                 userSockets.delete(user.id);
-                console.log(`Socket removed from userSockets Map for user ${user.id}`);
+                //console.log(`Socket removed from userSockets Map for user ${user.id}`);
             }
-            console.log(`User ${socket.id} disconnected`);
+            //console.log(`User ${socket.id}, disconnected`);
         });
     });
-}
 
-/*io.on('connection', (socket) => {
-    console.log('a user connected');
-});*/
+}
 module.exports = { getUsers, searchUsers, getMessages, saveSentMessage, initializeSocketIO };
 
-
-/*
-For original implementation
-//get all users the current user has conversation with
-const getConversations = async (req, res) => {
-    const userID = req.body.id;
-    const userType = req.body.userType;
-    console.log(userID);
-    console.log(userType);
-
-    try {
-        let results = null;
-        let fieldToExtract = null;
-
-        if (userType === roles.STUDENT) {
-            results = await Conversation.find({ student: userID })
-                .populate('advisor', '_id advisorFirstName advisorLastName')
-                .select('-_id -student');
-            fieldToExtract = 'advisor';
-        }
-        else if (userType === roles.ADVISOR) {
-            results = await Conversation.find({ advisor: userID })
-                .populate('student', '_id studentFirstName studentLastName')
-                .select('-_id -advisor');
-            fieldToExtract = 'student';
-        }
-
-        if (!results || results.length === 0) {
-            return res.status(404).json({ message: 'No Conversations Found For User' });
-        }
-
-        // The populated fields should already contain the necessary information
-        const modifiedResponse = results.map(result => result[fieldToExtract]);
-        res.status(200).json(modifiedResponse);
-    } catch (error) {
-        console.error('Error:', error);
-        res.status(500).json({ message: error.message });
-    }
-};
-
-//might need to use regex
-const searchUser = async (req, res) => {
-    try {
-        //if student:
-        //search for advisors where the first name and advsior slightly match
-        //return results as the advisorid, firstname, and last name
-        if (userType === roles.STUDENT) { }
-        else if(userType === roles.ADVISOR){}
-        //else if advisor:
-        //search for advisors where the first name and advsior slightly match
-        //return results as the advisorid, firstname, and last name
-        //could update to handle case where not stydent or advisor
-    } catch (error) {
-
-    }
-};
-const openConversation = async (req, res) => {
-    //get who the requester is
-    //get who the selected user is
-    //if there is a previous conversation, return all messages from that conversation
-    //If there is no previous conversation, create a new conversation
-
-    try {
-
-    } catch (error) {
-
-    }
-};
-
-const saveMessage = async (req, res) => {
-    //save message to db
-    //will need senderId, receiverId, content, and convoId
-};
-module.exports = { getConversations };*/
-
-//create a function that creates convoId as student--advisor
-/*
-let convoID = null;
-let userIsStudent = false;
-let userIsAdvisor = false;
-*/
-//things to do
-/* Original Idea*/
-/*
-getConversations: Gets people that current user has conversations with. 
-If current user is a student, should return whoever is the advisor.
-If currnt user is advisor, should rturn whoever is student
-
-searchUser: search for users that might slightly match the input. 
-Returning the people that slightly match the input.
-If they are an advisor, they should only be searching for students
-If they are students, they should only be looking for advisors
-
-openConversation: when you search and select someone to chat with: 
-if there is a previous conversation with current user and selected user, get all messages from this conversation
-if there is no conversation, create a new one. The convoID could be a combination of ids such such as studentID--advisorID
-
-saveMessage: Save messages sent messages in database
-*/
-
-/*Current Idea */
-/*
-getUsers: 
-get list of users that current user can chat with
-If current user is an advisor, get all students
-If current user is an student, get all advisors
-
-searchUser:
-Searches through list of users that current user can chat with
-If they are an advisor, they should only be searching for students
-If they are students, they should only be looking for advisors
-
-getMessages:
-get all messages between two users, the two users being the current user and other user
-
-saveMessage:save sent messages to database
- */
 

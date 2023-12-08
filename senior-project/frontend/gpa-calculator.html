@@ -8,8 +8,7 @@
     <title>GPA Calculator</title>
 
     <link rel="stylesheet" href="./css/nav.css" />
-    <link rel="stylesheet" href="./css/calc.css">
-    <script src="./javascript/calculator.js"></script>
+    <link rel="stylesheet" href="./css/gpa.css">
 </head>
 
 <body>
@@ -30,15 +29,22 @@
                         </li>
                     </ul>
                 </li>
-                <li data-role="STUDENT">
-                    <a class="nav-link" href="class-generator.html">Class Generator</a>
-                </li>
                 <li><a class="nav-link" id="logout-link" href="#">Logout</a></li>
             </ul>
         </nav>
         <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
     </header>
     <main>
+        <div id="error-container">
+            <div><span class="closebtn" onclick="closeErrorContainer()">&times;</span></div>
+
+            <ul id="listed-messages">
+                <!--Display for errors-->
+
+            </ul>
+        </div>
+
+        <!-- Information box content -->
         <div class="calc-info">
             <h3 class="calc-welcome">GPA Calculator</h3>
             <p>Welcome to our GPA Calculator</p>
@@ -47,62 +53,39 @@
             </p>
             <p>These are the instructions: From left to right input the optional course name, assignment grade, and
                 assignment weight. The weight has to be a value. </p>
-            <p class="calc-description">Want to use the Course Calculator, click below</p>
-            <button><a href="course-calculator.html">Course Calculator</a></button>
 
         </div>
-        <div class="top-div">
-            <form class="gpa-calc-form" id="gpa-calc-form" action="#" onsubmit="event.preventDefault()">
-                <ul class="course-calc">
-                    <li>
-                        <ul class="labels">
-                            <li><label for="course-name">Course(Optional)</label></li>
-                            <li><label for="course-grade">Grade</label></li>
-                            <li><label for="course-weight">Weight</label></li>
-                        </ul>
-                    </li>
-                    <li class="calc-fields">
-                        <input type="text" class="course-name" placeholder="Enter Course Name">
-                        <input type="text" class="course-grade" placeholder="Enter Grade">
-                        <input type="text" class="course-weight" placeholder="Enter Weight">
-                    </li>
-                    <li class="calc-fields">
-                        <input type="text" class="course-name" placeholder="Enter Course Name">
-                        <input type="text" class="course-grade" placeholder="Enter Grade">
-                        <input type="text" class="course-weight" placeholder="Enter Weight">
-                    </li>
-                    <li class="calc-fields">
-                        <input type="text" class="course-name" placeholder="Enter Course Name">
-                        <input type="text" class="course-grade" placeholder="Enter Grade">
-                        <input type="text" class="course-weight" placeholder="Enter Weight">
-                    </li>
-                    <li class="calc-fields">
-                        <input type="text" class="course-name" placeholder="Enter Course Name">
-                        <input type="text" class="course-grade" placeholder="Enter Grade">
-                        <input type="text" class="course-weight" placeholder="Enter Weight">
-                    </li>
-                    <div class="added-row" id="added-row"></div>
-                    div calc-butons>
-                    <input type="button" class="add-button" onclick="addMore()" value="Add">
-                    <input type="reset" value="Reset" class="reset-button" onclick="changeDefault()">
-                    <input type="submit" value="Submit" class="submit-button" onclick="gparesultAdd()">
-        </div>
+        <div class="calculator">
+            <table id="gpa-calc-table">
+                <thead>
+                    <tr>
+                        <th>Course (Optional)</th>
+                        <th>Grade</th>
+                        <th>Weight</th>
+                    </tr>
+                </thead>
+                <tbody id="gpa-calc-table-body">
+                    <!-- Rows for user input -->
+                    <tr>
+                        <td class="course-name"><input type="text" placeholder="Enter Course Name"></td>
+                        <td class="course-grade"><input type="text" placeholder="Enter Course Grade"></td>
+                        <td class="course-weight"><input type="text" placeholder="Enter Course Weight"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button onclick="addMore()">Add Row</button>
+            <button onclick="resetCalculator()">Reset Calculator</button>
+            <button onclick="deleteRow()">Delete Row</button>
+            <button onclick="calculateGPA()">Calculate Course Grade</button>
 
+        </div>
         <div class="bottom-div">
-            <input type="text" placeholder="Grade Results" class="calc-results" id="calc-results" readonly>
-            <input type="text" placeholder="Classification" class="calc-classification" id="calc-classification"
-                readonly>
-            <input type="text" placeholder="Credits" class="calc-credits" id="calc-credits" readonly>
+            <!-- Result and classification output -->
         </div>
-        <!--allow user to input credit and gpa that they want to start calculating from-->
-        </ul>
-        </form>
-
-        </div>
-
     </main>
     <!--Function for logging the user out-->
     <script src="./javascript/logout.js"></script>
+    <script src="./javascript/gpa-calc.js"></script>
 </body>
 
 </html>

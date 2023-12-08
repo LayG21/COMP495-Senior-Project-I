@@ -67,11 +67,14 @@ th {
 
 /*Modal content*/
 #modal-content {
+    display: flex;
+    flex-direction: column;
     background-color: #fefefe;
     margin: 10% auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 60%;
+    width: 80%;
+    position: relative;
     /* Could be more or less, depending on screen size */
 }
 
@@ -79,6 +82,25 @@ th {
     text-align: center;
     /* Center the heading */
 }
+
+#modal-content hr {
+    border: 1px solid #9d9b9b;
+    /* Add a border style to the hr */
+    margin: 10px 0;
+    /* Add some margin for spacing */
+}
+
+#info-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+#personal-info,
+#academic-info {
+    width: 100%;
+    /* Adjust the width as needed */
+}
+
 
 #modal-content label {
     color: black;
@@ -88,6 +110,12 @@ th {
 /*Close button*/
 #close-modal {
     color: #aaa;
+    position: absolute;
+    /* Add this line */
+    top: 15px;
+    /* Add this line */
+    right: 35px;
+    /* Add this line */
     float: right;
     font-size: 28px;
     font-weight: bold;

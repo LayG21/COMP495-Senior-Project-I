@@ -8,8 +8,7 @@
   <title>Course Calculator</title>
 
   <link rel="stylesheet" href="./css/nav.css" />
-  <link rel="stylesheet" href="./css/calc.css" />
-  <script src="./javascript/calculator.js"></script>
+  <link rel="stylesheet" href="./css/course.css" />
 </head>
 
 <body>
@@ -30,15 +29,22 @@
             </li>
           </ul>
         </li>
-        <li data-role="STUDENT">
-          <a class="nav-link" href="class-generator.html">Class Generator</a>
-        </li>
         <li><a class="nav-link" id="logout-link" href="#">Logout</a></li>
       </ul>
     </nav>
     <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
   </header>
   <main>
+    <div id="error-container">
+      <div><span class="closebtn" onclick="closeErrorContainer()">&times;</span></div>
+
+      <ul id="listed-messages">
+        <!--Display for errors-->
+
+      </ul>
+    </div>
+
+    <!--Information box for content-->
     <div class="calc-info">
       <h3 class="calc-welcome">Course Calculator</h3>
       <p>Welcome to our Course Calculator</p>
@@ -47,67 +53,40 @@
         assignment name, assignment grade, and assignment weight.
       </p>
       <p class="calc-description">
-        Want to use the GPA Calculator, click below
       </p>
-      <button><a href="gpa-calculator.html">GPA Calculator</a></button>
     </div>
-    <div class="top-div">
-      <form id="calc-form" class="calc-form" action="#" onsubmit="event.preventDefault()">
-        <ul class="course-calc" id="course-calc">
-          <li>
-            <ul class="labels">
-              <label for="course-name">Assignment Name(Optional)</label>
-              <label for="course-grade">Grade</label>
-              <label for="course-weight">Weight%</label>
-            </ul>
-          </li>
-          <li class="calc-fields">
-            <input type="text" class="course-name" id="course-name" placeholder="Enter Assignment Name" />
-            <input type="text" class="course-grade" id="course-grade" placeholder="Enter Grade" />
-            <input type="text" class="course-weight" id="course-weight" placeholder="Enter Weight" />
-          </li>
-          <li class="calc-fields">
-            <input type="text" class="course-name" id="course-name" placeholder="Enter Assignment Namee" />
-            <input type="text" class="course-grade" id="course-grade" placeholder="Enter Grade" />
-            <input type="text" class="course-weight" id="course-weight" placeholder="Enter Weight" />
-          </li>
-          <li class="calc-fields">
-            <input type="text" class="course-name" id="course-name" placeholder="Enter Assignment Name" />
-            <input type="text" class="course-grade" id="course-grade" placeholder="Enter Grade" />
-            <input type="text" class="course-weight" id="course-weight" placeholder="Enter Weight" />
-          </li>
-          <li class="calc-fields">
-            <input type="text" class="course-name" id="course-name" placeholder="Enter Assignment Name" />
-            <input type="text" class="course-grade" id="course-grade" placeholder="Enter Grade" />
-            <input type="text" class="course-weight" id="course-weight" placeholder="Enter Weight" />
-          </li>
-          <li class="calc-fields">
-            <input type="text" class="course-name" id="course-name" placeholder="Enter Assignment Name" />
-            <input type="text" class="course-grade" id="course-grade" placeholder="Enter Grade" />
-            <input type="text" class="course-weight" id="course-weight" placeholder="Enter Weight" />
-          </li>
-          <li class="calc-fields">
-            <input type="text" class="course-name" id="course-name" placeholder="Enter Assignment Name" />
-            <input type="text" class="course-grade" id="course-grade" placeholder="Enter Grade" />
-            <input type="text" class="course-weight" id="course-weight" placeholder="Enter Weight" />
-          </li>
-
-          <div class="added-row" id="added-row"></div>
-          <div calc-butons>
-            <input type="button" onclick="addMore()" value="Add" class="add-button" />
-            <input type="reset" value="Reset" onclick="changeDefault()" class="reset-button" />
-            <input type="submit" value="Submit" onclick="courseresultAdd()" class="submit-button" />
-          </div>
-
-          <div class="bottom-div">
-            <input type="text" placeholder="Grade Results" id="calc-results" readonly />
-          </div>
-        </ul>
-      </form>
+    <div class="calculator">
+      <table id="course-calc-table">
+        <thead>
+          <tr>
+            <th>Assignment(Optional)</th>
+            <th>Grade</th>
+            <th>Weight</th>
+          </tr>
+        </thead>
+        <tbody id="course-calc-table-body">
+          <!-- Rows for user input -->
+          <tr>
+            <td class="assignment-name"><input type="text" placeholder="Enter Assignment Name"></td>
+            <td class="assignment-grade"><input type="text" placeholder="Enter Assignment Grade"></td>
+            <td class="assignment-weight"><input type="text" placeholder="Enter Assignment Weight"></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="button-container">
+        <button onclick="addMore()">Add Row</button>
+        <button onclick="resetCalculator()">Reset Calculator</button>
+        <button onclick="deleteRow()">Delete Row</button>
+        <button onclick="calculateGrade()">Calculate Course Grade</button>
+      </div>
+    </div>
+    <div class="bottom-div">
+      <!-- Result output -->
     </div>
   </main>
 </body>
 <!--Function for logging the user out-->
 <script src="./javascript/logout.js"></script>
+<script src="./javascript/course-calc.js"></script>
 
 </html>

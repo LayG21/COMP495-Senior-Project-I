@@ -2,16 +2,13 @@ const express = require("express");
 const router = express.Router();
 const Student = require("../models/Student");
 const Advisor = require("../models/Advisor");
+const { sanitizationRules, validateInput } = require("../middleware/loginvalidate");
 const { loginController } = require("../controllers/authController");
-const { validateInput } = require("../middleware/loginvalidate");
-const bcrypt = require('bcrypt');
-const { roles } = require("../roles/roles");
 const path = require('path');
+const { validationResult } = require("express-validator");
 
-//Validate and Santitize user input
+router.use(express.json());
 
-//have to protect html page and requests made
-//if they do not have a session or required role, they shouldn't be able to make a request so they can not send or put in data
 //get login page
 router.get("/", (req, res) => {
   const absolutePath =
@@ -22,7 +19,9 @@ router.get("/", (req, res) => {
 
 
 //post request for when user adds credentials ad presses login
-router.post('/login', validateInput, loginController);
+
+router.post('/login', validateInput, sanitizationRules, loginController);
+
 
 
 

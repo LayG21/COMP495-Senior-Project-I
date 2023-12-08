@@ -1,5 +1,3 @@
-// Js file that will make requests based on user interaction and update html page if needed
-
 //DOMEvent to update html page as the user goes to the page
 document.addEventListener('DOMContentLoaded', (event) => {
     const userRole = 'STUDENT'; // Replace with the actual user role
@@ -10,8 +8,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
     getProfile();
 });
 
-//server side requests
-//gets and displays student information or will display error
+/****************************************
+ *        Request Functions        *
+ ****************************************/
+
 //Gets students information
 function getProfile() {
     fetch('/student/profile')
@@ -21,18 +21,31 @@ function getProfile() {
         }
         return response.json();
     })
-    .then(data =>{
-        displayProfile(data); 
-    })
-    .catch(error => {
-        console.error('There was a problem with the fetch operation: ', error);
-    });
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(errorData => {
+                    throw new Error(`${errorData.error}`);
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            displayProfile(data);
+        })
+        .catch(error => {
+            console.error(error);
+            showErrorMessage(error);
+
+        });
 
 }
 
-//Upadating of UI with the data
+/****************************************
+ *        UI Functions        *
+ ****************************************/
 
-// Function to update navigation based on user role
+
+// UI Function to update navigation based on user role
 function updateNavigation(userRole) {
     const navItems = document.querySelectorAll('.links li');
 
@@ -44,37 +57,42 @@ function updateNavigation(userRole) {
     });
 }
 
+
+//UI function for updating page with data
 function displayProfile(data) {
-          // Create HTML elements
-          const studentIdElement = document.getElementById('studentId');
-          const nameElement = document.getElementById('name-input');
-          const studentemailElement = document.getElementById('student-email');
-          const statusElement = document.getElementById('student-status');
-          const classificationElement = document.getElementById('classification-input');
-          const gpaElement = document.getElementById('gpa-input');
-          const advisorElement = document.getElementById('advisor-input');
-          const emailElement = document.getElementById('email-input');
-          const studentMajorElement = document.getElementById('major-input');
-          const studentCreditElement = document.getElementById('credit-input');
-   
-          // Update the HTML elements with the profile data
-          studentIdElement.innerHTML = data.studentID;
-          nameElement.innerHTML = data.studentFirstName +" "+ data.studentLastName;
-          studentemailElement.innerHTML =  data.studentEmail;
-          studentMajorElement.innerHTML = data.studentMajor;
-          statusElement.innerHTML =  data.studentStatus;
-          classificationElement.innerHTML = data.studentClassification;
-          studentCreditElement.innerHTML = data.studentCredit;
-          gpaElement.innerHTML = data.studentGPA;
-          advisorElement.innerHTML = data.advisorFirstName +" "+ data.advisorLastName;
-          emailElement.innerHTML = data.advisorEmail;
+    document.getElementById('name-input').textContent = `${data.studentFirstName} ${data.studentLastName}`;
+    document.getElementById('id-input').textContent = data.studentID;
+    document.getElementById('email-input').textContent = data.studentEmail;
+    document.getElementById('status-input').textContent = data.studentStatus;
+    document.getElementById('classification-input').textContent = data.studentClassification;
+    document.getElementById('credit-input').textContent = data.studentCredit;
+    document.getElementById('gpa-input').textContent = data.studentGPA;
+    document.getElementById('major-input').textContent = data.studentMajor;
+    document.getElementById('advisor-input').textContent = `${data.advisorFirstName} ${data.advisorLastName}`;
+    document.getElementById('advisor-email-input').textContent = data.advisorEmail;
+}
+
+//UI Function to display Errors
+function showErrorMessage(message) {
+    let errorContainer = document.getElementById("error-container");
+    let listErrors = document.getElementById("listed-messages");
+    //errorContainer.textContent = '';
+    listErrors.textContent = '';
+    if (message && message.error) {
+        // Handle single error
+        errorContainer.style.display = "block";
+        let errorDiv = document.createElement('li');
+        errorDiv.textContent = message.error;
+        listErrors.appendChild(errorDiv);
+        errorContainer.appendChild(listErrors);
+    }
 }
 
 
-//Change links displayed
-//Upload student information onto the page
-window.onload = function(){
-    //displayProfile(data);
-    getProfile();
-}
 
+
+//UI function to close error box
+function closeErrorContainer() {
+    console.log("Closing error container");
+    document.getElementById("error-container").style.display = "none";
+}

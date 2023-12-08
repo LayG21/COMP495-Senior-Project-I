@@ -1,33 +1,63 @@
-/*Styling for student profile page.*/
 main {
-    align-items: center;
-    padding-top: 20px;
-    padding-bottom: 40px;
-    margin-left: 200px;
-    margin-right: 200px;
-
-}
-
-/*div only becomes visible if there is something inside it*/
-div#profile-container {
-    align-items: center;
-    align-self: center;
-    padding-top: 9px;
-    background-color: rgb(220, 220, 220);
     display: flex;
     flex-direction: column;
+    align-items: center;
+    padding: 20px;
+
 }
 
-#profile-logo {
-    background-color: white;
-    align-self: center;
+.profile-info {
+    background: linear-gradient(180deg, #cecccc, #d9d9d9);
+    border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    width: 40%;
+    margin: 20px auto;
+    /* Center the profile info and add margin */
+}
+
+.profile-info p {
+    font-size: 1.0em;
+    /* Adjust font size for better readability */
+    font-weight: bold;
+    color: #333;
+}
+
+.profile-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    /* Add margin between profile rows */
+}
+
+.closebtn {
+    color: #f00;
+    float: right;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#error-container {
+    display: none;
+    padding: 20px;
+    background-color: rgba(255, 0, 0, 0.2);
+    border: 2px solid #f44336;
+    color: black;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    position: relative;
+}
+
+.closebtn:hover {
+    color: black;
 }
 
 @media (max-width: 768px) {
     main {
-        align-items: center;
-        margin-left: 100px;
-        margin-right: 100px;
-
+        margin-left: 20px;
+        margin-right: 20px;
+        width: 100%;
     }
 }

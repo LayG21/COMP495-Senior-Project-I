@@ -29,9 +29,6 @@
             </li>
           </ul>
         </li>
-        <li data-role="STUDENT">
-          <a class="nav-link" href="class-generator.html">Class Generator</a>
-        </li>
         <li><a class="nav-link" id="logout-link" href="#">Logout</a></li>
       </ul>
     </nav>
@@ -47,7 +44,7 @@
     </div>
     <!--Search bar to search for users-->
     <div class="search-container">
-      <input type="text" id="advisee-input" onkeyup="userSearch()" placeholder="Search For User...">
+      <input type="text" id="advisee-input" oninput="searchStudent()" placeholder="Search For User...">
     </div>
     <!--Table of advisees with their information-->
     <table id="advisee-list">
@@ -61,27 +58,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td data-label="ID">10348</td>
-          <td data-label="First Name">John</td>
-          <td data-label="Last Name">Smith</td>
-          <td data-label="Email">johnsmith@gmail.com</td>
-          <td data-label="Action"><button class="open-modal">View</button></td>
-        </tr>
-        <tr>
-          <td data-label="ID">10300</td>
-          <td data-label="First Name">Jane</td>
-          <td data-label="Last Name">Joe</td>
-          <td data-label="Email">janejoe@gmail.com</td>
-          <td data-label="Action"><button class="open-modal">View</button></td>
-        </tr>
-        <tr>
-          <td data-label="ID">10301</td>
-          <td data-label="First Name">Linda</td>
-          <td data-label="Last Name">Jane</td>
-          <td data-label="Email">lindajane@gmail.com</td>
-          <td data-label="Action"><button class="open-modal">View</button></td>
-        </tr>
+        <!--Dynamocally update this with js-->
       </tbody>
 
     </table>
@@ -90,25 +67,41 @@
       <div id="modal-content">
         <span id="close-modal">&times</span>
         <h2>User Information</h2>
-        <hr />
-        <label for="studentID">ID:</label>
-        <p id="studentID">950432500</p>
-        <label for="firstName">First Name:</label>
-        <p id="firstName">Jane</p>
-        <label for="lastName">Last Name:</label>
-        <p id="lastName">Doe</p>
-        <label for="email">Email:</label>
-        <p id="email">janedoe@gmail.com</p>
-        <label for="status">Status:</label>
-        <p id="status">Full-Time</p>
-        <label for="major">Major:</label>
-        <p id="major">Computer Science</p>
-        <label for="classification">Classification:</label>
-        <p id="classification">Sophomore</p>
-        <label for="gpa">GPA:</label>
-        <p id="gpa">3.5</p>
-        <label for="credits">Credits:</label>
-        <p id="credits">67</p>
+        <hr>
+        <!--Separate styling for header and actual data-->
+        <div id="info-container">
+          <!--Dynamically update the p elemnts with data-->
+          <!--Personal Information-->
+          <div id="personal-info">
+            <h3>Personal Info</h3>
+            <hr />
+            <h4>ID:</h4>
+            <p id="studentID"></p>
+            <h4>First Name:</h4>
+            <p id="firstName"></p>
+            <h4>Last Name:</h4>
+            <p id="lastName"></p>
+            <h4>Email:</h4>
+            <p id="email"></p>
+          </div>
+
+          <!--Academic information-->
+          <div id="academic-info">
+            <h3>Academic Info</h3>
+            <hr />
+            <h4>Status:</h4>
+            <p id="status"></p>
+            <h4>Major:</h4>
+            <p id="major"></p>
+            <h4>Classification:</h4>
+            <p id="classification"></p>
+            <h4>GPA:</h4>
+            <p id="gpa"></p>
+            <h4>Credits:</h4>
+            <p id="credits"></p>
+          </div>
+
+        </div>
       </div>
     </div>
     <!--Container for pagination-->
