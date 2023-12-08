@@ -1,0 +1,24 @@
+# For chat:
+Current Idea:
+    - If current user is a student they chat with advisors only and if current user is a advisor the can only 
+     chat with a student:
+        -Current user should select a user to chat with:
+        - If the selected user is not online:
+            -Old messages should load into chat window for the current user
+            -When current user sends a message it should go to the database
+        -If selected user is online:
+            -They should be able to send messages in real time with the websockets
+            -Old messages should load into chat window for both users if there are any
+            -The sent messages should be sent to the database
+
+#View Advisees Page:
+    - The current user should be an advisor and an advisor only in order to access this page
+    - The current user should be able to search for profile of student by name. As
+        the current user searches, suggested users should show up and then the current user should be able 
+        to select the user and open up their profile
+
+#Student Profile Page:
+    -The current user should be a student and only a student
+    The current user should go to their profile page and see their student information that is in the database,
+     displayed on the page.
+
