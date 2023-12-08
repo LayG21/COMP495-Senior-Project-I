@@ -27,12 +27,16 @@ main {
   margin-bottom: 20px;
   border-radius: 7px;
   width: 100%;
+  font-size: 1.1em;
 }
 
 /* Calculator styles */
 .calculator {
   padding: 20px;
   border-radius: 4px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
 #gpa-calc-table {
@@ -41,24 +45,37 @@ main {
   margin-top: 20px;
 }
 
+
 #gpa-calc-table th,
 #gpa-calc-table td {
   border: 1px solid #ddd;
   padding: 8px;
   text-align: left;
+  background-color: #f2f2f2;
+  font-size: 1.2em;
 }
+
 
 #gpa-calc-table thead th {
   background-color: #c2c8cb;
 }
 
 /* Set input fields to 100% width */
+
 #gpa-calc-table input[type="text"] {
   width: 100%;
   height: 3.3em;
   box-sizing: border-box;
-  border: 1.5px solid #b5b2b2;
   border-radius: 4px;
+  font-size: 0.8em;
+}
+
+/* Button container styles */
+.button-container {
+  margin-top: 20px;
+  /* Adjust the top margin as needed */
+  text-align: center;
+  /* Center the buttons horizontally */
 }
 
 button {
@@ -75,10 +92,16 @@ button {
 .bottom-div {
   display: none;
   margin-top: 20px;
-  padding: 10px;
   background-color: #ecf0f1;
   border-radius: 4px;
+  width: 100%;
+  border: 2px solid #007bb5;
+  box-shadow: 2px solid gray;
+  height: 6em;
+
 }
+
+
 
 /* Error container styles */
 #error-container {

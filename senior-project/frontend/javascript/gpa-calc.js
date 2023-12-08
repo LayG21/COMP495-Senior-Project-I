@@ -1,12 +1,4 @@
-//File used by gpa and course calculatorr
-
-//math for gpa calculator
-/*((letter grade * weight) / weight)*/
-/* A = 4.0, A- = 3.7, B+ = 3.3, B = 3.0, B- = 2.7, C+ = 2.3, C = 2.0, C- = 1.7, D+ = 1.3, D = 1.0, F = 0.0
-*/
-/* Freshman Credits = 0 - 29, Sophomore = 30 - 59, Junior = 60 - 89, Senior = 90 or more  */
-//round numbers to two decimals
-
+//File used by gpa
 document.addEventListener('DOMContentLoaded', () => {
     //Dispaly all users you can chat with
     getRole();
@@ -58,8 +50,10 @@ function addMore() {
 
 //reset calculator back to normal
 function resetCalculator() {
+    document.querySelector(".bottom-div").style.display = "none";
     // Clear content in all rows, starting from the second row
     var calcTable = document.getElementById("gpa-calc-table");
+    console.log(calcTable);
     var rows = calcTable.getElementsByTagName("tr");
 
     for (var i = rows.length - 1; i > 0; i--) {
@@ -231,7 +225,7 @@ function resultAdd() {
     else {
         if (validRows > 0) {
             math = totalPoints / totalWeight;
-            grade_output = `Your GPA: ${math.toFixed(2)}`;
+            grade_output = `Your GPA: ${(Math.floor(math * 100) / 100)}`;
             credit_output = totalWeight;
             classification_output = classification(credit_output);
 
