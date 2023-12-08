@@ -49,7 +49,8 @@ function getUsers() {
         })
         .catch(error => {
             //change this to be different and display to users
-            alert('Error:' + error.message);
+            let errorRes = 'Error:' + error.message;
+            handleResponse(errorRes);
         });
 }
 
@@ -76,7 +77,8 @@ function getMessages(selectedUserID, selectedUserName) {
             //console.log(data);
         })
         .catch(error => {
-            alert('Error: ' + error.message);
+            let errorRes = 'Error: ' + error.message;
+            handleResponse(errorRes);
         });
 }
 
@@ -173,7 +175,9 @@ function searchUsers() {
                 displaySearchResults(users);
             })
             .catch(error => {
-                console.error('Error during search:', error);
+                let response = `Error during search:${error}`
+                handleResponse(response);
+                //console.error();
             });
     } else {
         clearSearchResults();
@@ -314,15 +318,17 @@ socket.on('receiveMessage', function ({ senderID, content }) {
         makeReceiverMessage(content);
     }
 });
-
-socket.on('errorMessage', (data) => {
-    // Handle the error message
-    console.error('Error:', data.error);
-
-    // Display the error message to the user (you can customize this part)
-    alert(`Error: ${data.error}`);
+//for soclet error
+socket.on("connect_error", (error) => {
+    let er = "Connection error: " + error.message;
+    handleResponse(er);
+    // Handle the error or take appropriate action
 });
 
+//custom error event
+socket.on('errorMesage', function () {
+    console.log('Connected to server');
+});
 socket.on('disconnect', function () {
     console.log('Disconnected from server');
 });
@@ -339,6 +345,46 @@ function sendMessage() {
         makeSenderMessage(content);
     }
     else {
-        alert("Please type in input before sending and select a user");
+        let text = "Please type in input before sending and select a user"
+        handleResponse(text);
+    }
+}
+
+//close error container
+function closeErrorContainer() {
+    console.log("Closing error container");
+    document.getElementById("error-container").style.display = "none";
+}
+
+//display error
+
+function handleResponse(data) {
+    let errorContainer = document.getElementById("error-container");
+    let listErrors = document.getElementById("listed-messages");
+    //errorContainer.textContent = '';
+    listErrors.textContent = '';
+
+    if (Array.isArray(data.errors)) {
+        // Handle array of errors
+        data.errors.forEach(error => {
+            errorContainer.style.display = "block";
+            let errorDiv = document.createElement('li');
+            errorDiv.textContent = error;
+            listErrors.appendChild(errorDiv);
+        });
+        errorContainer.appendChild(listErrors);
+    } else if (data && data.error) {
+        // Handle single error
+        errorContainer.style.display = "block";
+        let errorDiv = document.createElement('li');
+        errorDiv.textContent = data.error;
+        listErrors.appendChild(errorDiv);
+        errorContainer.appendChild(listErrors);
+    } else {
+        errorContainer.style.display = "block";
+        let errorDiv = document.createElement('li');
+        errorDiv.textContent = data;
+        listErrors.appendChild(errorDiv);
+        errorContainer.appendChild(listErrors);
     }
 }

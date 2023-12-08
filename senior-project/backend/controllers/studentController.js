@@ -59,21 +59,3 @@ const getProfile = async (req, res) => {
 
 
 module.exports = { getProfile };
-
-/*
-Example Response:
-{
-    "studentID": 950405789,
-    "studentFirstName": "Leighana",
-    "studentLastName": "Glover",
-    "studentEmail": "llglover@aggies.ncat.edu",
-    "studentStatus": "Full-Time",
-    "studentClassification": "Senior",
-    "studentGPA": 3.5,
-    "studentCredit": 102,
-    "studentMajor": "Computer Science",
-    "advisorFirstName": "John",
-    "advisorLastName": "Kelly",
-    "advisorEmail": "jk@ncat.edu"
-}
-*/

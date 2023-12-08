@@ -1,5 +1,3 @@
-// Js file that will make requests based on user interaction and update html page if needed
-
 //DOMEvent to update html page as the user goes to the page
 document.addEventListener('DOMContentLoaded', (event) => {
     const userRole = 'STUDENT'; // Replace with the actual user role
@@ -10,8 +8,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
     getProfile();
 });
 
-//server side requests
-//gets and displays student information or will display error
+/****************************************
+ *        Request Functions        *
+ ****************************************/
+
 //Gets students information
 function getProfile() {
     const errorContainer = document.getElementById('error-container');
@@ -34,18 +34,17 @@ function getProfile() {
         })
         .catch(error => {
             console.error(error);
+            showErrorMessage(error);
 
-            // Log the full response details for debugging
-            //console.log('Full response:', error);
-
-            // Display the error to the user
-            errorContainer.textContent = `Error Message: ${error.message}`;
         });
 }
 
-//Functions for updating the UI
+/****************************************
+ *        UI Functions        *
+ ****************************************/
 
-// Function to update navigation based on user role
+
+// UI Function to update navigation based on user role
 function updateNavigation(userRole) {
     const navItems = document.querySelectorAll('.links li');
 
@@ -69,4 +68,29 @@ function displayProfile(data) {
     document.getElementById('major-input').textContent = data.studentMajor;
     document.getElementById('advisor-input').textContent = `${data.advisorFirstName} ${data.advisorLastName}`;
     document.getElementById('advisor-email-input').textContent = data.advisorEmail;
+}
+
+//UI Function to display Errors
+function showErrorMessage(message) {
+    let errorContainer = document.getElementById("error-container");
+    let listErrors = document.getElementById("listed-messages");
+    //errorContainer.textContent = '';
+    listErrors.textContent = '';
+    if (message && message.error) {
+        // Handle single error
+        errorContainer.style.display = "block";
+        let errorDiv = document.createElement('li');
+        errorDiv.textContent = message.error;
+        listErrors.appendChild(errorDiv);
+        errorContainer.appendChild(listErrors);
+    }
+}
+
+
+
+
+//UI function to close error box
+function closeErrorContainer() {
+    console.log("Closing error container");
+    document.getElementById("error-container").style.display = "none";
 }

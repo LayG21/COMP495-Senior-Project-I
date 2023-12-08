@@ -1,28 +1,61 @@
-/*styling for calculator page*/
-/*Style the original and additional fields*/
-main{
-  display: flex;
-  flex-direction: column;
-}
-main ul li{
-    list-style: none;
-}
-main ul li a button{
-    text-decoration: none;
+/* Reset some default margin and padding for better consistency */
+body,
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+  padding: 0;
 }
 
-/*align text in the middle*/
-main.calc-home{
-  text-align: center;
+/* Main styles */
+main {
+  padding: 20px;
 }
 
-/*align text in the middle*/
-main .calc-info{
-  text-align: center;
-}
-main .top-div{
-  text-align: center;
+/* Information box styles */
+.calc-info {
+  background-color: #3498db;
+  color: #fff;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 4px;
 }
 
-/*style gpa calculator to have three input fields in each row or in each column*/
-/*for home screen align the items in the center*/
+/* Calculator styles */
+.calculator {
+  /* Your calculator styling here */
+}
+
+/* Calculator form styles */
+.gpa-calc-form {
+  /* Your form styling here */
+}
+
+/* Added row styles */
+.calc-fields {
+  /* Your added row styling here */
+}
+
+/* Error container styles */
+#error-container {
+  display: none;
+  padding: 20px;
+  background-color: #e74c3c;
+  color: #fff;
+  margin-bottom: 15px;
+  font-size: 1.2em;
+  border-radius: 4px;
+}
+
+.closebtn {
+  color: #fff;
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.closebtn:hover {
+  color: #fff;
+}

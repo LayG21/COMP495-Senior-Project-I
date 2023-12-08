@@ -42,7 +42,13 @@
     </nav>
     <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
   </header>
+  <div id="error-container">
+    <div><span class="closebtn" onclick="closeErrorContainer()">&times;</span></div>
 
+    <ul id="listed-messages">
+      <!--Display for errors-->
+    </ul>
+  </div>
   <!--Body of chat page-->
   <main class="chat-container">
     <!--Sidebar-->
@@ -97,6 +103,7 @@
   </main>
   <!--Function for logging the user out-->
   <script src="./javascript/logout.js"></script>
+  <script src="./javascript/role.js"></script>
   <script src="./javascript/chat.js"></script>
 </body>
 

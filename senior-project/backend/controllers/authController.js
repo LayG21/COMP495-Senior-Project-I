@@ -12,15 +12,9 @@ const loginController = async (req, res) => {
     const email = req.body.userEmail;
     const password = req.body.userPassword;
     let user = null;
-
-    console.log(role);
-    console.log(email);
-    console.log(password);
     try {
 
         if (role === roles.STUDENT) {
-            // Perform authentication logic for student
-            // Example: Check user credentials in the database
             const student = await Student.findOne({ studentEmail: email });
             if (!student) {
                 console.log("No User with matching Email");
@@ -50,8 +44,6 @@ const loginController = async (req, res) => {
             res.redirect('/home.html');
         }
         else if (role === roles.ADVISOR) {
-            // Perform authentication logic for advisor
-            // Example: Check advisor credentials in the database
             const advisor = await Advisor.findOne({ advisorEmail: email });
 
             if (!advisor) {
@@ -87,7 +79,6 @@ const loginController = async (req, res) => {
 };
 
 //logout controller
-//works
 const logoutController = async (req, res) => {
     // Destroy the session
     req.session.destroy((err) => {

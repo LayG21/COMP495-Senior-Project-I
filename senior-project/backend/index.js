@@ -68,6 +68,7 @@ const logoutRoutes = require("./routes/logoutroute.js");
 const chatRoutes = require("./routes/chatroute.js");
 const advisorRoutes = require("./routes/advisorroute.js");
 const studentRoutes = require("./routes/studentroute.js");
+const roleRoutes = require("./routes/roleroute.js");
 
 
 
@@ -78,6 +79,7 @@ app.use("/", logoutRoutes);
 app.use("/chat", chatRoutes);
 app.use("/advisor", advisorRoutes);
 app.use("/student", studentRoutes);
+app.use("/", roleRoutes);
 
 
 
@@ -117,7 +119,6 @@ app.get('/course-calculator.html', isAuthenticated, isAuthorized([roles.STUDENT,
   //console.log("reached the course calculator page");
   res.sendFile(path.join(__dirname, "../frontend/course-calculator.html"));
 });
-
 
 
 

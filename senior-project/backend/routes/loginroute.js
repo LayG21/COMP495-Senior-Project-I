@@ -19,6 +19,7 @@ router.get("/", (req, res) => {
 
 
 //post request for when user adds credentials ad presses login
+
 router.post('/login', validateInput, sanitizationRules, loginController);
 
 

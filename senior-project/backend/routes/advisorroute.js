@@ -16,10 +16,8 @@ const { getStudents, getSpecificStudent, searchStudents } = require("../controll
 
 
 //get all assigned students
-//This does not take in user input, this takes in session information managed on the server side
 router.get("/students", isAuthenticated, isAuthorized([roles.ADVISOR]), getStudents);
 
-//sanitization middleware works as long as there is input
 
 //get students based on search
 router.get("/students/search", queryvalidationRules, vsQuery, isAuthenticated, isAuthorized([roles.ADVISOR]), searchStudents);

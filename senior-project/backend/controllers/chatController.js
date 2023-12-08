@@ -133,7 +133,6 @@ const saveSentMessage = async (senderID, receiverID, message) => {
 
 //search through advisors if current user is a student
 //search through students if current user is advisor
-//To do: implement search
 const searchUsers = async (req, res) => {
     const role = req.session.user.role;
     const searchQuery = req.query.searchQuery;
@@ -183,13 +182,20 @@ const searchUsers = async (req, res) => {
 const initializeSocketIO = (io, sessionMiddleware) => {
     // Socket.IO connection setup with session middleware
     io.engine.use(sessionMiddleware);
-
+    io.use((socket, next) => {
+        // Access the session data to check if the user is authenticated
+        const session = socket.request.session;
+        if (session && session.user) {
+            return next();
+        }
+        return next(new Error("Unauthorized"));
+    });
     io.on('connection', (socket) => {
         const { user } = socket.request.session;
 
         if (user && user.id) {
             userSockets.set(user.id, socket);
-            console.log(`User ${user.id} connected. This is their socket id: ${socket.id}`);
+            //console.log(`User ${user.id} connected. This is their socket id: ${socket.id}`);
             // console.log('Current userSockets map:', userSockets);
 
         } else {
@@ -201,8 +207,8 @@ const initializeSocketIO = (io, sessionMiddleware) => {
             const senderID = parseInt(socket.request.session.user.id);
             const receiverSocket = userSockets.get(parseInt(receiverID, 10));
 
-            console.log(`Received message from ${senderID} to ${receiverID}: ${content}`);
-            console.log(`This is the socket of the receiverID ${receiverSocket}`);
+            // console.log(`Received message from ${senderID} to ${receiverID}: ${content}`);
+            //console.log(`This is the socket of the receiverID ${receiverSocket}`);
 
             //save message before emitting and if not saved do no emit message
             let saveResult = await saveSentMessage(senderID, receiverID, content);
@@ -210,12 +216,12 @@ const initializeSocketIO = (io, sessionMiddleware) => {
 
             if (saveResult === 200) {
                 if (receiverSocket) {
-                    console.log(`Receiver socket found for ${receiverID}: ${receiverSocket.id}`);
+                    //console.log(`Receiver socket found for ${receiverID}: ${receiverSocket.id}`);
                     io.to(receiverSocket.id).emit('receiveMessage', ({ senderID, content }));
                 }
 
             } else {
-                console.log(`Message not saved or receiver ${receiverID} not found or does not have an active socket.`);
+                //console.log(`Message not saved or receiver ${receiverID} not found or does not have an active socket.`);
                 // Handle the case where the message is not saved or receiver not found
                 socket.emit('errorMessage', { error: 'Message could not be sent.' });
             }
@@ -225,9 +231,9 @@ const initializeSocketIO = (io, sessionMiddleware) => {
         socket.on('disconnect', () => {
             if (user && user.id) {
                 userSockets.delete(user.id);
-                console.log(`Socket removed from userSockets Map for user ${user.id}`);
+                //console.log(`Socket removed from userSockets Map for user ${user.id}`);
             }
-            console.log(`User ${socket.id}, disconnected`);
+            //console.log(`User ${socket.id}, disconnected`);
         });
     });
 

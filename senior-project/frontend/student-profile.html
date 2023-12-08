@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="css/nav.css" />
   <link rel="stylesheet" href="css/profile.css" />
-
   <title>Profile Page</title>
 </head>
 
@@ -37,45 +36,55 @@
 
   <main>
     <!--For displaying errors to the user-->
-    <div id="error-container" class="error-message"></div>
-    <div id="profile-container">
-      <!--Needs to be filled and fetched on login-->
-      <div id="profile-circle">
-        <p id="profile-letters">JD</p>
-      </div>
-      <div class="profile-info">
-        <p>Name:</p>
+    <div id="error-container">
+      <div><span class="closebtn" onclick="closeErrorContainer()">&times;</span></div>
+
+      <ul id="listed-messages">
+        <!--Display for errors-->
+      </ul>
+    </div>
+    <div class="profile-info">
+      <div class="profile-row">
+        <p><i class="fas fa-user"></i> Name:</p>
         <p class="name-input" id="name-input"></p>
-        <br />
+      </div>
+      <div class="profile-row">
         <p>ID:</p>
         <p class="id-input" id="id-input"></p>
-        <br />
+      </div>
+      <div class="profile-row">
         <p>Email:</p>
         <p class="email-input" id="email-input"></p>
-        <br />
+      </div>
+      <div class="profile-row">
         <p>Status:</p>
         <p class="status-input" id="status-input"></p>
-        <br />
+      </div>
+      <div class="profile-row">
         <p>Classification:</p>
-        <p class="classification-input" id="classification-input">
-
-        </p>
-        <br />
+        <p class="classification-input" id="classification-input"></p>
+      </div>
+      <div class="profile-row">
         <p>Credits:</p>
         <p class="credit-input" id="credit-input"></p>
-        <br />
+      </div>
+      <div class="profile-row">
         <p>GPA:</p>
         <p class="gpa-input" id="gpa-input"></p>
-        <br />
+      </div>
+      <div class="profile-row">
         <p>Major:</p>
         <p class="major-input" id="major-input"></p>
-        <br />
+      </div>
+      <div class="profile-row">
         <p>Advisor:</p>
         <p class="advisor-input" id="advisor-input"></p>
-        <br />
+      </div>
+      <div class="profile-row">
         <p>Advisor Email:</p>
         <p class="advisor-email-input" id="advisor-email-input"></p>
       </div>
+      <!-- Repeat for other categories -->
     </div>
   </main>
   <!--Function for logging the user out-->

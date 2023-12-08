@@ -268,3 +268,31 @@ header.navbar {
 .sidebar-user:hover {
   background-color: rgb(197, 193, 193);
 }
+
+/* The alert message box */
+.closebtn {
+  color: #f00;
+  /* Red color for close button */
+  float: right;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Styling for error container */
+#error-container {
+  display: none;
+  padding: 20px;
+  background-color: white;
+  border: 1px solid #f44336;
+  /* Red border color */
+  color: black;
+  margin-bottom: 0;
+  position: relative;
+  z-index: 100;
+}
+
+/* Styling for close button on hover */
+.closebtn:hover {
+  color: black;
+}
