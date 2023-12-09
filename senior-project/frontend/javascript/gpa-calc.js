@@ -53,7 +53,7 @@ function resetCalculator() {
     document.querySelector(".bottom-div").style.display = "none";
     // Clear content in all rows, starting from the second row
     var calcTable = document.getElementById("gpa-calc-table");
-    console.log(calcTable);
+    //console.log(calcTable);
     var rows = calcTable.getElementsByTagName("tr");
 
     for (var i = rows.length - 1; i > 0; i--) {

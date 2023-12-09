@@ -12,7 +12,6 @@ router.use(express.json());
 //get login page
 router.get("/", (req, res) => {
   const absolutePath =
-    // If the user is authenticated and has the necessary role, send the HTML file
     res.sendFile(path.join(__dirname, '../../frontend/index.html'));
 
 });

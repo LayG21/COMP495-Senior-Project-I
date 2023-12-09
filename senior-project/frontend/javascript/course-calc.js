@@ -49,7 +49,6 @@ function addMore() {
 
 //reset calculator back to normal
 function resetCalculator() {
-    document.querySelector(".calc-results").value = "";
     document.querySelector(".bottom-div").style.display = "none";
 
     // Clear content in all rows, starting from the second row
@@ -210,7 +209,7 @@ function resultAdd() {
                 displayResults(warningText);
             } else {
                 math = totalPoints / totalWeight;
-                grade_output = `Your Course Grade: ${math.toFixed(2)}`;
+                grade_output = `Your Course Grade: ${math.toFixed(2)}%`;
                 credit_output = totalWeight;
                 // Display results
                 displayResults(grade_output);
