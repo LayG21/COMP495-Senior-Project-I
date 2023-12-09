@@ -15,7 +15,7 @@ beforeEach(() => {
 
     res = {
         status: jest.fn(() => res),
-        json: jest.fn(), // Add this line to mock the json function
+        json: jest.fn(),
         send: jest.fn(),
     };
 });
@@ -42,7 +42,7 @@ describe('Custom Validation Middleware', () => {
     });
 
     it('should return 400 for missing form data', () => {
-        const invalidReq = { body: {} }; // Add the 'body' property here
+        const invalidReq = { body: {} };
         validateInput(invalidReq, res, () => { });
         expect(res.status).toHaveBeenCalledWith(400);
     });
