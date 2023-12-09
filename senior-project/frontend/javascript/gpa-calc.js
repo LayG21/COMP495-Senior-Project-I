@@ -1,6 +1,6 @@
 //File used by gpa
 document.addEventListener('DOMContentLoaded', () => {
-    //Dispaly all users you can chat with
+    //Get role
     getRole();
 });
 
@@ -53,7 +53,7 @@ function resetCalculator() {
     document.querySelector(".bottom-div").style.display = "none";
     // Clear content in all rows, starting from the second row
     var calcTable = document.getElementById("gpa-calc-table");
-    console.log(calcTable);
+    //console.log(calcTable);
     var rows = calcTable.getElementsByTagName("tr");
 
     for (var i = rows.length - 1; i > 0; i--) {
@@ -244,6 +244,10 @@ function displayResults() {
     var bottomDiv = document.querySelector(".bottom-div");
     bottomDiv.textContent = ""; // Clear previous content
 
+    // Create container div for styling
+    var resultContainer = document.createElement("div");
+    resultContainer.className = "result-container";
+
     // Create input elements
     var gpaInput = document.createElement("input");
     gpaInput.type = "text";
@@ -258,7 +262,7 @@ function displayResults() {
     classificationInput.placeholder = "Classification";
     classificationInput.className = "calc-classification";
     classificationInput.id = "calc-classification";
-    classificationInput.value = classification_output;
+    classificationInput.value = "Classification:" + classification_output;
     classificationInput.readOnly = true;
 
     var creditsInput = document.createElement("input");
@@ -266,16 +270,19 @@ function displayResults() {
     creditsInput.placeholder = "Credits";
     creditsInput.className = "calc-credits";
     creditsInput.id = "calc-credits";
-    creditsInput.value = credit_output;
+    creditsInput.value = "Credits:" + credit_output;
     creditsInput.readOnly = true;
 
-    // Append input elements to bottomDiv
-    bottomDiv.appendChild(gpaInput);
-    bottomDiv.appendChild(classificationInput);
-    bottomDiv.appendChild(creditsInput);
+    // Append input elements to resultContainer
+    resultContainer.appendChild(gpaInput);
+    resultContainer.appendChild(classificationInput);
+    resultContainer.appendChild(creditsInput);
 
+    // Append resultContainer to bottomDiv
+    bottomDiv.appendChild(resultContainer);
     bottomDiv.style.display = "block";
 }
+
 
 
 

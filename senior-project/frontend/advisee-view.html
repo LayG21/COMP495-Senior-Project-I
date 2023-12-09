@@ -36,15 +36,11 @@
   </header>
 
   <main>
-    <h2 id="page-header">Advisee Profile Page</h2>
+    <h2 id="page-header">Advisee View Page</h2>
     <!--Box for displaying instructions-->
-    <div id="page-instructions">
-      <p>This page allows you to view your advisees' information and their grades.</p>
-      <button onclick="closeInstructions()">X</button>
-    </div>
     <!--Search bar to search for users-->
     <div class="search-container">
-      <input type="text" id="advisee-input" oninput="searchStudent()" placeholder="Search For User...">
+      <input type="text" id="advisee-input" oninput="searchStudent()" placeholder="Search By Name or Email...">
     </div>
     <!--Table of advisees with their information-->
     <table id="advisee-list">
@@ -103,9 +99,6 @@
 
         </div>
       </div>
-    </div>
-    <!--Container for pagination-->
-    <div id="pagination-container"></div>
   </main>
   <!--Function for logging the user out-->
   <script src="./javascript/logout.js"></script>

@@ -31,27 +31,29 @@ main {
     /* Add margin between profile rows */
 }
 
+/* Error container styles */
+#error-container {
+    display: none;
+    padding: 20px;
+    background-color: rgba(231, 76, 60, 1);
+    color: #fff;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    border-radius: 7px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /* Add a subtle box shadow for depth */
+}
+
 .closebtn {
-    color: #f00;
+    color: #fff;
     float: right;
     font-size: 20px;
     font-weight: bold;
     cursor: pointer;
 }
 
-#error-container {
-    display: none;
-    padding: 20px;
-    background-color: rgba(255, 0, 0, 0.2);
-    border: 2px solid #f44336;
-    color: black;
-    margin-bottom: 15px;
-    font-size: 1.2em;
-    position: relative;
-}
-
 .closebtn:hover {
-    color: black;
+    color: #fff;
 }
 
 @media (max-width: 768px) {

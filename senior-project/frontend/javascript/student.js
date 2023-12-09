@@ -15,12 +15,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
 //Gets students information
 function getProfile() {
     fetch('/student/profile')
-    .then(response => {
-        if(!response.ok){
-            throw new Error(`HTTP error: ${response.status}`);
-        }
-        return response.json();
-    })
         .then(response => {
             if (!response.ok) {
                 return response.json().then(errorData => {

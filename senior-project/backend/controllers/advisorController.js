@@ -53,7 +53,7 @@ const getSpecificStudent = async (req, res) => {
       {
         $unwind: '$advisorInfo',
       },
-      // $project stage to shape the output
+      // shape the output
       {
         $project: {
           _id: 0,
@@ -120,47 +120,6 @@ const searchStudents = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
-
-
-/*
-Example Response getstudents:
-[
-    {
-        "studentID": 950505789,
-        "studentFirstName": "Lisa",
-        "studentLastName": "Wade",
-        "studentEmail": "lwade@aggies.ncat.edu"
-    },
-    {
-        "studentID": 950705799,
-        "studentFirstName": "Jade",
-        "studentLastName": "Jackson",
-        "studentEmail": "jjackson@aggies.ncat.edu"
-    }
-]
- */
-
-/*
-Example Response get specific student:
-[
-    {
-        "studentID": 950705799,
-        "studentFirstName": "Jade",
-        "studentLastName": "Jackson",
-        "studentEmail": "jjackson@aggies.ncat.edu",
-        "studentStatus": "Full-Time",
-        "studentClassification": "Senior",
-        "studentGPA": 3.4,
-        "studentCredit": 100,
-        "studentMajor": "Computer Science",
-        "advisorFirstName": "Mariah",
-        "advisorLastName": "Green",
-        "advisorEmail": "mg@ncat.edu"
-    }
-]
- */
-
 
 
 module.exports = { getStudents, getSpecificStudent, searchStudents };

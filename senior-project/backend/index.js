@@ -128,6 +128,14 @@ app.get('/course-calculator.html', isAuthenticated, isAuthorized([roles.STUDENT,
   //console.log("reached the course calculator page");
   res.sendFile(path.join(__dirname, "../frontend/course-calculator.html"));
 });
+app.get('/class.html', isAuthenticated, isAuthorized([roles.STUDENT]), (req, res) => {
+  //console.log("reached the course calculator page");
+  res.sendFile(path.join(__dirname, "../frontend/class.html"));
+});
+app.get('/selected_classes.html', isAuthenticated, isAuthorized([roles.STUDENT]), (req, res) => {
+  //console.log("reached the course calculator page");
+  res.sendFile(path.join(__dirname, "../frontend/selected_classes.html"));
+});
 
 
 

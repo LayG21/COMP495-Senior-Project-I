@@ -30,10 +30,6 @@ function validateInput(req, res, next) {
     const userEmail = req.body.userEmail;
     const userPassword = req.body.userPassword;
 
-    console.log(userType);
-    console.log(userEmail);
-    console.log(userPassword);
-
     let validationErrors = [];
 
     // Check for missing data first and tell the user

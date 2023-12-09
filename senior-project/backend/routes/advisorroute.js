@@ -7,12 +7,6 @@ const { vsParam, vsQuery, paramvalidationRules, queryvalidationRules } = require
 const { roles } = require("../roles/roles");
 const { getStudents, getSpecificStudent, searchStudents } = require("../controllers/advisorController");
 
-//DONE SO FAR:
-//Tested route calls after applying role middleware
-
-//To DO: 
-//Validate and Santitize
-
 
 
 //get all assigned students

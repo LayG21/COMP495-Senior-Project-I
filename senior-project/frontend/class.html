@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,33 +9,30 @@
     <link rel="stylesheet" href="css/profile.css" />
     <script src="https://code.jquery.com/jquery-3.6.4.min.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
     <header class="navbar">
         <a class="logo" href="home.html">Aggie Advise</a>
         <input type="checkbox" id="nav-toggle" class="nav-toggle" />
         <nav>
-          <ul class="links">
-            <li data-role="STUDENT"><a class="nav-link" href="student-profile.html">Profile</a></li>
-            <li data-role="ADVISOR"><a class="nav-link" href="advisee-view.html">View</a></li>
-            <li><a class="nav-link" href="chat.html">Chat</a></li>
-            <li class="calc-links">
-              <a class="nav-link" href="#">Calculator &#x25BC;</a>
-              <ul class="dropdown" id="dropdown">
-                <li><a href="gpa-calculator.html">GPA Calculator</a></li>
-                <li>
-                  <a href="course-calculator.html">Course Calculator</a>
+            <ul class="links">
+                <li data-role="STUDENT"><a class="nav-link" href="student-profile.html">Profile</a></li>
+                <li><a class="nav-link" href="chat.html">Chat</a></li>
+                <li class="calc-links">
+                    <a class="nav-link" href="#">Calculator &#x25BC;</a>
+                    <ul class="dropdown" id="dropdown">
+                        <li><a href="gpa-calculator.html">GPA Calculator</a></li>
+                        <li>
+                            <a href="course-calculator.html">Course Calculator</a>
+                        </li>
+                    </ul>
                 </li>
-              </ul>
-            </li>
-            <li data-role="STUDENT">
-              <a class="nav-link" href="class-generator.html">Class Generator</a>
-            </li>
-            <li><a class="nav-link" id="logout-link" href="#">Logout</a></li>
-          </ul>
+                <li><a class="nav-link" id="logout-link" href="#">Logout</a></li>
+            </ul>
         </nav>
         <label for="nav-toggle" class="nav-toggle-label">&#9776;</label>
     </header>
-    
+
     <h1>Class Selection</h1>
 
     <form id="classSelectionForm" action="/select_classes" method="POST">
@@ -287,20 +285,20 @@
         <br><br>
         <input type="button" value="Submit" onclick="selectClasses()">
         <input type="button" value="Clear" onclick="clearClasses()">
-        
+
 
 
     </form>
     <script>
-         // JavaScript to Handle Form Submission
-         function selectClasses() {
+        // JavaScript to Handle Form Submission
+        function selectClasses() {
             console.log('selectClasses() called'); // Add this line
-             // Get and prepare the selected classes data (selectedClassesData)
-             const selectedClassesData = [];
-             const promises = [];
-             let lastSelectionID = 0; // Initialize this to the highest SelectionID in your database
+            // Get and prepare the selected classes data (selectedClassesData)
+            const selectedClassesData = [];
+            const promises = [];
+            let lastSelectionID = 0; // Initialize this to the highest SelectionID in your database
 
-             for (let i = 1; i <= 5; i++) {
+            for (let i = 1; i <= 5; i++) {
                 const classCodename = document.getElementById(`classCodename${i}`).value;
                 const classID = document.getElementById(`classID${i}`).value;
                 const className = document.getElementById(`className${i}`).value; // Get class name
@@ -318,8 +316,8 @@
                         SelectedClassID: classID, // Update to match your server-side column names
                         SelectedClassName: className, // Match your server-side column name
                         Semester: semester,
-                        SelectionDate: new Date().toISOString().slice(0, 19).replace('T', ' '), 
-                     });
+                        SelectionDate: new Date().toISOString().slice(0, 19).replace('T', ' '),
+                    });
                 }
             }
 
@@ -339,24 +337,24 @@
                 data: {
                     selectedClasses: JSON.stringify(selectedClassesData), // Your form data
                 },
-                traditional:true,
+                traditional: true,
 
-                
 
-                success: function (response){
+
+                success: function (response) {
                     // Show a success message to the user
                     alert(response); // You can use a more user-friendly way to display the message
                 },
 
-                error: function (error){
+                error: function (error) {
                     // Show an error message to the user
                     alert('Error: ' + error.responseText); // You can customize the error message
                 },
-            
+
             });
-                 
-        
-            
+
+
+
         }
         // Add an event listener to the form submission
         document.getElementById('classSelectionForm').addEventListener('submit', function (e) {
@@ -376,4 +374,5 @@
     </script>
     <script src="./javascript/logout.js"></script>
 </body>
+
 </html>

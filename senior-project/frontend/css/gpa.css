@@ -21,21 +21,22 @@ main {
 
 /* Information box styles */
 .calc-info {
-  background-color: #889095e7;
-  color: #fff;
-  padding: 10px;
+  background-color: #bac2c7e7;
+  color: #0f0f0f;
+  padding: 15px;
   margin-bottom: 20px;
   border-radius: 7px;
   width: 100%;
   font-size: 1.1em;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Calculator styles */
 .calculator {
   padding: 20px;
-  border-radius: 4px;
+  border-radius: 7px;
   background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   text-align: center;
 }
 
@@ -73,7 +74,6 @@ main {
 /* Button container styles */
 .button-container {
   margin-top: 20px;
-  /* Adjust the top margin as needed */
   text-align: center;
   /* Center the buttons horizontally */
 }
@@ -86,19 +86,41 @@ button {
   border-radius: 4px;
   cursor: pointer;
   margin-right: 10px;
+  font-size: 1.0em;
   transition: background-color 0.3s ease;
 }
 
+.result-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+}
+
+.calc-results,
+.calc-classification,
+.calc-credits {
+  flex: 1;
+  margin: 5px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1.0em;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Style adjustments */
 .bottom-div {
   display: none;
   margin-top: 20px;
   background-color: #ecf0f1;
   border-radius: 4px;
   width: 100%;
-  border: 2px solid #007bb5;
   box-shadow: 2px solid gray;
-  height: 6em;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 
@@ -107,11 +129,13 @@ button {
 #error-container {
   display: none;
   padding: 20px;
-  background-color: rgba(231, 76, 60, 0.5);
+  background-color: rgba(231, 76, 60, 1);
   color: #fff;
   margin-bottom: 15px;
   font-size: 1.2em;
   border-radius: 7px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* Add a subtle box shadow for depth */
 }
 
 .closebtn {
