@@ -90,16 +90,37 @@ button {
   transition: background-color 0.3s ease;
 }
 
+.result-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+}
+
+.calc-results,
+.calc-classification,
+.calc-credits {
+  flex: 1;
+  margin: 5px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1.0em;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Style adjustments */
 .bottom-div {
   display: none;
   margin-top: 20px;
   background-color: #ecf0f1;
   border-radius: 4px;
   width: 100%;
-  border: 2px solid #007bb5;
   box-shadow: 2px solid gray;
-  height: 6em;
-
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 

@@ -53,7 +53,7 @@ main {
     text-align: left;
     background-color: #f2f2f2;
     font-size: 1.2em;
-    /* Add a background color to table header and cells */
+
 }
 
 /* Set input fields to 100% width */
@@ -69,9 +69,7 @@ main {
 /* Button container styles */
 .button-container {
     margin-top: 20px;
-    /* Adjust the top margin as needed */
     text-align: center;
-    /* Center the buttons horizontally */
 }
 
 button {
@@ -93,7 +91,6 @@ button:hover {
 .bottom-div {
     display: none;
     margin-top: 20px;
-    /* Adjust padding for spacing */
     background-color: #ecf0f1;
     border-radius: 4px;
     width: 100%;
@@ -120,7 +117,6 @@ button:hover {
     font-size: 1.2em;
     border-radius: 7px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    /* Add a subtle box shadow for depth */
 }
 
 .closebtn {

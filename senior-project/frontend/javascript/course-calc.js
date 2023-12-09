@@ -1,7 +1,7 @@
 //File used by course
 
 document.addEventListener('DOMContentLoaded', () => {
-    //Dispaly all users you can chat with
+    //get role
     getRole();
 });
 
