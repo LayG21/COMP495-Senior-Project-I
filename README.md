@@ -1,2 +1,2 @@
 # COMP495-Senior-Project-I
-Repository containing our senior project named Aggie Advise
+Repo for senior project named Aggie Advise
